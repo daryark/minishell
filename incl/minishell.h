@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:21:52 by btvildia          #+#    #+#             */
-/*   Updated: 2024/04/29 19:13:15 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/04/30 00:43:31 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "src/execute.h"
-# include "utils/sources.h"
+# include "execute.h"
+# include "sources.h"
 # include <dirent.h>
 # include <fcntl.h>
 # include <readline/history.h>

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:02 by btvildia          #+#    #+#             */
-/*   Updated: 2024/04/29 19:16:42 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/04/30 00:43:40 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
-# include "../minishell.h"
+
+# include "minishell.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>

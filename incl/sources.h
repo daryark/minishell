@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sources.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:48:00 by btvildia          #+#    #+#             */
-/*   Updated: 2024/04/29 19:00:04 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/04/30 00:41:59 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SOURCES_H
 # define SOURCES_H
-# include "../minishell.h"
+# include "minishell.h"
 
 # define RED "\x1b[31m"
 # define BLUE "\x1b[34m"

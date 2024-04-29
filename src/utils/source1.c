@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   source1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:49:14 by btvildia          #+#    #+#             */
-/*   Updated: 2024/04/29 19:15:45 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/04/30 00:44:50 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sources.h"
+#include "../../incl/sources.h"
 
 int	ft_strlen(char *s)
 {
