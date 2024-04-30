@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:23:44 by btvildia          #+#    #+#             */
-/*   Updated: 2024/04/30 00:45:15 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:28:01 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ void	ft_minishell(char **envp)
 {
 	char	*line;
 
+	(void)envp;
 	while (1)
 	{
 		line = readline(YELLOW "Minishell$ " RESET);
 		if (!line || !ft_strncmp(line, "exit", 4))
 			break ;
-		printf("line: %s\n", line);
-		execute_command(line, envp);
+		add_history(line);
+		parse_cmds(line, envp);
 		free(line);
 	}
 }

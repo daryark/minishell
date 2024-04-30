@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   source1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:49:14 by btvildia          #+#    #+#             */
-/*   Updated: 2024/04/30 00:44:50 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:21:40 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,22 @@ void	ft_strcpy(char *d, char *s)
 		i++;
 	}
 	d[i] = '\0';
+}
+
+char	*ft_strchr(char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	while (s[i])
+	{
+		if (s[i] == c)
+			return ((char *)s + i);
+		i++;
+	}
+	return (NULL);
 }
 
 char	*ft_strdup(char *s)
@@ -145,4 +161,56 @@ char	**ft_split(char *a, char d)
 	c = malloc(sizeof(char *) * (j + 1));
 	c = ft_put(c, a, d);
 	return (c);
+}
+
+char	*ft_substr(char *s, unsigned int start, size_t len)
+{
+	unsigned int	i;
+	unsigned int	j;
+	char			*a;
+
+	i = 0;
+	j = ft_strlen(s);
+	if (start >= j)
+	{
+		start = 0;
+		len = 0;
+	}
+	if (len > j - start)
+		len = j - start;
+	a = malloc(len + 1);
+	if (!a)
+		return (NULL);
+	while (i < len)
+	{
+		a[i] = s[start + i];
+		i++;
+	}
+	a[i] = '\0';
+	return (a);
+}
+
+char	*ft_strtrim(char *s1, char *set)
+{
+	unsigned int i;
+	unsigned int j;
+	char *a;
+
+	a = 0;
+	if (!s1 || !set)
+		return (a);
+	if (s1 != 0 && set != 0)
+	{
+		i = 0;
+		j = ft_strlen(s1);
+		while (s1[i] && ft_strchr(set, s1[i]))
+			i++;
+		while (j > i && s1[j - 1] && ft_strchr(set, s1[j - 1]))
+			j--;
+		a = (char *)malloc(sizeof(char) * (j - i + 1));
+		if (!a)
+			return (NULL);
+		ft_strncpy(a, s1 + i, j - i);
+	}
+	return (a);
 }
