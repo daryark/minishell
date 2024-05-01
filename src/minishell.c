@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:23:44 by btvildia          #+#    #+#             */
-/*   Updated: 2024/04/30 20:28:01 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/01 22:52:57 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 void	ft_minishell(char **envp)
 {
 	char	*line;
+	char	*path;
 
-	(void)envp;
 	while (1)
 	{
-		line = readline(YELLOW "Minishell$ " RESET);
+		path = ft_strjoin(getcwd(NULL, 0), YELLOW "$ " RESET);
+		line = readline(path);
 		if (!line || !ft_strncmp(line, "exit", 4))
 			break ;
 		add_history(line);

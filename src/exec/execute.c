@@ -6,90 +6,75 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/04/30 23:56:14 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/01 22:45:59 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execute.h"
 
-// void	execute_command(char *cmd, char **envp)
-// {
-// if (ft_strncmp(cmd, "cd", 2) == 0)
-// 	ft_cd(cmd);
-// else if (ft_strncmp(cmd, "echo", 4) == 0)
-// 	ft_echo(cmd);
-// else if (ft_strncmp(cmd, "pwd", 3) == 0)
-// 	ft_pwd();
-// else if (ft_strncmp(cmd, "export", 6) == 0)
-// 	ft_export(cmd);
-// else if (ft_strncmp(cmd, "unset", 5) == 0)
-// 	ft_unset(cmd);
-// else if (ft_strncmp(cmd, "env", 3) == 0)
-// 	ft_env(envp);
-// else
-// }
-
-int	ft_execve(char *cmds, char **envp)
-{
-	int		i;
-	char	**cmd;
-	char	*path;
-
-	i = 0;
-	cmd = ft_split(cmds, ' ');
-	while (ft_strncmp(envp[i], "PATH=", 5) != 0)
-		i++;
-	path = find_path(cmd[0], envp[i]);
-	i = 0;
-	if (!path)
-	{
-		printf("minishell: %s: command not found\n", cmd[0]);
-		exit(127);
-	}
-	execve(path, cmd, envp);
-	free_array(cmd);
-	free(path);
-	return (0);
-}
-
-char	*find_path(char *cmd, char *path)
-{
-	char	*c;
-	char	*tmp;
-	char	**paths;
-	int		i;
-	int		fd;
-
-	i = 0;
-	paths = ft_split(path + 5, ':');
-	while (paths[i] != NULL)
-	{
-		tmp = ft_strjoin(paths[i], "/");
-		c = ft_strjoin(tmp, cmd);
-		free(tmp);
-		fd = open(c, O_RDONLY);
-		if (fd != -1)
-		{
-			close(fd);
-			free_array(paths);
-			return (c);
-		}
-		free(c);
-		i++;
-	}
-	free_array(paths);
-	return (NULL);
-}
-
-void	free_array(char **arr)
+void	execute_just_pipes(char **cmds, char **envp)
 {
 	int	i;
+	int	fd[2];
+	int	fd_in;
 
 	i = 0;
-	while (arr[i])
+	while (cmds[i] != NULL)
 	{
-		free(arr[i]);
+		pipe(fd);
+		if (fork() == 0)
+		{
+			dup2(fd_in, 0);
+			if (cmds[i + 1] != NULL)
+				dup2(fd[1], 1);
+			close(fd[0]);
+			close(fd[1]);
+			ft_execve(cmds[i], envp);
+		}
+		else
+		{
+			wait(NULL);
+			close(fd[1]);
+			fd_in = fd[0];
+		}
 		i++;
 	}
-	free(arr);
+}
+
+void	execute_infile_outfile(t_args args)
+{
+	int	i;
+	int	fd[2];
+	int	fd_in;
+	int	fd_out;
+
+	fd_in = 0;
+	fd_out = 1;
+	i = 0;
+	if (args.input)
+		fd_in = args.infile;
+	if (args.output)
+		fd_out = args.outfile;
+	while (i < args.pipes + 1)
+	{
+		pipe(fd);
+		if (fork() == 0)
+		{
+			dup2(fd_in, 0);
+			if (args.cmds[i + 1] != NULL)
+				dup2(fd[1], 1);
+			else
+				dup2(fd_out, 1);
+			close(fd[0]);
+			close(fd[1]);
+			ft_execve(args.cmds[i], args.envp);
+		}
+		else
+		{
+			wait(NULL);
+			close(fd[1]);
+			fd_in = fd[0];
+		}
+		i++;
+	}
 }

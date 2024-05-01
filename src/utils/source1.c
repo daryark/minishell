@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:49:14 by btvildia          #+#    #+#             */
-/*   Updated: 2024/04/30 20:21:40 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/01 19:06:29 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (a);
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(char *s1, char *s2, size_t n)
 {
 	unsigned char	*str1;
 	unsigned char	*str2;
@@ -192,9 +192,9 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 
 char	*ft_strtrim(char *s1, char *set)
 {
-	unsigned int i;
-	unsigned int j;
-	char *a;
+	unsigned int	i;
+	unsigned int	j;
+	char			*a;
 
 	a = 0;
 	if (!s1 || !set)
@@ -213,4 +213,55 @@ char	*ft_strtrim(char *s1, char *set)
 		ft_strncpy(a, s1 + i, j - i);
 	}
 	return (a);
+}
+
+char	*ft_strstr(char *haystack, char *needle)
+{
+	size_t	len;
+
+	len = ft_strlen(needle);
+	if (len == 0)
+		return ((char *)haystack);
+	while (*haystack)
+	{
+		if (ft_strncmp(haystack, needle, len) == 0)
+			return ((char *)haystack);
+		haystack++;
+	}
+	return (NULL);
+}
+
+char	*ft_remove_substr(char *str, char *substr)
+{
+	char	*result;
+	char	*found;
+	int		len;
+	int		new_len;
+	int		i;
+
+	result = NULL;
+	if (str && substr)
+	{
+		found = ft_strstr(str, substr);
+		if (found)
+		{
+			len = ft_strlen(substr);
+			new_len = ft_strlen(str) - len;
+			result = (char *)malloc((new_len + 1) * sizeof(char));
+			if (result)
+			{
+				i = found - str;
+				ft_strncpy(result, str, i);
+				ft_strncpy(result + i, found + len, new_len - i);
+				result[new_len] = '\0';
+			}
+		}
+		else
+		{
+			result = (char *)malloc((ft_strlen(str) + 1) * sizeof(char));
+			if (result)
+				ft_strncpy(result, str, ft_strlen(str) + 1);
+		}
+	}
+	return (result);
 }

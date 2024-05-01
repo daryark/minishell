@@ -8,7 +8,8 @@ HEADERS = incl/minishell.h incl/execute.h incl/sources.h
 SRC =	minishell.c \
 		execute.c \
 		parsing.c \
-		source1.c
+		source1.c \
+		utils.c \
 
 SRC_F = src/
 OBJ_F = obj/
