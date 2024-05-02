@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:49:14 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/01 19:06:29 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:07:21 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,9 @@ char	*ft_strstr(char *haystack, char *needle)
 	}
 	return (NULL);
 }
+
+// ft_remove_substr() is a function that removes a substring from a string
+// example: ft_remove_substr("Hello World", "World") returns "Hello "
 
 char	*ft_remove_substr(char *str, char *substr)
 {

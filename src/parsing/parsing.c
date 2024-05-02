@@ -6,25 +6,14 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 01:04:09 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/01 22:59:14 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:05:00 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	open_file(char *argv, int i)
-{
-	int	file;
-
-	file = 0;
-	if (i == 0)
-		file = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0777);
-	else if (i == 1)
-		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	else if (i == 2)
-		file = open(argv, O_RDONLY, 0777);
-	return (file);
-}
+// ft_remove_substr() is a function that removes a substring from a string
+// init_args() is a function that initializes the t_args structure
 
 void	init_args(t_args *args, char *cmd, char **envp)
 {
@@ -38,6 +27,7 @@ void	init_args(t_args *args, char *cmd, char **envp)
 	args->envp = envp;
 	i = 0;
 	tmp_split = ft_split(cmd, ' ');
+	// This while loop checks if there is an input or output redirection
 	while (tmp_split[i] != NULL)
 	{
 		if (ft_strncmp(tmp_split[i], "|", 1) == 0)
@@ -48,6 +38,8 @@ void	init_args(t_args *args, char *cmd, char **envp)
 			args->output = tmp_split[i + 1];
 		i++;
 	}
+	// If there is an input or output redirection,
+	// the file is opened and put in args->infile or args->outfile
 	if (args->input)
 	{
 		args->infile = open_file(args->input, 2);
@@ -63,22 +55,7 @@ void	init_args(t_args *args, char *cmd, char **envp)
 	args->cmds = ft_split(cmd, '|');
 }
 
-void	ft_cd(char *cmd)
-{
-	char	**tmp_split;
-	char	*path;
-
-	tmp_split = ft_split(cmd, ' ');
-	if (tmp_split[1] == NULL)
-	{
-		path = ft_strdup("/home");
-		chdir(path);
-		free(path);
-	}
-	else
-		chdir(tmp_split[1]);
-}
-
+// parse_cmds() is a function that parses the commands and executes them
 void	parse_cmds(char *cmd, char **envp)
 {
 	t_args	args;

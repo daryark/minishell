@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:02 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/01 22:36:23 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/02 11:58:34 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-typedef struct s_args t_args;
+typedef struct s_args	t_args;
 
-char	*find_path(char *cmds, char *path);
-int		ft_execve(char *cmds, char **envp);
-void	free_array(char **array);
-void	execute_just_pipes(char **cmd, char **envp);
-void	execute_infile_outfile(t_args args);
+char					*find_path(char *cmds, char *path);
+int						ft_execve(char *cmds, char **envp);
+void					free_array(char **array);
+void					execute_just_pipes(char **cmd, char **envp);
+void					execute_infile_outfile(t_args args);
+void					ft_cd(char *cmd);
 
 #endif

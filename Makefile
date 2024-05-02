@@ -7,6 +7,7 @@ HEADERS = incl/minishell.h incl/execute.h incl/sources.h
 
 SRC =	minishell.c \
 		execute.c \
+		execute2.c \
 		parsing.c \
 		source1.c \
 		utils.c \
@@ -34,15 +35,3 @@ fclean: clean
 re: fclean $(NAME)
 
 .PHONY:	all clean fclean re bonus
-
-#!struct of adding src files to src, just not to mess up for the eyes
-#src folder files (minishell and maybe main)
-#exec folder files
-# parsing fodler files
-# utils folder files
-#! can delete after reading
-#! delete after you read it (can leave this comment at the end of file, if need)
-# mkdir -p $(@D) - -p flag says to create the dir, if it doesn't exist. $(@D) takes the name from $(OBF_F) = obj/
-# $@ (takes each obj file), $< takes first prerequisite for this rule (each .c file) - but not .h ro Makefile
-# each .o need .c before, check changes in .h files used and in Makefile (for macros and function declarations changed mostly)
-#! <3 tthank 

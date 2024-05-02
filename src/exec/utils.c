@@ -6,11 +6,13 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 22:46:01 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/01 22:57:17 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:06:20 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execute.h"
+
+// ft_execve() is a function that executes a command based on the PATH
 
 int	ft_execve(char *cmds, char **envp)
 {
@@ -34,6 +36,10 @@ int	ft_execve(char *cmds, char **envp)
 	free(path);
 	return (0);
 }
+
+// find_path() is a function that finds the path of a command
+// example: find_path("ls", "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin");
+// returns "/bin/ls" so we can execute it with execve()
 
 char	*find_path(char *cmd, char *path)
 {
@@ -62,6 +68,20 @@ char	*find_path(char *cmd, char *path)
 	}
 	free_array(paths);
 	return (NULL);
+}
+
+int	open_file(char *argv, int i)
+{
+	int	file;
+
+	file = 0;
+	if (i == 0)
+		file = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0777);
+	else if (i == 1)
+		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	else if (i == 2)
+		file = open(argv, O_RDONLY, 0777);
+	return (file);
 }
 
 void	free_array(char **arr)
