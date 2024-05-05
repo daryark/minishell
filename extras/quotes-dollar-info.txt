@@ -1,0 +1,46 @@
+
+____BASICS________________________________________
+echo '"$PATH"' - inside 'single quotes' everything is treated as a text only!!!
+echo "'$PATH'" - inside "double quotes" other quotes are treated as text symbols, and variables are being parsed and executed as should be, not as text.
+
+____OTHER EXAMPLES________________________________
+echo "'"$PATH"'"    - will be interpreted like that: "'" - empty arg, $PATH, "'" - empty arg. 
+Output: '/whole path...././././'
+
+echo ''"''$PATH''"''    - ''-empty arg, "-open, ''-empty arg, $PATH(inside doulbe quote) ''-empty arg, "-close, ''-empty arg. 
+Output: /whole path...././././
+
+echo ''"'"$PATH"'"''    - ''-empty arg, "-open, '-print "-will open quote as inside doubles primary, $PATH(inside doulbe quote) "-it was opened, '-print also, "-close, ''-empty arg. 
+Output: '/whole path...././././'
+
+'""$PATH""' - '-open, ""-print both as inside single quotes primary, $PATH-print, inside singles, ""-print also, '-close
+
+
+echo $  - just prints
+Output: $
+
+echo $"$"   - just prints, opens double quotes and prints dollar, as no space and no other sign before the closing quote.
+Output: $$
+
+echo $"$ "  - will try to parse the command until the first space.
+Output: zsh: command not found
+
+echo $"$hello"  - will treat hello as env.variable
+Output (when hello variable DOESN'T EXIST): $
+Output (when hello variable DO EXIST): $hello_variable_value_here
+
+cat file1 | 'wc'
+cat file1 | "wc" 
+will work the same - open the quotes and do the command as in both cases we basically type wc for second part of pipe to execute (either we open doubles, or print it from singles)
+cat file1 | 'wc -l'
+cat file1 | "wc -l"
+in both cases it will not work, as it types wc -l as the whole command to execute, but the shell need to execute the command "wc" first and only then count the lines "-l".
+so we try to execute "wc -l" as one command, while only "wc" command exists, and -l its and argument of the command that need to be executed on top of "wc" result.
+
+
+
+____CONCLUSTION___________________________________
+Fist NON-CLOSED quote is important for interpretting all others inisde.
+-if single quote first, then everything is a text.
+-if double quote first, then commands and env.variables are parsed, 
+                        text and spaces are written into Output
