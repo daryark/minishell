@@ -1,5 +1,5 @@
 
-____BASICS________________________________________
+____BASICS FOR QUOTES________________________________________
 echo '"$PATH"' - inside 'single quotes' everything is treated as a text only!!!
 echo "'$PATH'" - inside "double quotes" other quotes are treated as text symbols, and variables are being parsed and executed as should be, not as text.
 
@@ -22,6 +22,7 @@ Output: $
 echo $"$"   - just prints, opens double quotes and prints dollar, as no space and no other sign before the closing quote.
 Output: $$
 
+___ERROR CASES________________________________
 echo $"$ "  - will try to parse the command until the first space.
 Output: zsh: command not found
 
@@ -37,7 +38,12 @@ cat file1 | "wc -l"
 in both cases it will not work, as it types wc -l as the whole command to execute, but the shell need to execute the command "wc" first and only then count the lines "-l".
 so we try to execute "wc -l" as one command, while only "wc" command exists, and -l its and argument of the command that need to be executed on top of "wc" result.
 
+____BASICS ECHO________________________________________________________________
+$> echo -n -n  (will return the prompt again, without empty newline)
+$>
 
+$> echo -n -n -n -n hello
+hello$> (leaves the prompt on the same line)
 
 ____CONCLUSTION___________________________________
 Fist NON-CLOSED quote is important for interpretting all others inisde.

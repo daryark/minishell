@@ -1,0 +1,23 @@
+
+____BASICS QUESTION________________________________________
+$> echo hello           
+hello
+$> echo $?  shows exit code of previous command
+0
+
+$> a;ldfja;l
+zsh: command not found: a
+zsh: command not found: ldfja
+zsh: command not found: l
+$> echo $?  
+127
+
+$> ?
+zsh: no matches found: ?
+
+____OTHER EXAMPLES________________________________
+$> $?   -(in that case it was the very first command typed in newely opened shell!!!)
+zsh: command not found: 0
+$> $?
+zsh: command not found: 127
+$>
