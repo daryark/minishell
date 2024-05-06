@@ -7,10 +7,8 @@ HEADERS = incl/minishell.h incl/execute.h incl/sources.h
 
 SRC =	minishell.c \
 		execute.c \
-		execute2.c \
 		parsing.c \
-		source1.c \
-		utils.c \
+		source.c \
 
 SRC_F = src/
 OBJ_F = obj/
@@ -32,6 +30,8 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-re: fclean $(NAME)
+re: fclean
+	clear;
+	make fclean $(NAME);
 
 .PHONY:	all clean fclean re bonus

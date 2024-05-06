@@ -6,15 +6,22 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:21:52 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/05 13:57:57 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/06 20:35:46 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-// # include "execute.h"
-// # include "sources.h"
+# define RED "\033[1;31m"
+# define GREEN "\033[1;32m"
+# define YELLOW "\033[1;33m"
+# define RE "\033[0m"
+
+# include "execute.h"
+# include "sources.h"
+# include <stdlib.h>
+# include <unistd.h>
 // # include <dirent.h>
 // # include <fcntl.h>
 // # include <readline/history.h>

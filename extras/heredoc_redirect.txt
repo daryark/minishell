@@ -1,0 +1,11 @@
+
+____BASICS HEREDOC________________________________
+
+
+____OTHER EXAMPLES________________________________
+$> "hello" <<< EO
+zsh: command not found: hello   -BUT WE SHOULD DISPLAY(mishell should not work with "here string");
+$> "hello" << <<< EO        -here we found normal heredoc first, but after - we don't work with "here string" and syntax is not right (<<< can't be terminator for heredoc)
+zsh: parse error near `<<<'
+$> "hello" <<< << EO        -the same - we don't work with "here string"
+zsh: parse error near `<<'

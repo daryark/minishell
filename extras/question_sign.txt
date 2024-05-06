@@ -1,5 +1,5 @@
 
-____BASICS QUESTION________________________________________
+____BASICS QUESTION________________________________
 $> echo hello           
 hello
 $> echo $?  shows exit code of previous command

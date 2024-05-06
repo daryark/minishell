@@ -1,5 +1,5 @@
 
-____BASICS FOR QUOTES________________________________________
+____BASICS FOR QUOTES_____________________________
 echo '"$PATH"' - inside 'single quotes' everything is treated as a text only!!!
 echo "'$PATH'" - inside "double quotes" other quotes are treated as text symbols, and variables are being parsed and executed as should be, not as text.
 
@@ -22,7 +22,7 @@ Output: $
 echo $"$"   - just prints, opens double quotes and prints dollar, as no space and no other sign before the closing quote.
 Output: $$
 
-___ERROR CASES________________________________
+___ERROR CASES_____________________________________
 echo $"$ "  - will try to parse the command until the first space.
 Output: zsh: command not found
 
@@ -38,12 +38,24 @@ cat file1 | "wc -l"
 in both cases it will not work, as it types wc -l as the whole command to execute, but the shell need to execute the command "wc" first and only then count the lines "-l".
 so we try to execute "wc -l" as one command, while only "wc" command exists, and -l its and argument of the command that need to be executed on top of "wc" result.
 
-____BASICS ECHO________________________________________________________________
+____BASICS ECHO___________________________________
 $> echo -n -n  (will return the prompt again, without empty newline)
 $>
 
 $> echo -n -n -n -n hello
 hello$> (leaves the prompt on the same line)
+
+____BASICS CAT____________________________________
+$> cat -
+$> cat
+
+$>cat
+$>blablabla     (you print)
+$>blablabla     (cat returns)
+$>blablabla2    (you print)
+$>blablabla2    (cat returns)
+$> ^D          HERE cat will finally return control
+in both cases when cat with no args or with - instead of file, cat will read from stdin until Ctrl+D (which tells about the EOF)
 
 ____CONCLUSTION___________________________________
 Fist NON-CLOSED quote is important for interpretting all others inisde.
