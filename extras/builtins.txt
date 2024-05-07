@@ -20,3 +20,7 @@ $>exit -200
 $>The terminal process "/bin/zsh '-l'" terminated with exit code: 56.
 $>exit 200
 $>The terminal process "/bin/zsh '-l'" terminated with exit code: 200.
+____EXIT EXAMPLES_____________BASH_________________
+bash-3.2$ exit adklfjasdkfl
+exit
+bash: exit: adklfjasdkfl: numeric argument required
