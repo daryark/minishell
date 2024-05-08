@@ -3,12 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 01:04:09 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/05 13:23:49 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/08 20:19:55 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
+// void ft_parse(t_args *args, char *line)
+// {
+// }
