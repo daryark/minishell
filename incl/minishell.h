@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:21:52 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/10 02:06:06 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/11 02:21:03 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,21 @@ typedef struct	s_env_line
 
 typedef struct s_mshell
 {
-	t_env_line	*envp;
+	t_env_line	*env;
 	char		*input;
 
 }			   t_mshell;
 
 //*PARSING
+// init_env.c
+void 	init_env(t_mshell *mshell, char **env);
+// parsing.c
+void	parse_input(char *input, t_mshell *mshell);
+// parse_err.c
+int		parse_err(char *input);
+//*UTILS
 // struct.c
-void	init_mshell(t_mshell *mshell, char **envp);
+void	init_mshell(t_mshell *mshell, char **env);
 // utils_parsing.c
 int		arr_len(char **arr);
 int		ft_strchr_pos(char *s, int c);

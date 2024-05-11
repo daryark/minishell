@@ -6,14 +6,14 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:23:44 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/09 23:26:22 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/10 03:36:31 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 #include <stdio.h>
 
-static void minishell_loop(void) {
+static void minishell_loop(t_mshell *mshell) {
     char *input;
 
     while (1) {
@@ -31,7 +31,7 @@ static void minishell_loop(void) {
             free(input);
             exit(0);
         }                                  //*
-
+        parse_input(input, mshell);
         printf("%s\n",input);
         free(input);
     }
@@ -47,7 +47,7 @@ int main(int ac, char **av, char **envp)
     else {
         write(1, GREEN "OK\n" RE, 14);
         init_mshell(&mshell, envp);
-        minishell_loop();
+        minishell_loop(&mshell);
     }
     return 0;
 }
