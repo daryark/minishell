@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:23:44 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/10 03:36:31 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/11 19:12:30 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static void minishell_loop(t_mshell *mshell) {
             exit(0);
         }                                  //*
         parse_input(input, mshell);
-        printf("%s\n",input);
         free(input);
     }
 }

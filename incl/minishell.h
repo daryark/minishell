@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:21:52 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/11 02:21:03 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/11 19:15:21 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
 # define YELLOW "\033[1;33m"
+# define MAGENTA "\033[1;35m"
 # define RE "\033[0m"
 
 # include <stdlib.h>
@@ -53,12 +54,14 @@ void 	init_env(t_mshell *mshell, char **env);
 void	parse_input(char *input, t_mshell *mshell);
 // parse_err.c
 int		parse_err(char *input);
+// utils_parsing.c
+int		space(char c);
+void	quote_opened_type(char c, char *quote);
+int		arr_len(char **arr);
+int		ft_strchr_pos(char *s, int c);
 //*UTILS
 // struct.c
 void	init_mshell(t_mshell *mshell, char **env);
-// utils_parsing.c
-int		arr_len(char **arr);
-int		ft_strchr_pos(char *s, int c);
 //*EXEC
 // execute.c
 #endif

@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 01:04:09 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/11 03:00:18 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/11 19:17:22 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,23 @@
 
 void    trim_input(char *src, char *dst)
 {
+    int i;
     int d;
+    char quote;
 
-    d = -1;
-    while (*src)
+    i = -1;
+    d = 0;
+    quote = '\0';
+    if (!src || !dst)
+        return ;
+    while (src[++i])
     {
-        //while found ' and didn't found second the same
-        //OR
-        //while found " and didn't found second the same
-        //what should this fn reutrn, or what add inside curr fn?
-        while (*src && in_quotes(&*src))
-            dst[++d] = *src;
-        while (!((*src == ' ' || *src == '\t') &&
-            (*(src + 1) == ' ' || *(src + 1) == '\t')) &&
-            !((*src == ' ' || *src == '\t') && d != -1))
-            dst[++d] = *src;
-        src++;
+        quote_opened_type(src[i], &quote);
+        if (!(((space(src[i]) && space(src[i + 1])) ||
+            (space(src[i]) && (!d || !src[i + 1])))
+            && !quote))
+            dst[d++] = src[i];
     }
-    if (dst[d] == ' ' || dst[d] == '\t')
-        dst[d] = '\0';
-
-    
 }
 
 void parse_input(char *input, t_mshell *mshell)
@@ -42,9 +38,12 @@ void parse_input(char *input, t_mshell *mshell)
     char *dst;
 
     (void)mshell;
-    dst = ft_calloc(sizeof(char), ft_strlen(input) + 1);
+    dst = (char *)ft_calloc(sizeof(char), ft_strlen(input) + 1);
+    if (!dst)
+        exit(printf(RED "Allocation failed\n" RE));
     trim_input(input, dst);
+    printf("input: |%s|\n", input);
+    printf(" trim: |%s|\n", dst);
     if (parse_err(input))
         return ;
-    printf("parsing input   ");
 }
