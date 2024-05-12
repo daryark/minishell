@@ -6,13 +6,40 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 01:04:09 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/11 19:17:22 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/12 01:55:21 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-void    trim_input(char *src, char *dst)
+static void dollars_replace(char **s, t_mshell *mshell)
+{
+    int i;
+    // int quote;
+    // int search_name;
+
+    i = -1;
+    while ((*s)[++i])
+    {
+        if ((*s)[i] == '$')
+        {
+            if ((*s)[i + 1] == '?')
+                dollar_question_replace(s, i, mshell);
+            // else
+        }
+    }
+    //find $:
+        //--when single quote is not open
+            //if ? next -> replace with exit code of prev command
+                //if not found -> just return "" instead of ?
+            //else read until space(char c) and find in env[i].name
+                //if not found -> just return "" instead of name
+        //--in both cases split dst, add place for replacement str
+        //  fill the replacing str, join all.
+
+}
+
+static void trim_input(char *src, char *dst)
 {
     int i;
     int d;
@@ -37,13 +64,15 @@ void parse_input(char *input, t_mshell *mshell)
 {
     char *dst;
 
-    (void)mshell;
+    if (input_err_check(input))
+        return ;
     dst = (char *)ft_calloc(sizeof(char), ft_strlen(input) + 1);
     if (!dst)
         exit(printf(RED "Allocation failed\n" RE));
-    trim_input(input, dst);
     printf("input: |%s|\n", input);
+    trim_input(input, dst);
     printf(" trim: |%s|\n", dst);
-    if (parse_err(input))
-        return ;
+    dollars_replace(&dst, mshell);
+    //split
+    
 }

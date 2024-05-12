@@ -9,7 +9,7 @@ LFT_GIT = https://github.com/daryark/libft.git
 
 SRC =	minishell.c \
 		execute.c \
-		parsing.c init_env.c parse_err.c utils_parsing.c \
+		parsing.c init_env.c parse_err.c utils_parsing.c dollar_parse.c \
 		struct.c \
 
 SRC_F = src/

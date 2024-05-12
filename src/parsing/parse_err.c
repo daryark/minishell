@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:00:05 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/10 23:44:38 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/12 02:49:07 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,46 @@ static int open_quotes(char *s)
     return (single_q || double_q);
 }
 
-static int redir_err(char *s)
-{
-    (void)s;
-    return (0);
-}
+// static int redir_err(char *s)
+// {
+//     (void)s;
+//     return (0);
+// }
 
 static int not_valid_symbols(char *s)
 {
-    (void)s;
+    char quote;
+
+    quote = '\0';
+    while (*s)
+    {
+        quote_opened_type(*s, &quote);
+        if ((*s == '&' || *s == ';' || *s == '\\') && !quote)
+            return (*s);
+        s++;
+    }
     return (0);
 }
 
-int parse_err(char *input)
+void    syntax_err(int  c)
 {
-    if (open_quotes(input))
-        return (printf("syntax error: unable to locate closing quotation\n")); 
-    if (redir_err(input) || not_valid_symbols(input))
-    {
-        return (printf("parsing error\n"));
+    if (c == '\'')
+    {    
+        printf("Minishell: syntax error: unable to locate closing quotation\n");
+        return ;
     }
+    printf("Minishell: syntax error near unexpected token `%c'\n", c);
+}
+
+int input_err_check(char *input)
+{
+    int err_c;
+
+    err_c = 0;
+    if (open_quotes(input))
+        return (syntax_err('\''), 1); 
+    err_c = not_valid_symbols(input);
+    if (err_c)
+        return (syntax_err(err_c), 1);
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:23:44 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/11 19:12:30 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/12 02:21:43 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void minishell_loop(t_mshell *mshell) {
     char *input;
 
     while (1) {
-        input = readline(YELLOW "Minishell>" RE);
+        input = readline(YELLOW "Minishell$" RE);
 
         if (!input || *input == '\0') {
             printf("Exiting...\n");
