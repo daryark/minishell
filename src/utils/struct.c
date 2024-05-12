@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:24:46 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 15:52:56 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:26:15 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,20 @@ void	init_mshell(t_mshell *mshell, char **env)
 	mshell->input = NULL;
 }
 
-void	ft_strncpy(char *d, char *s, int n)
+void	handle_sigint(int signals)
 {
-	int	i;
-
-	i = 0;
-	if (!s)
-		return ;
-	while (s[i] && i < n)
-	{
-		d[i] = s[i];
-		i++;
-	}
-	d[i] = '\0';
+	(void)signals;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
-void	ft_strcpy(char *d, char *s)
+void	ignore_signals(void)
 {
-	int	i;
-
-	i = 0;
-	if (!s)
-		return ;
-	while (s[i])
-	{
-		d[i] = s[i];
-		i++;
-	}
-	d[i] = '\0';
+	// Ctrl+C displays a new prompt on a new line.
+	signal(SIGINT, handle_sigint);
+	// Ctrl+D exits the program
+	signal(SIGQUIT, SIG_IGN);
+	// Ctrl+\ does noting
+	signal(SIGTERM, SIG_IGN);
 }

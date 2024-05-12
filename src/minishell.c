@@ -3,25 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 17:27:06 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:48:14 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-char	*get_currect_path(void)
+char	*get_currect_path(char **envp)
 {
-	char	*path;
-	char	*tmp;
-	char	*tmp2;
+	static char	*path;
+	char		*tmp;
+	char		*tmp2;
+	int			i;
 
-	tmp = getcwd(NULL, 0);
-	tmp2 = ft_strjoin(tmp, "$ ");
+	i = 0;
+	while (envp[i] && ft_strncmp(envp[i], "USER=", 5) != 0)
+		i++;
+	tmp = ft_strjoin("/home/", envp[i] + 5);
+	tmp2 = ft_strjoin(ft_remove_substr(getcwd(NULL, 0), tmp), "$ ");
+	if (!tmp2)
+	{
+		printf("\nyou can use only 'cd ..' or 'exit'\n\n");
+		free(tmp);
+		return (path);
+	}
 	free(tmp);
-	path = ft_strjoin(LIGHTGREEN "Minishell~" RE, tmp2);
+	path = ft_strjoin(YELLOW "Minishell~" RE, tmp2);
 	free(tmp2);
 	return (path);
 }
@@ -33,14 +43,9 @@ static void	minishell_loop(t_mshell *mshell)
 
 	while (1)
 	{
-		path = get_currect_path();
+		path = get_currect_path(mshell->envp);
+		ignore_signals();
 		input = readline(path);
-		if (!input || *input == '\0')
-		{
-			printf("Exiting...\n");
-			// free(input);
-			continue ;
-		}
 		add_history(input);
 		if (!input || ft_strncmp(input, "exit", 4) == 0)
 		{
@@ -48,7 +53,7 @@ static void	minishell_loop(t_mshell *mshell)
 			break ;
 		}
 		parse_input(input, mshell);
-		ft_execute(input, mshell);
+		ft_execute(mshell);
 		free(input);
 	}
 }

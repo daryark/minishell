@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 15:53:53 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:56:18 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void	parse_input(char *input, t_mshell *mshell)
 	dst = (char *)ft_calloc(sizeof(char), ft_strlen(input) + 1);
 	if (!dst)
 		exit(printf(RED "Allocation failed\n" RE));
-	printf("input: |%s|\n", input);
+	// printf("input: |%s|\n", input);
 	trim_input(input, dst);
-	printf(" trim: |%s|\n", dst);
+	// printf(" trim: |%s|\n", dst);
 	// split
 	dollars_replace(&dst, mshell);
 	mshell->input = dst;

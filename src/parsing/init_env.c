@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 03:28:01 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 15:52:36 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/12 18:52:02 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	fill_str(char *s, t_env_line *s_line)
 	}
 	else
 	{
-		s_line->name = ft_strdup((const char *)s);
+		s_line->name = ft_strdup((char *)s);
 		s_line->val = NULL;
 		if (!s_line->name)
 			err = 1;

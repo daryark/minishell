@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:10:22 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/12 16:05:28 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/12 19:42:33 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ void	ft_env(t_mshell *mshell)
 	}
 }
 
-void	ft_exec_just_cmd(char *cmd, t_mshell *mshell)
+void	ft_exec_just_cmd(t_mshell *mshell)
 {
 	int	pid;
 	int	status;
 
 	pid = fork();
 	if (pid == 0)
-		ft_execve(cmd, mshell->envp);
+		ft_execve(mshell->input, mshell->envp);
 	else
 		waitpid(pid, &status, 0);
 }
@@ -98,32 +98,4 @@ void	ft_execve(char *cmd, char **envp)
 		printf("minishell: %s: command not found\n", tmp_split[0]);
 		exit(127);
 	}
-}
-
-char	*ft_remove_substr(char *str, char *sub)
-{
-	char	*result;
-	char	*found;
-	int		len;
-	int		new_len;
-	int		i;
-
-	result = NULL;
-	if (!str || !sub)
-		return (NULL);
-	found = ft_strnstr(str, sub, ft_strlen(str));
-	if (found)
-	{
-		len = ft_strlen(sub);
-		new_len = ft_strlen(str) - len;
-		result = (char *)malloc((new_len + 1) * sizeof(char));
-		if (result)
-		{
-			i = found - str;
-			ft_strncpy(result, str, i);
-			ft_strncpy(result + i, found + len, new_len - i);
-			result[new_len] = '\0';
-		}
-	}
-	return (result);
 }
