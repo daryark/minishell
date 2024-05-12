@@ -1,6 +1,6 @@
 NAME = minishell
 
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -g
 LFLAGS = -lreadline
 CC = cc
 HEADERS = incl/minishell.h incl/execute.h incl/sources.h
@@ -20,7 +20,6 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(LFLAGS) $(CFLAGS) -o $@ $(OBJ)
-
 $(OBJ_F)%.o: %.c $(HEADERS) Makefile
 	mkdir -p $(@D)
 	$(CC) $(CFLAGS) -o $@ -c $<

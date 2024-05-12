@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 13:23:44 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/08 20:58:21 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:33:47 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ int	main(int argc, char **argv, char **envp)
 		path = get_currect_path();
 		line = readline(path);
 		if (!line || ft_strncmp(line, "exit", 4) == 0)
+		{
+			free(line);
 			break ;
+		}
 		add_history(line);
 		// ft_parse(&args, line); // we will parse the arguments
 		// ft_execute(&args);
@@ -47,4 +50,5 @@ int	main(int argc, char **argv, char **envp)
 		ft_execute(line, envp);
 		free(line);
 	}
+	return (0);
 }

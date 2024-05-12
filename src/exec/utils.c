@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:10:22 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/08 22:46:58 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:33:55 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ void	ft_cd(char *cmd)
 		free(path);
 	}
 	else
+	{
 		chdir(tmp[1]);
+		free(tmp[1]);
+	}
+	free(tmp);
 }
 
 void	ft_echo(char *cmd)
@@ -42,8 +46,8 @@ void	ft_echo(char *cmd)
 			printf(" ");
 		i++;
 	}
-	free(tmp);
 	printf("\n");
+	free(tmp);
 }
 
 void	ft_pwd(void)
