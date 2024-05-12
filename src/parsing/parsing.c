@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/30 01:04:09 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 13:11:03 by dyarkovs         ###   ########.fr       */
+/*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
+/*   Updated: 2024/05/12 14:48:40 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,5 @@ void parse_input(char *input, t_mshell *mshell)
     printf(" trim: |%s|\n", dst);
     //split
     dollars_replace(&dst, mshell);
-    
+    mshell->input = dst;
 }

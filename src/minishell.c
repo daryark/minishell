@@ -5,19 +5,33 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 13:23:44 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/12 02:21:43 by dyarkovs         ###   ########.fr       */
+/*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
+/*   Updated: 2024/05/12 14:56:16 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
-#include <stdio.h>
+
+char	*get_currect_path(void)
+{
+	char	*path;
+	char	*tmp;
+	char	*tmp2;
+
+	tmp = getcwd(NULL, 0);
+	tmp2 = ft_strjoin(tmp, "$ ");
+	free(tmp);
+	path = ft_strjoin(LIGHTGREEN "Minishell~" RE, tmp2);
+	free(tmp2);
+	return (path);
+}
 
 static void minishell_loop(t_mshell *mshell) {
     char *input;
-
+	char *path;
     while (1) {
-        input = readline(YELLOW "Minishell$" RE);
+		path = get_currect_path();
+        input = readline(path);
 
         if (!input || *input == '\0') {
             printf("Exiting...\n");
@@ -25,13 +39,13 @@ static void minishell_loop(t_mshell *mshell) {
             continue;
         }
         add_history(input);
-        if (input[0] == '1' && !input[1])   //*temporary exit
-        {
-            printf("%sexit%s\n", YELLOW, RE);
-            free(input);
-            exit(0);
-        }                                  //*
+		if (!input || ft_strncmp(input, "exit", 4) == 0)
+		{
+			free(input);
+			break ;
+		}
         parse_input(input, mshell);
+		ft_execute(input, mshell);
         free(input);
     }
 }

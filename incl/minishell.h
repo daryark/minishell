@@ -5,33 +5,36 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 13:21:52 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/12 02:49:12 by dyarkovs         ###   ########.fr       */
+/*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
+/*   Updated: 2024/05/12 15:07:04 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define RE "\033[0m"
+# define BLUE "\x1b[34m"
 # define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
 # define YELLOW "\033[1;33m"
 # define MAGENTA "\033[1;35m"
-# define RE "\033[0m"
+# define LIGHTGREEN "\x1b[92m"
 
-# include <stdlib.h>
-# include <unistd.h>
-// # include <dirent.h>
-// # include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-// # include <signal.h>
-// # include <sys/stat.h>
-// # include <sys/types.h>
-// # include <sys/wait.h>
 # include "../libft/libft.h"
 # include "execute.h"
 # include "sources.h"
+
+# include <stdlib.h>
+# include <unistd.h>
+# include <dirent.h>
+# include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 typedef struct	s_env_line
 {
@@ -39,10 +42,10 @@ typedef struct	s_env_line
 	char *val;
 }				t_env_line;
 
-
 typedef struct s_mshell
 {
 	t_env_line	*env;
+	char 		**envp;
 	int			exit_status;
 	char		*input;
 
@@ -65,7 +68,10 @@ int		ft_strchr_pos(char *s, int c);
 void    dollar_question_replace(char **s, int i, t_mshell *mshell);
 //*UTILS
 // struct.c
-void	init_mshell(t_mshell *mshell, char **env);
+void	ft_strcpy(char *d, char *s);
+void	ft_strncpy(char *d, char *s, int n);
+void    init_mshell(t_mshell *mshell, char **env);
+
 //*EXEC
 // execute.c
 #endif
