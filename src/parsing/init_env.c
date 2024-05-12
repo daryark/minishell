@@ -3,33 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 03:28:01 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 00:02:24 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/12 15:52:36 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../incl/minishell.h"
+#include "../../incl/minishell.h"
 
-
-static void arr_clean(t_env_line *env)
+static void	arr_clean(t_env_line *env)
 {
 	while (env)
 	{
 		free(env->name);
 		if (env->val != NULL)
-		free(env->val);
+			free(env->val);
 		env++;
 	}
 	free(env);
 	env = NULL;
 }
 
-static int fill_str(char *s, t_env_line *s_line)
+static int	fill_str(char *s, t_env_line *s_line)
 {
-	int divider_pos;
-	int err;
+	int	divider_pos;
+	int	err;
 
 	err = 0;
 	divider_pos = ft_strchr_pos(s, '=');
@@ -50,22 +49,22 @@ static int fill_str(char *s, t_env_line *s_line)
 	return (err);
 }
 
-void init_env(t_mshell *mshell, char **env)
+void	init_env(t_mshell *mshell, char **env)
 {
-	int i;
-	
+	int	i;
+
 	mshell->env = (t_env_line *)ft_calloc(sizeof(t_env_line *), arr_len(env));
 	if (!mshell->env)
 		exit(printf(RED "Allocation failed\n" RE));
 	i = -1;
-	while(env[++i])
+	while (env[++i])
 	{
 		if (fill_str(env[i], &mshell->env[i]))
 		{
 			arr_clean(mshell->env);
 			exit(printf(RED "Allocation failed\n" RE));
 		}
-		// printf("%s%s = %s%s%s\n", YELLOW, mshell->env[i].name, GREEN, mshell->env[i].val, RE);
+		// printf("%s%s = %s%s%s\n", YELLOW, mshell->env[i].name, GREEN,
+		// mshell->env[i].val, RE);
 	}
-
 }

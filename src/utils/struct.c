@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   struct.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:24:46 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 14:38:53 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/12 15:52:56 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-void    init_mshell(t_mshell *mshell, char **env)
+void	init_mshell(t_mshell *mshell, char **env)
 {
-    init_env(mshell, env);
+	init_env(mshell, env);
 	mshell->envp = env;
-    mshell->exit_status = 0;
-    mshell->input = NULL;
+	mshell->exit_status = 0;
+	mshell->input = NULL;
 }
 
 void	ft_strncpy(char *d, char *s, int n)
