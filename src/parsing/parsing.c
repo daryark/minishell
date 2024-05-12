@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 01:04:09 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 01:55:21 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/12 13:11:03 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void trim_input(char *src, char *dst)
 void parse_input(char *input, t_mshell *mshell)
 {
     char *dst;
-
+    
     if (input_err_check(input))
         return ;
     dst = (char *)ft_calloc(sizeof(char), ft_strlen(input) + 1);
@@ -72,7 +72,7 @@ void parse_input(char *input, t_mshell *mshell)
     printf("input: |%s|\n", input);
     trim_input(input, dst);
     printf(" trim: |%s|\n", dst);
-    dollars_replace(&dst, mshell);
     //split
+    dollars_replace(&dst, mshell);
     
 }
