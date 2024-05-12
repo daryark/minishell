@@ -1,3 +1,7 @@
+GREEN = \033[0;32m
+YELLOW = \033[0;33m
+RE = \033[0m
+
 NAME = minishell
 
 CC = cc
@@ -20,13 +24,17 @@ OBJ = $(addprefix $(OBJ_F), $(SRC:%.c=%.o))
 
 all: $(LFT_F) $(NAME)
 
+.SILENT:
 $(NAME): $(OBJ)
+	@printf "\n"
 	$(MAKE) -C $(LFT_F)
 	$(CC) -o $@ $(OBJ) $(LFLAGS) $(CFLAGS)
+	@echo "$(GREEN)\n—————————————✣ MINISHELL COMPILED ✣—————————————\n$(RE)"
 
 $(OBJ_F)%.o: %.c $(HEADERS) Makefile
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -o $@ -c $<
+	@printf "$(GREEN). $(RE)"
 
 $(LFT_F):
 	git clone $(LFT_GIT) $(LFT)
@@ -39,6 +47,7 @@ fclean: clean
 	if [ -d "$(LFT_F)" ]; then \
 		$(MAKE) fclean -C $(LFT_F); \
 	fi
+
 re: fclean all
 
 .PHONY:	all clean fclean re bonus
