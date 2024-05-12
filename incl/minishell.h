@@ -22,6 +22,7 @@
 # define LIGHTGREEN "\x1b[92m"
 
 # include "../libft/libft.h"
+# include "../ft_destructor/ft_alloc.h"
 # include "execute.h"
 # include "sources.h"
 # include <dirent.h>

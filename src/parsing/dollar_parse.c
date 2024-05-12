@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:30:07 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 19:35:42 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/12 22:11:10 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	dollar_question_replace(char **s, int i, t_mshell *mshell)
 		exit(printf(RED "Allocation failed\n" RE));
 	start = ft_substr(*s, 0, i + 1);
 	end = ft_substr(*s, i + 2, end_len);
-	free(*s);
+	ft_free(*s);
 	mid = ft_itoa(mshell->exit_status);
 	half_str = ft_strjoin(start, mid);
-	free(half_str);
+	ft_free(half_str);
 	*s = ft_strjoin(half_str, end);
 }

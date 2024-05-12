@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:24:46 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 19:26:15 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/12 22:55:14 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ void	handle_sigint(int signals)
 
 void	ignore_signals(void)
 {
-	// Ctrl+C displays a new prompt on a new line.
 	signal(SIGINT, handle_sigint);
-	// Ctrl+D exits the program
 	signal(SIGQUIT, SIG_IGN);
-	// Ctrl+\ does noting
 	signal(SIGTERM, SIG_IGN);
 }

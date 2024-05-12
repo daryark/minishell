@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 03:28:01 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 18:52:02 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/12 22:49:45 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static void	arr_clean(t_env_line *env)
 {
 	while (env)
 	{
-		free(env->name);
+		ft_free(env->name);
 		if (env->val != NULL)
-			free(env->val);
+			ft_free(env->val);
 		env++;
 	}
-	free(env);
+	ft_free(env);
 	env = NULL;
 }
 
@@ -59,6 +59,7 @@ void	init_env(t_mshell *mshell, char **env)
 	i = -1;
 	while (env[++i])
 	{
+		return ; // i add return here cuz you are accessing an invalid memory
 		if (fill_str(env[i], &mshell->env[i]))
 		{
 			arr_clean(mshell->env);

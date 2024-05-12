@@ -1,10 +1,11 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -g
 LFLAGS = -lreadline -Ireadline -L$(LFT_F) -lft -I$(LFT_F)
 HEADERS = incl/minishell.h incl/execute.h incl/sources.h
 LFT_F = libft
+FT_DES = ft_destructor
 
 SRC =	minishell.c \
 		execute.c \
@@ -20,8 +21,9 @@ OBJ = $(addprefix $(OBJ_F), $(SRC:%.c=%.o))
 all: $(NAME)
 
 $(NAME): $(OBJ)
+	$(MAKE) -C $(FT_DES)
 	$(MAKE) -C $(LFT_F)
-	$(CC) -o $@ $(OBJ) $(LFLAGS) $(CFLAGS)
+	$(CC) -o $@ $(OBJ) $(LFLAGS) $(CFLAGS) ./ft_destructor/ft_alloc.a
 
 $(OBJ_F)%.o: %.c $(HEADERS) Makefile
 	@mkdir -p $(@D)
@@ -32,9 +34,10 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	if [ -d "$(LFT_F)" ]; then \
-		$(MAKE) fclean -C $(LFT_F); \
-	fi
-re: fclean all
+	$(MAKE) fclean -C $(LFT_F);
+	$(MAKE) fclean -C ./ft_destructor
+
+re: fclean
+	$(MAKE) -j 12 all
 
 .PHONY:	all clean fclean re bonus
