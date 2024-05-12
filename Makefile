@@ -18,9 +18,9 @@ OBJ_F = obj/
 VPATH = $(SRC_F) $(SRC_F)exec/ $(SRC_F)utils/ $(SRC_F)parsing/
 OBJ = $(addprefix $(OBJ_F), $(SRC:%.c=%.o))
 
-all: $(NAME)
+all: $(LFT_F) $(NAME)
 
-$(NAME): $(OBJ) $(LFT_F)
+$(NAME): $(OBJ)
 	$(MAKE) -C $(LFT_F)
 	$(CC) -o $@ $(OBJ) $(LFLAGS) $(CFLAGS)
 
@@ -36,8 +36,9 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) fclean -C $(LFT_F)
-
+	if [ -d "$(LFT_F)" ]; then \
+		$(MAKE) fclean -C $(LFT_F); \
+	fi
 re: fclean all
 
 .PHONY:	all clean fclean re bonus
