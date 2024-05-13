@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 15:51:48 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:59:19 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_mshell
 // init_env.c
 void			init_env(t_mshell *mshell, char **env);
 // parsing.c
-void			parse_input(char *input, t_mshell *mshell);
+int				parse_input(char *input, t_mshell *mshell);
 // parse_err.c
 int				input_err_check(char *input);
 void			syntax_err(int c);

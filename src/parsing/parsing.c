@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 15:53:53 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/12 17:59:47 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ static void	trim_input(char *src, char *dst)
 	}
 }
 
-void	parse_input(char *input, t_mshell *mshell)
+int	parse_input(char *input, t_mshell *mshell)
 {
 	char	*dst;
 
 	if (input_err_check(input))
-		return ;
+		return (1);
 	dst = (char *)ft_calloc(sizeof(char), ft_strlen(input) + 1);
 	if (!dst)
 		exit(printf(RED "Allocation failed\n" RE));
@@ -73,4 +73,5 @@ void	parse_input(char *input, t_mshell *mshell)
 	// split
 	dollars_replace(&dst, mshell);
 	mshell->input = dst;
+	return (0);
 }
