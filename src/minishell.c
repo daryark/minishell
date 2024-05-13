@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 22:50:58 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:57:42 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,14 @@ char	*get_currect_path(char **envp)
 	i = 0;
 	while (envp[i] && ft_strncmp(envp[i], "USER=", 5) != 0)
 		i++;
-	tmp = ft_strjoin("/home/", envp[i] + 5);
 	tmp3 = getcwd(NULL, 0);
-	tmp2 = ft_strjoin(ft_remove_substr(tmp3, tmp), "$ ");
-	if (!tmp2)
+	if (!tmp3)
 	{
 		printf("\nyou can use only 'cd ..' or 'exit'\n\n");
-		ft_free(tmp);
 		return (path);
 	}
+	tmp = ft_strjoin("/home/", envp[i] + 5);
+	tmp2 = ft_strjoin(ft_remove_substr(tmp3, tmp), "$ ");
 	ft_free(tmp3);
 	path = ft_strjoin(YELLOW "Minishell~" RE, tmp2);
 	ft_free(tmp2);
