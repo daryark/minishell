@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sources.h                                          :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 13:48:00 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/12 17:54:59 by btvildia         ###   ########.fr       */
+/*   Created: 2023/11/16 10:25:17 by btvildia          #+#    #+#             */
+/*   Updated: 2024/05/12 20:05:12 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SOURCES_H
-# define SOURCES_H
-# include "minishell.h"
-# include "../ft_destructor/ft_alloc.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
+#include "libft.h"
 
-#endif
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		((char *)s)[i] = 0;
+		i++;
+	}
+}

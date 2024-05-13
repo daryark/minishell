@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sources.h                                          :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 13:48:00 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/12 17:54:59 by btvildia         ###   ########.fr       */
+/*   Created: 2023/12/01 20:34:03 by btvildia          #+#    #+#             */
+/*   Updated: 2023/12/04 13:56:34 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SOURCES_H
-# define SOURCES_H
-# include "minishell.h"
-# include "../ft_destructor/ft_alloc.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
+#include "libft.h"
 
-#endif
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+{
+	t_list	*a;
+	t_list	*ls;
+
+	ls = NULL;
+	if (!lst || !f || !del)
+	{
+		return (NULL);
+	}
+	while (lst)
+	{
+		a = ft_malloc(sizeof(t_list));
+		if (!a)
+		{
+			ft_lstclear(&ls, (*del));
+			return (NULL);
+		}
+		a->content = f(lst->content);
+		a->next = NULL;
+		ft_lstadd_back(&ls, a);
+		lst = lst->next;
+	}
+	return (ls);
+}

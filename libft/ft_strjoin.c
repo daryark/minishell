@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sources.h                                          :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 13:48:00 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/12 17:54:59 by btvildia         ###   ########.fr       */
+/*   Created: 2023/11/24 18:15:36 by btvildia          #+#    #+#             */
+/*   Updated: 2024/05/13 15:10:18 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SOURCES_H
-# define SOURCES_H
-# include "minishell.h"
-# include "../ft_destructor/ft_alloc.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
+#include "libft.h"
 
-#endif
+char	*ft_strjoin(char *s1, char *s2)
+{
+	int		i;
+	int		j;
+	char	*a;
+
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	a = ft_malloc(i + j + 1);
+	if (!a || !s1)
+		return (NULL);
+	ft_strcpy(a, s1);
+	ft_strcpy(a + i, s2);
+	return (a);
+}

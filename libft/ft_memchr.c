@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sources.h                                          :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 13:48:00 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/12 17:54:59 by btvildia         ###   ########.fr       */
+/*   Created: 2023/11/18 15:13:02 by btvildia          #+#    #+#             */
+/*   Updated: 2024/05/12 20:13:53 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SOURCES_H
-# define SOURCES_H
-# include "minishell.h"
-# include "../ft_destructor/ft_alloc.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
+#include "libft.h"
 
-#endif
+void	*ft_memchr(void *s, int c, size_t n)
+{
+	unsigned char	*a;
+	unsigned int	i;
+
+	a = s;
+	c = (unsigned char)c;
+	i = 0;
+	while (i < n)
+	{
+		if (a[i] == c)
+		{
+			return ((void *)&a[i]);
+		}
+		i++;
+	}
+	return (NULL);
+}

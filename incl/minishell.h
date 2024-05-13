@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 17:59:19 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/13 22:09:37 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define MAGENTA "\033[1;35m"
 # define LIGHTGREEN "\x1b[92m"
 
+# include "../ft_destructor/ft_alloc.h"
 # include "../libft/libft.h"
 # include "execute.h"
 # include "sources.h"
@@ -37,16 +38,16 @@
 
 typedef struct s_env_line
 {
-	char		*name;
 	char		*val;
+	char		*name;
 }				t_env_line;
 
 typedef struct s_mshell
 {
 	t_env_line	*env;
+	char		*input;
 	char		**envp;
 	int			exit_status;
-	char		*input;
 
 }				t_mshell;
 
@@ -56,20 +57,20 @@ void			init_env(t_mshell *mshell, char **env);
 // parsing.c
 int				parse_input(char *input, t_mshell *mshell);
 // parse_err.c
-int				input_err_check(char *input);
 void			syntax_err(int c);
+int				input_err_check(char *input);
 // utils_parsing.c
 int				space(char c);
-void			quote_opened_type(char c, char *quote);
 int				arr_len(char **arr);
 int				ft_strchr_pos(char *s, int c);
+void			quote_opened_type(char c, char *quote);
 // dollar_parse.c
 void			dollar_question_replace(char **s, int i, t_mshell *mshell);
 //*UTILS
 // struct.c
-void			ft_strcpy(char *d, char *s);
-void			ft_strncpy(char *d, char *s, int n);
 void			init_mshell(t_mshell *mshell, char **env);
+void			handle_sigint(int signals);
+void			ignore_signals(void);
 
 //*EXEC
 // execute.c

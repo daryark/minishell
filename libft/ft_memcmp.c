@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sources.h                                          :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 13:48:00 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/12 17:54:59 by btvildia         ###   ########.fr       */
+/*   Created: 2023/11/18 18:19:56 by btvildia          #+#    #+#             */
+/*   Updated: 2024/05/12 20:31:17 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SOURCES_H
-# define SOURCES_H
-# include "minishell.h"
-# include "../ft_destructor/ft_alloc.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
+#include "libft.h"
 
-#endif
+int	ft_memcmp(void *s1, void *s2, size_t n)
+{
+	unsigned int	i;
+	char			*a;
+	char			*b;
+
+	a = s1;
+	b = s2;
+	i = 0;
+	while (i < n)
+	{
+		if (a[i] != b[i])
+		{
+			return ((unsigned char)a[i] - (unsigned char)b[i]);
+		}
+		i++;
+	}
+	return (0);
+}

@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sources.h                                          :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 13:48:00 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/12 17:54:59 by btvildia         ###   ########.fr       */
+/*   Created: 2023/11/27 12:28:11 by btvildia          #+#    #+#             */
+/*   Updated: 2024/05/12 20:18:46 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SOURCES_H
-# define SOURCES_H
-# include "minishell.h"
-# include "../ft_destructor/ft_alloc.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
+#include "libft.h"
 
-#endif
+char	*ft_strmapi(char *s, char (*f)(unsigned int, char))
+{
+	unsigned int	i;
+	char			*a;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	a = ft_malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (!a)
+		return (NULL);
+	while (s[i] != '\0')
+	{
+		a[i] = f(i, s[i]);
+		i++;
+	}
+	a[i] = '\0';
+	return (a);
+}

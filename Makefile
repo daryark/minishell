@@ -5,39 +5,39 @@ RE = \033[0m
 NAME = minishell
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -g
 LFLAGS = -lreadline -Ireadline -L$(LFT_F) -lft -I$(LFT_F)
 HEADERS = incl/minishell.h incl/execute.h incl/sources.h
 LFT_F = libft
-LFT_GIT = https://github.com/daryark/libft.git
+FT_DES = ft_destructor
 
 SRC =	minishell.c \
 		execute.c \
 		parsing.c init_env.c parse_err.c utils_parsing.c dollar_parse.c \
 		struct.c \
-		utils.c \
+		builtins.c \
+		env.c \
+		echo.c \
 
 SRC_F = src/
 OBJ_F = obj/
 VPATH = $(SRC_F) $(SRC_F)exec/ $(SRC_F)utils/ $(SRC_F)parsing/
 OBJ = $(addprefix $(OBJ_F), $(SRC:%.c=%.o))
 
-all: $(LFT_F) $(NAME)
+all: $(NAME)
 
 .SILENT:
 $(NAME): $(OBJ)
 	@printf "\n"
+	$(MAKE) -C $(FT_DES)
 	$(MAKE) -C $(LFT_F)
-	$(CC) -o $@ $(OBJ) $(LFLAGS) $(CFLAGS)
+	$(CC) -o $@ $(OBJ) $(LFLAGS) $(CFLAGS) ./ft_destructor/ft_alloc.a
 	@echo "$(GREEN)\n—————————————✣ MINISHELL COMPILED ✣—————————————\n$(RE)"
 
 $(OBJ_F)%.o: %.c $(HEADERS) Makefile
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -o $@ -c $<
 	@printf "$(GREEN). $(RE)"
-
-$(LFT_F):
-	git clone $(LFT_GIT) $(LFT)
 
 clean:
 	rm -rf $(OBJ_F)
@@ -49,5 +49,8 @@ fclean: clean
 	fi
 
 re: fclean all
+	$(MAKE) fclean -C $(LFT_F);
+	$(MAKE) fclean -C ./ft_destructor 
+	$(MAKE) -j 12 all
 
 .PHONY:	all clean fclean re bonus

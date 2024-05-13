@@ -1,24 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sources.h                                          :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 13:48:00 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/12 17:54:59 by btvildia         ###   ########.fr       */
+/*   Created: 2023/11/27 16:10:40 by btvildia          #+#    #+#             */
+/*   Updated: 2023/12/03 21:54:18 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SOURCES_H
-# define SOURCES_H
-# include "minishell.h"
-# include "../ft_destructor/ft_alloc.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
+#include "libft.h"
 
-#endif
+void	ft_putnbr_fd(int n, int fd)
+{
+	if (n == -2147483648)
+	{
+		ft_putchar_fd('-', fd);
+		ft_putchar_fd('2', fd);
+		ft_putnbr_fd(147483648, fd);
+	}
+	else if (n < 0)
+	{
+		ft_putchar_fd('-', fd);
+		n = -n;
+		ft_putnbr_fd(n, fd);
+	}
+	else if (n >= 10)
+	{
+		ft_putnbr_fd((n / 10), fd);
+		ft_putnbr_fd((n % 10), fd);
+	}
+	else
+	{
+		ft_putchar_fd(((n % 10) + '0'), fd);
+	}
+}

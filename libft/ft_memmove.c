@@ -1,36 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.c                                           :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/12 14:24:46 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/13 18:39:35 by btvildia         ###   ########.fr       */
+/*   Created: 2023/11/17 14:12:30 by btvildia          #+#    #+#             */
+/*   Updated: 2024/05/12 20:14:15 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/minishell.h"
+#include "libft.h"
 
-void	init_mshell(t_mshell *mshell, char **env)
+void	*ft_memmove(void *dst, void *src, size_t len)
 {
-	init_env(mshell, env);
-	mshell->envp = env;
-	mshell->exit_status = 0;
-	mshell->input = NULL;
-}
+	unsigned int	i;
 
-void	handle_sigint(int signals)
-{
-	(void)signals;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_redisplay();
-}
-
-void	ignore_signals(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
+	if (!dst && !src && len > 0)
+		return (dst);
+	if ((char *)dst > (char *)src && (char *)dst < (char *)src + len)
+	{
+		i = len;
+		while (i > 0)
+		{
+			((char *)dst)[i - 1] = ((char *)src)[i - 1];
+			i--;
+		}
+	}
+	else
+	{
+		i = 0;
+		while (i < len)
+		{
+			((char *)dst)[i] = ((char *)src)[i];
+			++i;
+		}
+	}
+	return (dst);
 }

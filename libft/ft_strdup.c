@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sources.h                                          :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/29 13:48:00 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/12 17:54:59 by btvildia         ###   ########.fr       */
+/*   Created: 2023/11/22 22:49:01 by btvildia          #+#    #+#             */
+/*   Updated: 2024/05/13 15:33:51 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SOURCES_H
-# define SOURCES_H
-# include "minishell.h"
-# include "../ft_destructor/ft_alloc.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
+#include "libft.h"
 
-#endif
+char	*ft_strdup(char *s1)
+{
+	char	*buffer;
+	int		i;
+
+	buffer = ft_malloc(sizeof(char) * ft_strlen(s1) + 1);
+	if (!buffer || !s1)
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		buffer[i] = s1[i];
+		i++;
+	}
+	buffer[i] = '\0';
+	return (buffer);
+}
