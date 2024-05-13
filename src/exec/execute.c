@@ -6,26 +6,37 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/12 22:52:18 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:56:26 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execute.h"
 
-void	ft_execute(t_mshell *mshell)
+void	ft_exec_just_cmd(t_mshell *mshell)
 {
-	if (ft_strncmp(mshell->input, "cd", 2) == 0)
-		ft_cd(mshell->input);
-	else if (ft_strncmp(mshell->input, "echo", 4) == 0)
-		ft_echo(mshell->input);
-	else if (ft_strncmp(mshell->input, "pwd", 3) == 0)
-		ft_pwd();
-	else if (ft_strncmp(mshell->input, "env", 3) == 0)
-		ft_env(mshell);
-	else if (ft_strncmp(mshell->input, "export", 6) == 0)
-		ft_export(mshell);
-	else if (ft_strncmp(mshell->input, "unset", 5) == 0)
-		ft_unset(mshell);
+	int	pid;
+	int	status;
+
+	pid = fork();
+	if (pid == 0)
+		ft_execve(mshell->input, mshell->envp);
 	else
-		ft_exec_just_cmd(mshell);
+		waitpid(pid, &status, 0);
+}
+
+void	ft_execve(char *cmd, char **envp)
+{
+	char	**tmp_split;
+	char	*path;
+	int		i;
+
+	tmp_split = ft_split(cmd, ' ');
+	path = ft_strdup("/bin/");
+	path = ft_strjoin(path, tmp_split[0]);
+	i = execve(path, tmp_split, envp);
+	if (i == -1)
+	{
+		printf("minishell: %s: command not found\n", tmp_split[0]);
+		exit(127);
+	}
 }

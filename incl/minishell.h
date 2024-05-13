@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 19:26:42 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:11:49 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # define MAGENTA "\033[1;35m"
 # define LIGHTGREEN "\x1b[92m"
 
-# include "../libft/libft.h"
 # include "../ft_destructor/ft_alloc.h"
+# include "../libft/libft.h"
 # include "execute.h"
 # include "sources.h"
 # include <dirent.h>

@@ -11,7 +11,9 @@ SRC =	minishell.c \
 		execute.c \
 		parsing.c init_env.c parse_err.c utils_parsing.c dollar_parse.c \
 		struct.c \
-		utils.c \
+		builtins.c \
+		env.c \
+		echo.c \
 
 SRC_F = src/
 OBJ_F = obj/

@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 14:06:08 by escura            #+#    #+#             */
-/*   Updated: 2024/05/11 17:17:48 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:07:36 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 #  define DEBUG 0
 # endif
 
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <stdbool.h>
 
 typedef struct t_allocs
 {

@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 03:28:01 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/12 22:49:45 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:43:09 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,21 @@ void	init_env(t_mshell *mshell, char **env)
 {
 	int	i;
 
-	mshell->env = (t_env_line *)ft_calloc(sizeof(t_env_line *), arr_len(env));
+	mshell->env = ft_malloc(sizeof(t_env_line) * (arr_len(env) + 1));
 	if (!mshell->env)
 		exit(printf(RED "Allocation failed\n" RE));
-	i = -1;
-	while (env[++i])
+	i = 0;
+	while (env[i])
 	{
-		return ; // i add return here cuz you are accessing an invalid memory
 		if (fill_str(env[i], &mshell->env[i]))
 		{
 			arr_clean(mshell->env);
 			exit(printf(RED "Allocation failed\n" RE));
 		}
 		// printf("%s%s = %s%s%s\n", YELLOW, mshell->env[i].name, GREEN,
-		// mshell->env[i].val, RE);
+		// 	mshell->env[i].val, RE);
+		i++;
 	}
+	mshell->env[i].name = NULL;
+	mshell->env[i].val = NULL;
 }
