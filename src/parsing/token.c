@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:29:53 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/15 18:34:43 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/15 22:23:40 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 //         add_token(c, 1, )
 // }
 
-void    prep_token(char *s, int len)
-{
-    if (len == 1)
-    {
-        if (*s == '|')
-            add_token()
-    }
-}
+// void    prep_token(char *s, int len)
+// {
+//     if (len == 1)
+//     {
+//         if (*s == '|')
+//             add_token()
+//     }
+// }

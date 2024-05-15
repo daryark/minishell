@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/15 18:31:26 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/16 01:10:26 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,23 @@
 
 static void	split_tokens(char *s, t_mshell *mshell)
 {
-	char q;
+	// char q;
 
-	(void)mshell;
-	q = '\0';
+	// q = '\0';
 	init_token_arr(s, mshell);
-	while (*s)
-	{
-		quote_opened_type(*s, q);
-		if (quote(*s) && q)
-			add_quote_token(*s);
-		else if (*s == '|')
-			add_token(*s, 1, T_PIPE);
-		else if (*s == '<' || *s == '>')
-			printf("REDIR\n");
-		else
-			printf("c");
-		s++;
-	}
+	// while (*s)
+	// {
+	// 	quote_opened_type(*s, &q);
+	// 	if (quote(*s) && q)
+	// 		add_quote_token(*s);
+	// 	else if (*s == '|')
+	// 		add_token(*s, 1, T_PIPE);
+	// 	else if (*s == '<' || *s == '>')
+	// 		printf("REDIR\n");
+	// 	else
+	// 		printf("c");
+	// 	s++;
+	// }
 }
 
 static void	trim_input(char *src, char *dst)
@@ -91,7 +90,7 @@ int	parse_input(char *input, t_mshell *mshell)
 		exit(printf(RED "Allocation failed\n" RE));
 	// printf("input: |%s|\n", input);
 	trim_input(input, dst);
-	// printf(" trim: |%s|\n", dst);
+	printf("%s trim: |%s|\n%s", GREEN, dst, RE);
 	split_tokens(dst, mshell);
 	// dollars_replace(&dst, mshell);
 	mshell->input = dst;

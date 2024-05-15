@@ -12,7 +12,8 @@ LFT_F = libft
 FT_DES = ft_destructor
 
 SRC =	minishell.c \
-		parsing.c init_env.c parse_err.c utils_parsing.c dollar_parse.c token.c \
+		parsing.c init_env.c parse_err.c utils_parsing.c dollar_parse.c \
+		token.c init_token_arr.c \
 		execute.c builtins.c echo.c env.c \
 		struct.c \
 
