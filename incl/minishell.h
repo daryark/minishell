@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/13 22:09:37 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/15 18:54:20 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 # include "../ft_destructor/ft_alloc.h"
 # include "../libft/libft.h"
+# include "parsing.h"
 # include "execute.h"
 # include "sources.h"
 # include <dirent.h>
@@ -36,6 +37,25 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+typedef enum e_type
+{
+	T_WORD = 0,
+	T_DQUOTE,
+	T_SQUOTE,
+	T_PIPE,
+	T_LREDIR,
+	T_DLREDIR,
+	T_RREDIR,
+	T_DRREDIR,
+	T_CMD,
+}				t_type;
+
+typedef struct s_token
+{
+	char		*word;
+	t_type		type; //or char ? '|', '\"', 'w'-for word; 'c' - for cmd...?
+}				t_token;
+
 typedef struct s_env_line
 {
 	char		*val;
@@ -45,33 +65,17 @@ typedef struct s_env_line
 typedef struct s_mshell
 {
 	t_env_line	*env;
-	char		*input;
 	char		**envp;
+	t_token		s_token_arr;
+	char		*input;
 	int			exit_status;
 
 }				t_mshell;
 
-//*PARSING
-// init_env.c
-void			init_env(t_mshell *mshell, char **env);
-// parsing.c
-int				parse_input(char *input, t_mshell *mshell);
-// parse_err.c
-void			syntax_err(int c);
-int				input_err_check(char *input);
-// utils_parsing.c
-int				space(char c);
-int				arr_len(char **arr);
-int				ft_strchr_pos(char *s, int c);
-void			quote_opened_type(char c, char *quote);
-// dollar_parse.c
-void			dollar_question_replace(char **s, int i, t_mshell *mshell);
 //*UTILS
 // struct.c
 void			init_mshell(t_mshell *mshell, char **env);
 void			handle_sigint(int signals);
 void			ignore_signals(void);
 
-//*EXEC
-// execute.c
 #endif

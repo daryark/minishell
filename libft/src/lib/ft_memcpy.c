@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.c                                           :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/12 14:24:46 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/15 18:32:26 by dyarkovs         ###   ########.fr       */
+/*   Created: 2023/11/16 16:14:00 by dyarkovs          #+#    #+#             */
+/*   Updated: 2024/02/19 19:57:44 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/minishell.h"
+#include "../../libft.h"
 
-void	init_mshell(t_mshell *mshell, char **env)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	init_env(mshell, env);
-	mshell->envp = env;
+	size_t	i;
 
-	mshell->exit_status = 0;
-	mshell->input = NULL;
+	if (!dst && !src)
+		return (NULL);
+	i = 0;
+	while (i < n)
+	{
+		*(unsigned char *)(dst + i) = *(unsigned char *)(src + i);
+		i++;
+	}
+	return (dst);
 }
 
-
-void	handle_sigint(int signals)
-{
-	(void)signals;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_redisplay();
-}
-
-void	ignore_signals(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
-}
+//restrict - for all the parameters with this flag means that they
+//strictly doesn't point to the same memory location.
+//(Used in *dst and *src in original funciton)

@@ -1,38 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.c                                           :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/12 14:24:46 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/15 18:32:26 by dyarkovs         ###   ########.fr       */
+/*   Created: 2023/11/27 00:58:42 by dyarkovs          #+#    #+#             */
+/*   Updated: 2024/03/05 14:29:36 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/minishell.h"
+#include "../../libft.h"
 
-void	init_mshell(t_mshell *mshell, char **env)
+int	ft_atoi(const char *str)
 {
-	init_env(mshell, env);
-	mshell->envp = env;
+	int		sign;
+	int		nb;
 
-	mshell->exit_status = 0;
-	mshell->input = NULL;
-}
-
-
-void	handle_sigint(int signals)
-{
-	(void)signals;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_redisplay();
-}
-
-void	ignore_signals(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
+	sign = 1;
+	nb = 0;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		nb = (nb * 10) + (*str - '0');
+		str++;
+	}
+	return (nb * sign);
 }

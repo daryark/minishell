@@ -1,38 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.c                                           :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/12 14:24:46 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/15 18:32:26 by dyarkovs         ###   ########.fr       */
+/*   Created: 2023/12/06 02:28:56 by dyarkovs          #+#    #+#             */
+/*   Updated: 2024/02/19 19:57:44 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/minishell.h"
+#include "../../libft.h"
 
-void	init_mshell(t_mshell *mshell, char **env)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	init_env(mshell, env);
-	mshell->envp = env;
-
-	mshell->exit_status = 0;
-	mshell->input = NULL;
-}
-
-
-void	handle_sigint(int signals)
-{
-	(void)signals;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_redisplay();
-}
-
-void	ignore_signals(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
+	del(lst->content);
+	free(lst);
 }

@@ -1,38 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.c                                           :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/12 14:24:46 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/15 18:32:26 by dyarkovs         ###   ########.fr       */
+/*   Created: 2023/12/06 02:15:15 by dyarkovs          #+#    #+#             */
+/*   Updated: 2024/02/19 19:57:44 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/minishell.h"
+#include "../../libft.h"
 
-void	init_mshell(t_mshell *mshell, char **env)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	init_env(mshell, env);
-	mshell->envp = env;
+	t_list	*last;
 
-	mshell->exit_status = 0;
-	mshell->input = NULL;
-}
-
-
-void	handle_sigint(int signals)
-{
-	(void)signals;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_redisplay();
-}
-
-void	ignore_signals(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
+	if (!*lst)
+		*lst = new;
+	else
+	{
+		last = ft_lstlast(*lst);
+		last->next = new;
+	}
 }
