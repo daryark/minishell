@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 23:22:23 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/16 00:11:57 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/16 19:03:07 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	arr_len(char **arr)
 	return (len);
 }
 
+//finds position from start of s. 
+//Not iteration(from 0), iterates from 1!
 int	ft_strchr_pos(char *s, int c)
 {
 	int	i;

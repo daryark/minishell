@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:30:36 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/16 01:16:36 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/16 17:56:54 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ int				input_err_check(char *input);
 //parsing
 void			init_env(t_mshell *mshell, char **env);
 int				parse_input(char *input, t_mshell *mshell);
-
-void			dollar_question_replace(char **s, int i, t_mshell *mshell);
+// void			replace_dollars(char **s, t_mshell *mshell);
+void			dollar_value_subst(char **s, char *q, t_mshell *mshell);
+// void			dollar_replace(char **s, int st, int en, t_mshell *mshell);
 //parsing utils
 int				space(char c);
 int             quote(char c);

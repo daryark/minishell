@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 03:28:01 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/13 18:43:09 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/16 19:03:26 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int	fill_str(char *s, t_env_line *s_line)
 
 	err = 0;
 	divider_pos = ft_strchr_pos(s, '=');
+	// printf("%d\n", divider_pos);
 	if (divider_pos >= 0)
 	{
 		s_line->name = ft_substr(s, 0, divider_pos - 1);
@@ -55,14 +56,14 @@ void	init_env(t_mshell *mshell, char **env)
 
 	mshell->env = ft_malloc(sizeof(t_env_line) * (arr_len(env) + 1));
 	if (!mshell->env)
-		exit(printf(RED "Allocation failed\n" RE));
+		alloc_err();
 	i = 0;
 	while (env[i])
 	{
 		if (fill_str(env[i], &mshell->env[i]))
 		{
 			arr_clean(mshell->env);
-			exit(printf(RED "Allocation failed\n" RE));
+			alloc_err();
 		}
 		// printf("%s%s = %s%s%s\n", YELLOW, mshell->env[i].name, GREEN,
 		// 	mshell->env[i].val, RE);

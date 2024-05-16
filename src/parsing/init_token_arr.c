@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:34:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/16 01:47:39 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/16 11:59:32 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	spec_symb(char *s, int i)
 {
-	if (s[i] == '|' || s[i] == '\'' || s[i] == '\"')
+	if (s[i] == '|')
 		return (1);
 	else if (s[i] == '<')
 	{
@@ -31,22 +31,42 @@ int	spec_symb(char *s, int i)
 	return (0);
 }
 
-int	pass_str(char *s, char q)
+int	pass_quoted_str(char *s, char *q)
+{
+	int i;
+
+	i = 0;
+	printf("%s%c%s", RED, s[i], RE);
+	i++;
+	while (s[i] && s[i] != *q)
+	{
+		printf("%s%c%s", RED, s[i], RE);
+		i++;
+	}
+	quote_opened_type(s[i], q);
+	return (i);
+}
+
+int	pass_str(char *s, char *q)
 {
 	int	i;
 
 	i = 0;
-	if (q)
-	{
-		while (s[i] && s[i] != q)
-			i++;
-	}
+	if (*q)
+		i+= pass_quoted_str(s, q);
 	else
 	{
 		while ((s[i] && !spec_symb(s, i)) && !space(s[i]))
+		{
+			quote_opened_type(s[i], q);
+			if (*q)
+				i += pass_quoted_str(&s[i], q);
+			printf("%s%c%s", RED, s[i], RE);
 			i++;
+		}
+		i--;
 	}
-	return (--i);
+	return (i);
 }
 //*redo token search to handle cases:
 //echo"hello" vs echo "hello" //WORD vs WORD QUOTED_STR
@@ -68,7 +88,7 @@ void	init_token_arr(char *s, t_mshell *mshell)
 		// if (space(s[i]) && !q)
 		// 	continue ;
 		// 
-		if (((spec_symb(s, i) || space(s[i])) && !q) || s[i] == q)
+		if ((spec_symb(s, i) || space(s[i])) && !q)
 		{
 			if (spec_symb(s, i) == 2)
 				i++;
@@ -76,7 +96,7 @@ void	init_token_arr(char *s, t_mshell *mshell)
 		}
 		else
 		{
-			i += pass_str(&s[i], q);
+			i += pass_str(&s[i], &q);
 			len++;
 		}
 		printf("%s%d %c%s\n", GREEN, i, s[i], RE);

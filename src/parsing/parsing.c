@@ -6,37 +6,58 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/16 01:10:26 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/16 17:56:23 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-// static void	dollars_replace(char **s, t_mshell *mshell)
-// {
-// 	int	i;
+static void	replace_dollars(char **s, t_mshell *mshell)
+{
+	char	**dllr_arr;
+	int		i;
+	char	q;
 
-// 	// int quote;
-// 	// int search_name;
-// 	i = -1;
-// 	while ((*s)[++i])
-// 	{
-// 		if ((*s)[i] == '$')
-// 		{
-// 			if ((*s)[i + 1] == '?')
-// 				dollar_question_replace(s, i, mshell);
-// 			// else
-// 		}
-// 	}
-// 	// find $:
-// 	//--when single quote is not open
-// 	// if ? next -> replace with exit code of prev command
-// 	// if not found -> just return "" instead of ?
-// 	// else read until space(char c) and find in env[i].name
-// 	// if not found -> just return "" instead of name
-// 	//--in both cases split dst, add place for replacement str
-// 	//  fill the replacing str, join all.
-// }
+	dllr_arr = split_parts(*s, '$');
+	if (!dllr_arr)
+		alloc_err();
+	q = '\0';
+	i = -1;
+	while (dllr_arr[++i])
+		dollar_value_subst(&dllr_arr[i], &q, mshell);
+	//!------------------------------------------------------
+	// int		i;
+	// char	*re_str;
+
+	// int quote;
+	// int search_name;
+	// i = -1;
+	// while ((*s)[++i])
+	// {
+	// 	if ((*s)[i] == '$')
+	// 	{
+	// 		if ((*s)[i + 1] == '?')
+	// 		{	
+	// 			re_str = ft_itoa(mshell->exit_status);
+	// 			if (!re_str)
+	// 				exit(printf(RED "Allocation failed\n" RE));
+	// 			dollar_question_replace(s, i, re_str, mshell);
+	// 		}
+	// 		else
+	// 		{
+	// 			// re_str =  
+	// 		}
+	// 	}
+	// }
+	// find $:
+	//--when single quote is not open
+	// if ? next -> replace with exit code of prev command
+	// if not found -> just return "" instead of ?
+	// else read until space(char c) and find in env[i].name
+	// if not found -> just return "" instead of name
+	//--in both cases split dst, add place for replacement str
+	//  fill the replacing str, join all.
+}
 
 static void	split_tokens(char *s, t_mshell *mshell)
 {
@@ -87,12 +108,13 @@ int	parse_input(char *input, t_mshell *mshell)
 		return (1);
 	dst = (char *)ft_calloc(sizeof(char), ft_strlen(input) + 1);
 	if (!dst)
-		exit(printf(RED "Allocation failed\n" RE));
-	// printf("input: |%s|\n", input);
+		alloc_err();
 	trim_input(input, dst);
 	printf("%s trim: |%s|\n%s", GREEN, dst, RE);
+
+	replace_dollars(&dst, mshell);
 	split_tokens(dst, mshell);
-	// dollars_replace(&dst, mshell);
 	mshell->input = dst;
 	return (0);
 }
+
