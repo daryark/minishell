@@ -6,25 +6,25 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/16 17:56:23 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/17 01:32:05 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static void	replace_dollars(char **s, t_mshell *mshell)
-{
-	char	**dllr_arr;
-	int		i;
-	char	q;
+// static void	replace_dollars(char **s, t_mshell *mshell)
+// {
+// 	char	**dllr_arr;
+// 	int		i;
+// 	char	q;
 
-	dllr_arr = split_parts(*s, '$');
-	if (!dllr_arr)
-		alloc_err();
-	q = '\0';
-	i = -1;
-	while (dllr_arr[++i])
-		dollar_value_subst(&dllr_arr[i], &q, mshell);
+// 	dllr_arr = split_parts(*s, '$');
+// 	if (!dllr_arr)
+// 		alloc_err();
+// 	q = '\0';
+// 	i = -1;
+// 	while (dllr_arr[++i])
+// 		dollar_value_subst(&dllr_arr[i], &q, mshell);
 	//!------------------------------------------------------
 	// int		i;
 	// char	*re_str;
@@ -57,7 +57,7 @@ static void	replace_dollars(char **s, t_mshell *mshell)
 	// if not found -> just return "" instead of name
 	//--in both cases split dst, add place for replacement str
 	//  fill the replacing str, join all.
-}
+// }
 
 static void	split_tokens(char *s, t_mshell *mshell)
 {
@@ -112,7 +112,7 @@ int	parse_input(char *input, t_mshell *mshell)
 	trim_input(input, dst);
 	printf("%s trim: |%s|\n%s", GREEN, dst, RE);
 
-	replace_dollars(&dst, mshell);
+	// replace_dollars(&dst, mshell);
 	split_tokens(dst, mshell);
 	mshell->input = dst;
 	return (0);

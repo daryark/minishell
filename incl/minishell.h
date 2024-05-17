@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/16 17:54:42 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/17 01:19:09 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,7 @@ void			ignore_signals(void);
 void            alloc_err(void);
 char			**split_parts(char *s, char c);
 
+void	        ft_lstadd_env(t_env_lst **lst, char *name, char *val);
+void	        clean_lst_env(t_env_lst **lst);
+void	        clean_node_env(t_env_lst **lst);
 #endif

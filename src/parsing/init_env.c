@@ -6,46 +6,38 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 03:28:01 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/16 19:03:26 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/17 14:32:35 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static void	arr_clean(t_env_line *env)
-{
-	while (env)
-	{
-		ft_free(env->name);
-		if (env->val != NULL)
-			ft_free(env->val);
-		env++;
-	}
-	ft_free(env);
-	env = NULL;
-}
+void	print_env(t_env_lst *env);
 
-static int	fill_str(char *s, t_env_line *s_line)
+static int	fill_str(char *s, t_env_lst **lst)
 {
-	int	divider_pos;
-	int	err;
+	int		divider_pos;
+	int		err;
+	char	*val;
+	char	*name;
 
 	err = 0;
 	divider_pos = ft_strchr_pos(s, '=');
-	// printf("%d\n", divider_pos);
 	if (divider_pos >= 0)
 	{
-		s_line->name = ft_substr(s, 0, divider_pos - 1);
-		s_line->val = ft_strdup(&(s[divider_pos]));
-		if (!s_line->val || !s_line->name)
+		name = ft_substr(s, 0, divider_pos - 1);
+		val = ft_strdup(&(s[divider_pos]));
+		if (!val || !name)
 			err = 1;
+		ft_lstadd_env(lst, name, val);
 	}
 	else
 	{
-		s_line->name = ft_strdup((char *)s);
-		s_line->val = NULL;
-		if (!s_line->name)
+		name = ft_strdup((char *)s);
+		val = NULL;
+		if (!name)
 			err = 1;
+		ft_lstadd_env(lst, name, val);
 	}
 	return (err);
 }
@@ -54,21 +46,27 @@ void	init_env(t_mshell *mshell, char **env)
 {
 	int	i;
 
-	mshell->env = ft_malloc(sizeof(t_env_line) * (arr_len(env) + 1));
-	if (!mshell->env)
-		alloc_err();
 	i = 0;
+	printf("env\n");
 	while (env[i])
 	{
-		if (fill_str(env[i], &mshell->env[i]))
+		if (fill_str(env[i], &mshell->env))
 		{
-			arr_clean(mshell->env);
+			clean_lst_env(&mshell->env);
 			alloc_err();
 		}
-		// printf("%s%s = %s%s%s\n", YELLOW, mshell->env[i].name, GREEN,
-		// 	mshell->env[i].val, RE);
 		i++;
 	}
-	mshell->env[i].name = NULL;
-	mshell->env[i].val = NULL;
+	printf("did lst env\n");
+	print_env(mshell->env);
+}
+
+void	print_env(t_env_lst *env)
+{
+	while (env)
+	{
+		printf("%s%s = %s%s%s\n", YELLOW, env->name, GREEN, \
+			env->val, RE);
+		env = env->next;
+	}
 }

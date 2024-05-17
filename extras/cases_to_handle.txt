@@ -1,0 +1,2 @@
+dyarkovs@c1r2s5:~/Desktop/42_core/curr_proj/minishell$ export ""=fd
+bash: export: `=fd': not a valid identifier
