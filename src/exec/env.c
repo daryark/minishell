@@ -6,11 +6,37 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/13 18:48:38 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:33:12 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execute.h"
+
+void	convert_envp(t_mshell *mshell)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+
+	i = 0;
+	while (mshell->envp[i] != NULL)
+	{
+		j = 0;
+		while (mshell->env[i].name[j] != '\0')
+		{
+			if (mshell->env[i].name[j] == '=')
+			{
+				tmp = ft_strjoin(mshell->env[i].name, mshell->env[i].val);
+				ft_free(mshell->envp[i]);
+				mshell->envp[i] = ft_strdup(tmp);
+				ft_free(tmp);
+				break ;
+			}
+			j++;
+		}
+		i++;
+	}
+}
 
 void	sort_env(char **envp)
 {
@@ -70,6 +96,7 @@ void	ft_export(t_mshell *mshell)
 
 	if (ft_strlen(mshell->input) == 6)
 	{
+		convert_envp(mshell);
 		sort_env(mshell->envp);
 		i = 0;
 		while (mshell->envp[i] != NULL)
@@ -87,6 +114,7 @@ void	ft_export(t_mshell *mshell)
 			mshell->envp = ft_add_var(mshell->envp, new_vars[i]);
 			i++;
 		}
+		init_env(mshell, mshell->envp);
 	}
 }
 
@@ -132,5 +160,6 @@ void	ft_unset(t_mshell *mshell)
 			mshell->envp = ft_remove_var(mshell->envp, rm_vars[i]);
 			i++;
 		}
+		init_env(mshell, mshell->envp);
 	}
 }

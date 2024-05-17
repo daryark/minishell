@@ -6,37 +6,37 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/13 15:32:53 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:09:22 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static void	dollars_replace(char **s, t_mshell *mshell)
-{
-	int	i;
+// static void	dollars_replace(char **s, t_mshell *mshell)
+// {
+// 	int	i;
 
-	// int quote;
-	// int search_name;
-	i = -1;
-	while ((*s)[++i])
-	{
-		if ((*s)[i] == '$')
-		{
-			if ((*s)[i + 1] == '?')
-				dollar_question_replace(s, i, mshell);
-			// else
-		}
-	}
-	// find $:
-	//--when single quote is not open
-	// if ? next -> replace with exit code of prev command
-	// if not found -> just return "" instead of ?
-	// else read until space(char c) and find in env[i].name
-	// if not found -> just return "" instead of name
-	//--in both cases split dst, add place for replacement str
-	//  fill the replacing str, join all.
-}
+// 	// int quote;
+// 	// int search_name;
+// 	i = -1;
+// 	while ((*s)[++i])
+// 	{
+// 		if ((*s)[i] == '$')
+// 		{
+// 			if ((*s)[i + 1] == '?')
+// 				dollar_question_replace(s, i, mshell);
+// 			// else
+// 		}
+// 	}
+// 	// find $:
+// 	//--when single quote is not open
+// 	// if ? next -> replace with exit code of prev command
+// 	// if not found -> just return "" instead of ?
+// 	// else read until space(char c) and find in env[i].name
+// 	// if not found -> just return "" instead of name
+// 	//--in both cases split dst, add place for replacement str
+// 	//  fill the replacing str, join all.
+// }
 
 static void	trim_input(char *src, char *dst)
 {
@@ -62,6 +62,7 @@ void	parse_input(char *input, t_mshell *mshell)
 {
 	char	*dst;
 
+	(void)mshell;
 	if (input_err_check(input))
 		return ;
 	dst = (char *)ft_calloc(sizeof(char), ft_strlen(input) + 1);
@@ -71,6 +72,6 @@ void	parse_input(char *input, t_mshell *mshell)
 	trim_input(input, dst);
 	// printf(" trim: |%s|\n", dst);
 	// split
-	dollars_replace(&dst, mshell);
+	// dollars_replace(&dst, mshell);
 	mshell->input = dst;
 }

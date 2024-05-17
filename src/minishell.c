@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/13 17:49:04 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:46:07 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,11 @@ char	*get_currect_path(char **envp)
 	return (path);
 }
 
-static void	minishell_loop(t_mshell *mshell)
+static void	minishell_loop(t_mshell *mshell, char **envp)
 {
 	char	*input;
 	char	*path;
 
-	(void)mshell;
 	while (1)
 	{
 		path = get_currect_path(mshell->envp);
@@ -56,7 +55,7 @@ static void	minishell_loop(t_mshell *mshell)
 			break ;
 		}
 		parse_input(input, mshell);
-		ft_execute(mshell);
+		ft_execute(mshell, envp);
 		ft_free(input);
 	}
 }
@@ -64,17 +63,19 @@ static void	minishell_loop(t_mshell *mshell)
 int	main(int ac, char **av, char **envp)
 {
 	t_mshell	mshell;
+	int			i;
 
 	ft_alloc_init();
 	(void)av;
 	(void)ac;
+	i = 0;
 	if (ac != 1)
 		exit(write(1, RED "No arguments accepted!\n" RE, 32));
 	else
 	{
 		write(1, GREEN "OK\n" RE, 14);
 		init_mshell(&mshell, envp);
-		minishell_loop(&mshell);
+		minishell_loop(&mshell, envp);
 	}
 	ft_destructor();
 	return (0);

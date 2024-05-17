@@ -34,3 +34,10 @@
     unset with no options. ✅
     env with no options or arguments. ✅
     exit with no options. ✅
+
+14. Error handle:
+    open minishell inside minishell. ❌
+    remove currect directory from inside. ✅
+    unclosed quotes " and '. ✅
+    shell level after 999. ❌
+    unclosed fds. ❌

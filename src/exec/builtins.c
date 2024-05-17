@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_funcs.c                                    :+:      :+:    :+:   */
+/*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:10:22 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/13 18:56:15 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:39:16 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execute.h"
 
-void	ft_execute(t_mshell *mshell)
+void	ft_execute(t_mshell *mshell, char **envp)
 {
 	if (ft_strncmp(mshell->input, "cd", 2) == 0)
 		ft_cd(mshell->input);
@@ -21,7 +21,7 @@ void	ft_execute(t_mshell *mshell)
 	else if (ft_strncmp(mshell->input, "pwd", 3) == 0)
 		ft_pwd();
 	else if (ft_strncmp(mshell->input, "env", 3) == 0)
-		ft_env(mshell);
+		ft_env(envp);
 	else if (ft_strncmp(mshell->input, "export", 6) == 0)
 		ft_export(mshell);
 	else if (ft_strncmp(mshell->input, "unset", 5) == 0)
@@ -50,14 +50,14 @@ void	ft_cd(char *cmd)
 	ft_free(tmp);
 }
 
-void	ft_env(t_mshell *mshell)
+void	ft_env(char **envp)
 {
 	int	i;
 
 	i = 0;
-	while (mshell->envp[i] != NULL)
+	while (envp[i])
 	{
-		printf("%s\n", mshell->envp[i]);
+		printf("%s\n", envp[i]);
 		i++;
 	}
 }
