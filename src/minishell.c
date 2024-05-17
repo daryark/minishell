@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/15 14:00:00 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:19:14 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,20 @@ static void	minishell_loop(t_mshell *mshell)
 		path = get_currect_path(mshell->envp);
 		ignore_signals();
 		input = readline(path);
-		add_history(input);
-		if (!input || ft_strncmp(input, "exit", 4) == 0)
+		if (!ft_strncmp(input, "exit", 4) && ft_strlen(input) == 4)
 		{
 			printf("exit\n");
 			ft_free(input);
 			break ;
 		}
+		add_history(input);
 		if (parse_input(input, mshell))
 		{
-			free(input);
+			ft_free(input);
 			continue ;
 		}
 		ft_execute(mshell);
-		free(input);
+		ft_free(input);
 	}
 }
 

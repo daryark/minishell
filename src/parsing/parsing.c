@@ -6,26 +6,40 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/17 01:32:05 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/17 21:32:57 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-// static void	replace_dollars(char **s, t_mshell *mshell)
-// {
-// 	char	**dllr_arr;
-// 	int		i;
-// 	char	q;
+static void	replace_dollars(char **s, t_mshell *mshell)
+{
+	char	**dllr_arr;
+	int		i;
+	char	q;
 
-// 	dllr_arr = split_parts(*s, '$');
-// 	if (!dllr_arr)
-// 		alloc_err();
-// 	q = '\0';
-// 	i = -1;
-// 	while (dllr_arr[++i])
-// 		dollar_value_subst(&dllr_arr[i], &q, mshell);
-	//!------------------------------------------------------
+	printf("--------------------------%sdollar%s\n", GREEN, RE);
+	dllr_arr = split_parts(*s, '$');
+	if (!dllr_arr)
+		alloc_err();
+	q = '\0';
+	i = -1;
+	while (dllr_arr[++i])
+		dollar_value_subst(&dllr_arr[i], &q, mshell);
+	ft_free(*s);
+	i = 0;
+	while (dllr_arr[i])
+	{
+		if (!i)
+			*s = ft_strdup(dllr_arr[i]);
+		if (dllr_arr[i + 1])
+			*s = ft_strjoin(*s, dllr_arr[i + 1]);
+		if (!*s)
+			alloc_err();
+		i++;
+	}
+	printf("--------------------------%sdollar END%s\n\n\n", GREEN, RE);
+	// !------------------------------------------------------
 	// int		i;
 	// char	*re_str;
 
@@ -50,20 +64,21 @@
 	// 	}
 	// }
 	// find $:
-	//--when single quote is not open
+	// --when single quote is not open
 	// if ? next -> replace with exit code of prev command
 	// if not found -> just return "" instead of ?
 	// else read until space(char c) and find in env[i].name
 	// if not found -> just return "" instead of name
-	//--in both cases split dst, add place for replacement str
+	// --in both cases split dst, add place for replacement str
 	//  fill the replacing str, join all.
-// }
+}
 
 static void	split_tokens(char *s, t_mshell *mshell)
 {
 	// char q;
 
 	// q = '\0';
+	printf("--------------------------%stokens%s\n", GREEN, RE);
 	init_token_arr(s, mshell);
 	// while (*s)
 	// {
@@ -78,6 +93,7 @@ static void	split_tokens(char *s, t_mshell *mshell)
 	// 		printf("c");
 	// 	s++;
 	// }
+	printf("--------------------------%stokens END%s\n\n\n", GREEN, RE);
 }
 
 static void	trim_input(char *src, char *dst)
@@ -94,8 +110,8 @@ static void	trim_input(char *src, char *dst)
 	while (src[++i])
 	{
 		quote_opened_type(src[i], &q);
-		if (!(((space(src[i]) && space(src[i + 1]))
-			|| (space(src[i]) && (!d || !src[i + 1]))) && !q))
+		if (!(((space(src[i]) && space(src[i + 1])) || (space(src[i])
+						&& (!d || !src[i + 1]))) && !q))
 			dst[d++] = src[i];
 	}
 }
@@ -111,8 +127,8 @@ int	parse_input(char *input, t_mshell *mshell)
 		alloc_err();
 	trim_input(input, dst);
 	printf("%s trim: |%s|\n%s", GREEN, dst, RE);
-
-	// replace_dollars(&dst, mshell);
+	replace_dollars(&dst, mshell);
+	printf("%s $: |%s|\n%s", GREEN, dst, RE);
 	split_tokens(dst, mshell);
 	mshell->input = dst;
 	return (0);
