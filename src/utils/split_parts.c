@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:27:34 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/18 02:11:52 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/18 02:43:52 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,32 @@
 
 //if no $, then add +1 char to print
 //(as with $ found I do -1 $ from end of str in outside fn)
-static int	check_end_len(char *s, int len)
+// static int	check_end_len(char *s, int len)
+// {
+// 	if (len < 0)
+// 		len = ft_strlen(s) + 1;
+// 	if (!len)
+// 		len = 2;
+// 	return (len);
+// }
+
+int	split_parts_alloc(char ***dst, char *s, char c)
 {
-	if (len < 0)
-		len = ft_strlen(s) + 1;
-	if (!len)
-		len = 2;
+	int		i;
+	int		len;
+
+	i = -1;
+	len = 1;
+	while (s[++i])
+	{
+		if (!i && s[0] == c)
+			i++;
+		if (s[i] == c)
+			len++;
+	}
+	*dst = (char **)ft_calloc(sizeof(char *), len + 1);
+	if (!*dst)
+		alloc_err();
 	return (len);
 }
 
@@ -34,16 +54,7 @@ char	**split_parts(char *s, char c)
 	int     len;
 	char    **arr;
 
-	i = -1;
-	len = 1;
-	while (s[++i])
-	{
-		if (!i && s[0] == c)
-			i++;
-		if (s[i] == c)
-			len++;
-	}
-	arr = (char **)ft_calloc(sizeof(char *), len + 1);
+	len = split_parts_alloc(&arr, s, c);
 	a_i = 0;
 	i = 0;
 	printf("arr len:%d\n", len);
@@ -52,13 +63,13 @@ char	**split_parts(char *s, char c)
 		if (!i && s[i] != c)
 		{
 			w_l = ft_strchr_pos(&s[i], c);
-			check_end_len(&s[i], w_l);
+			// check_end_len(&s[i], w_l);
 			arr[a_i] = ft_substr(s, i, --w_l);
 		}
 		else
 		{
 			w_l = ft_strchr_pos(&s[i + 1], c);
-			check_end_len(&s[i], w_l);
+			// check_end_len(&s[i], w_l);
 			arr[a_i] = ft_substr(s, i, w_l);
 		}
 		printf("w_l: %d	", w_l);
