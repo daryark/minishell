@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:02 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/17 13:39:26 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/17 19:53:02 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@
 typedef struct s_mshell	t_mshell;
 
 void					ft_pwd(void);
-void					ft_cd(char *cmd);
 void					ft_env(char **envp);
 void					ft_echo(t_mshell *mshell);
 void					ft_unset(t_mshell *mshell);
 void					ft_export(t_mshell *mshell);
+void					ft_cd(char *cmd, char **envp);
 void					ft_execve(char *cmd, char **envp);
 void					ft_exec_just_cmd(t_mshell *mshell);
 char					*ft_remove_substr(char *str, char *sub);

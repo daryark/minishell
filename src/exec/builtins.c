@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:10:22 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/17 13:39:16 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/17 19:52:46 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_execute(t_mshell *mshell, char **envp)
 {
 	if (ft_strncmp(mshell->input, "cd", 2) == 0)
-		ft_cd(mshell->input);
+		ft_cd(mshell->input, envp);
 	else if (ft_strncmp(mshell->input, "echo", 4) == 0)
 		ft_echo(mshell);
 	else if (ft_strncmp(mshell->input, "pwd", 3) == 0)
@@ -30,15 +30,19 @@ void	ft_execute(t_mshell *mshell, char **envp)
 		ft_exec_just_cmd(mshell);
 }
 
-void	ft_cd(char *cmd)
+void	ft_cd(char *cmd, char **envp)
 {
 	char	**tmp;
 	char	*path;
+	int		i;
 
+	i = 0;
+	while (envp[i] && ft_strncmp(envp[i], "USER=", 5) != 0)
+		i++;
 	tmp = ft_split(cmd, ' ');
 	if (tmp[1] == NULL)
 	{
-		path = ft_strdup("/home");
+		path = ft_strjoin("/home/", envp[i] + 5);
 		chdir(path);
 		ft_free(path);
 	}

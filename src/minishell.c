@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/17 13:46:07 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/18 20:50:37 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*get_currect_path(char **envp)
 	ft_free(tmp2);
 	return (path);
 }
-
 static void	minishell_loop(t_mshell *mshell, char **envp)
 {
 	char	*input;
@@ -63,12 +62,10 @@ static void	minishell_loop(t_mshell *mshell, char **envp)
 int	main(int ac, char **av, char **envp)
 {
 	t_mshell	mshell;
-	int			i;
 
 	ft_alloc_init();
 	(void)av;
 	(void)ac;
-	i = 0;
 	if (ac != 1)
 		exit(write(1, RED "No arguments accepted!\n" RE, 32));
 	else
