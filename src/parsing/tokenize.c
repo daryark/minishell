@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:34:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/18 02:21:51 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/19 00:55:42 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,16 @@ void	init_token_arr(char *s, t_mshell *mshell)
 	{
 		printf("%s%d %c%s	", YELLOW, i, s[i], RE);
 		quote_opened_type(s[i], &q);
-		// if (space(s[i]) && !q)
-		// 	continue ;
-		// 
-		if ((spec_symb(s, i) || space(s[i])) && !q)
+		if (space(s[i]) && !q)
+			continue ;
+		if (spec_symb(s, i) && !q)
 		{
 			if (spec_symb(s, i) == 2)
 				i++;
-			len++;
 		}
 		else
-		{
 			i += pass_str(&s[i], &q);
-			len++;
-		}
+		len++;
 		printf("%s%d %c%s\n", GREEN, i, s[i], RE);
 	}
 	mshell->s_token_arr = malloc(sizeof(t_token) * len);

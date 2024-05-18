@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/18 18:37:19 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/18 22:23:48 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	split_tokens(char *s, t_mshell *mshell)
 	(void)s;
 	(void)mshell;
 	printf("--------------------------%stokens%s\n", GREEN, RE);
-	// init_token_arr(s, mshell);
+	init_token_arr(s, mshell);
 	// while (*s)
 	// {
 	// 	quote_opened_type(*s, &q);
