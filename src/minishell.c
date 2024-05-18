@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/18 02:12:56 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:11:33 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ static void	minishell_loop(t_mshell *mshell)
 			printf("exit\n");
 			ft_free(input);
 			break ;
+		}
+		if (!input || !*input || empty_str(input))
+		{
+			ft_free(input);
+			continue; ;
 		}
 		add_history(input);
 		if (parse_input(input, mshell))

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_parsing.c                                    :+:      :+:    :+:   */
+/*   utils_symbol.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 23:22:23 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/18 02:18:26 by dyarkovs         ###   ########.fr       */
+/*   Created: 2024/05/18 18:23:05 by dyarkovs          #+#    #+#             */
+/*   Updated: 2024/05/18 18:23:54 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	space(char c)
 {
 	return (c == ' ' || c == '\t');
 }
+
 int	quote(char c)
 {
 	if (c == '\"')
@@ -52,32 +53,4 @@ void	quote_opened_type(char c, char *q)
 		*q = c;
 	else if ((quote(c)) && *q == c)
 		*q = '\0';
-}
-//*For env, use env_lst_len fn from utils/env_lst.c
-//!this fn will be deleted
-int	arr_len(char **arr)
-{
-	int	len;
-
-	len = 0;
-	while (*arr)
-	{
-		len++;
-		arr++;
-	}
-	return (len);
-}
-
-//finds position from start of s. 
-//Not iteration(from 0), iterates from 1!
-int	ft_strchr_pos(char *s, int c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != (unsigned char)c && s[i])
-		i++;
-	if (s[i] == (unsigned char)c)
-		return (++i);
-	return (-1);
 }

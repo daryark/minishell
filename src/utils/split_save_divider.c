@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:27:34 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/18 02:43:52 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:36:41 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 // 	return (len);
 // }
 
-int	split_parts_alloc(char ***dst, char *s, char c)
+static int	init_split_save_divider(char ***dst, char *s, char c)
 {
 	int		i;
 	int		len;
@@ -45,8 +45,9 @@ int	split_parts_alloc(char ***dst, char *s, char c)
 
 //! DIVIDE THE FUNC INTO PARTS
 //split string into parts
-//searches for divider and put it as a start of each arr[str]
-char	**split_parts(char *s, char c)
+//searches for divider and preserve it!
+//->put divider as a start of each arr[str] $part $part ...
+char	**split_save_divider(char *s, char c)
 {
 	int     i;
 	int		a_i;
@@ -54,7 +55,7 @@ char	**split_parts(char *s, char c)
 	int     len;
 	char    **arr;
 
-	len = split_parts_alloc(&arr, s, c);
+	len = init_split_save_divider(&arr, s, c);
 	a_i = 0;
 	i = 0;
 	printf("arr len:%d\n", len);

@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/18 02:22:37 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/18 18:37:19 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	replace_dollars(char **s, t_mshell *mshell)
 	int		i;
 	char	q;
 
-	dllr_arr = split_parts(*s, '$');
+	dllr_arr = split_save_divider(*s, '$');
 	if (!dllr_arr)
 		alloc_err();
 	q = '\0';

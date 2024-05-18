@@ -12,9 +12,10 @@ LFT_F = libft
 FT_DES = ft_destructor
 
 SRC =	minishell.c \
-		parsing.c parse_err.c utils_parsing.c dollar_parse.c tokenize.c \
 		execute.c builtins.c echo.c env.c \
-		utils_signals.c err.c split_parts.c env_lst.c init_env.c  \
+		env_init.c parsing.c dollar_parse.c tokenize.c \
+		utils_signals.c  utils_parsing.c utils_symbol.c \
+		err.c err_parsing.c env_lst.c split_save_divider.c \
 
 SRC_F = src/
 OBJ_F = obj/
