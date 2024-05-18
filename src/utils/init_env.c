@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 03:28:01 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/17 18:06:30 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/18 02:00:53 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static int	fill_str(char *s, t_env_lst **lst)
 	}
 	return (err);
 }
-
+//*Please, don't use this fn!!!!
+//*just add fn to change/add/remove needed name/value in the lst
 void	init_env(t_mshell *mshell, char **env)
 {
 	int	i;
@@ -60,6 +61,7 @@ void	init_env(t_mshell *mshell, char **env)
 	// print_env(mshell->env);
 }
 
+//it can be used when env command is inputed
 void	print_env(t_env_lst *env)
 {
 	while (env)

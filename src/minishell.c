@@ -6,11 +6,21 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/17 20:19:14 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/18 02:12:56 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
+
+void	init_mshell(t_mshell *mshell, char **env)
+{
+	mshell->env = NULL;
+	init_env(mshell, env);
+	mshell->envp = env;
+
+	mshell->exit_status = 0;
+	mshell->input = NULL;
+}
 
 char	*get_currect_path(char **envp)
 {

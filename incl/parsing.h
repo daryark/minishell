@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:30:36 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/17 18:01:39 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/18 02:18:05 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,11 @@ void			dollar_value_subst(char **s, char *q, t_mshell *mshell);
 //parsing utils
 int				space(char c);
 int             quote(char c);
-void			quote_opened_type(char c, char *q);
-int				arr_len(char **arr);
-int				ft_strchr_pos(char *s, int c);
 int				spec_symb(char *s, int i);
+void			quote_opened_type(char c, char *q);
+int				arr_len(char **arr); //!delete definition and fn
+int				env_lst_len(t_env_lst *lst);
+int				ft_strchr_pos(char *s, int c);
 void            init_token_arr(char *s, t_mshell *mshell);
 
 #endif

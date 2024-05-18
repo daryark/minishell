@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:30:07 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/18 01:29:53 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/18 02:24:54 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static char	*find_replace_env_var(char *s, int *i, t_env_lst *env)
 	return (ft_free(name), value);
 }
 
- //question sign $? or $?blahd
- //return i from which copy str
+//question sign $? or $?blahd
+//return i from which copy str
 static int	question_case(char *s)
 {
 	if (s[2])
@@ -65,7 +65,7 @@ static int	not_replace_cases(char *s, char q)
 	return (-1);
 }
 
-static	char *replace_cases(char *s, t_mshell *mshell)
+static char	*replace_cases(char *s, t_mshell *mshell)
 {
 	char	*subst;
 	int		i;
@@ -84,7 +84,7 @@ static	char *replace_cases(char *s, t_mshell *mshell)
 	return (ft_strjoin(subst, &s[i]));
 }
 
-//*   echo$ "$"  echo$ "$" '$' "$<" $< adfds $df
+//*   echo$ "$"  echo$ "$" '$' "$<" $< adfds $df $PATH
 //String with one dollar (from splited arr) passed in arg
 void	dollar_value_subst(char **s, char *q, t_mshell *mshell)
 {

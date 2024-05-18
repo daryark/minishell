@@ -1,35 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_token_arr.c                                   :+:      :+:    :+:   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:34:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/16 11:59:32 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/18 02:21:51 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
-
-int	spec_symb(char *s, int i)
-{
-	if (s[i] == '|')
-		return (1);
-	else if (s[i] == '<')
-	{
-		if (s[i + 1] && (s[i + 1] == '<'))
-			return (2);
-		return (1);
-	}
-	else if (s[i] == '>')
-	{
-		if (s[i + 1] && (s[i + 1] == '>'))
-			return (2);
-		return (1);
-	}
-	return (0);
-}
 
 int	pass_quoted_str(char *s, char *q)
 {
@@ -104,3 +85,18 @@ void	init_token_arr(char *s, t_mshell *mshell)
 	mshell->s_token_arr = malloc(sizeof(t_token) * len);
 	printf("len:%d\n", len);
 }
+
+// void    add_quote_token(char c)
+// {
+//     if (*s == '\'')
+//         add_token(c, 1, )
+// }
+
+// void    prep_token(char *s, int len)
+// {
+//     if (len == 1)
+//     {
+//         if (*s == '|')
+//             add_token()
+//     }
+// }

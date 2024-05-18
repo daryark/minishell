@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:27:34 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/17 20:53:31 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/18 02:11:52 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //if no $, then add +1 char to print
 //(as with $ found I do -1 $ from end of str in outside fn)
-static int check_end_len(char *s, int len)
+static int	check_end_len(char *s, int len)
 {
 	if (len < 0)
 		len = ft_strlen(s) + 1;
@@ -24,6 +24,8 @@ static int check_end_len(char *s, int len)
 }
 
 //! DIVIDE THE FUNC INTO PARTS
+//split string into parts
+//searches for divider and put it as a start of each arr[str]
 char	**split_parts(char *s, char c)
 {
 	int     i;
@@ -49,13 +51,13 @@ char	**split_parts(char *s, char c)
 	{
 		if (!i && s[i] != c)
 		{
-			w_l = ft_strchr_pos(&s[i], '$');
+			w_l = ft_strchr_pos(&s[i], c);
 			check_end_len(&s[i], w_l);
 			arr[a_i] = ft_substr(s, i, --w_l);
 		}
 		else
 		{
-			w_l = ft_strchr_pos(&s[i + 1], '$');
+			w_l = ft_strchr_pos(&s[i + 1], c);
 			check_end_len(&s[i], w_l);
 			arr[a_i] = ft_substr(s, i, w_l);
 		}

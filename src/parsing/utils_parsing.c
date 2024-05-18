@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 23:22:23 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/17 23:24:51 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/18 02:18:26 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,25 @@ int	quote(char c)
 		return (0);
 }
 
+int	spec_symb(char *s, int i)
+{
+	if (s[i] == '|')
+		return (1);
+	else if (s[i] == '<')
+	{
+		if (s[i + 1] && (s[i + 1] == '<'))
+			return (2);
+		return (1);
+	}
+	else if (s[i] == '>')
+	{
+		if (s[i + 1] && (s[i + 1] == '>'))
+			return (2);
+		return (1);
+	}
+	return (0);
+}
+
 // set quote "|' or unset for '\0' if it was open with same quote type
 void	quote_opened_type(char c, char *q)
 {
@@ -34,7 +53,8 @@ void	quote_opened_type(char c, char *q)
 	else if ((quote(c)) && *q == c)
 		*q = '\0';
 }
-
+//*For env, use env_lst_len fn from utils/env_lst.c
+//!this fn will be deleted
 int	arr_len(char **arr)
 {
 	int	len;

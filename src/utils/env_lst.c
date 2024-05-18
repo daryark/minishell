@@ -6,11 +6,24 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 01:00:02 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/17 20:21:27 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/18 02:07:38 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
+int	env_lst_len(t_env_lst *lst)
+{
+	int		size;
+
+	size = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		size++;
+	}
+	return (size);
+}
 
 void	ft_lstadd_env(t_env_lst **lst, char *name, char *val)
 {
