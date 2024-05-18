@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/18 22:23:48 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/19 00:57:49 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static void	replace_dollars(char **s, t_mshell *mshell)
 			alloc_err();
 		i++;
 	}
+	//*free dllr_arr write fn!!!!
 }
 
 static void	split_tokens(char *s, t_mshell *mshell)
