@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 23:22:23 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/18 18:23:20 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/19 13:26:13 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ int	ft_strchr_pos(char *s, int c)
 	return (-1);
 }
 
-int	empty_str(char *s)
-{
-	if (!s)
-		return (1);
-	while (*s && space(*s))
-		s++;
-	if (*s)
-		return (0);
-	return (1);
-}
+// int	empty_str(char *s)
+// {
+// 	if (!s)
+// 		return (1);
+// 	while (*s && space(*s))
+// 		s++;
+// 	if (*s)
+// 		return (0);
+// 	return (1);
+// }
