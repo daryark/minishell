@@ -6,30 +6,11 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/19 16:27:38 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:32:26 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execute.h"
-
-// struct of linked list for env
-// typedef struct 			s_env_lst
-// {
-// 	char				*val;
-// 	char				*name;
-// 	struct s_env_lst	*next;
-// }						t_env_lst;
-
-// struct of main shell
-// typedef struct 			s_mshell
-// {
-// 	t_env_lst			*env;
-// 	char				**envp;
-// 	t_token				*s_token_arr;
-// 	char				*input;
-// 	int					exit_status;
-
-// }						t_mshell;
 
 void	ft_print_env(t_env_lst *env)
 {
