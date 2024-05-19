@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:34:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 00:55:42 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:07:12 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	pass_quoted_str(char *s, char *q)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	printf("%s%c%s", RED, s[i], RE);
+	// printf("%s%c%s", RED, s[i], RE);
 	i++;
 	while (s[i] && s[i] != *q)
 	{
-		printf("%s%c%s", RED, s[i], RE);
+		// printf("%s%c%s", RED, s[i], RE);
 		i++;
 	}
 	quote_opened_type(s[i], q);
@@ -34,7 +34,7 @@ int	pass_str(char *s, char *q)
 
 	i = 0;
 	if (*q)
-		i+= pass_quoted_str(s, q);
+		i += pass_quoted_str(s, q);
 	else
 	{
 		while ((s[i] && !spec_symb(s, i)) && !space(s[i]))
@@ -42,7 +42,7 @@ int	pass_str(char *s, char *q)
 			quote_opened_type(s[i], q);
 			if (*q)
 				i += pass_quoted_str(&s[i], q);
-			printf("%s%c%s", RED, s[i], RE);
+			// printf("%s%c%s", RED, s[i], RE);
 			i++;
 		}
 		i--;
@@ -50,9 +50,9 @@ int	pass_str(char *s, char *q)
 	return (i);
 }
 //*redo token search to handle cases:
-//echo"hello" vs echo "hello" //WORD vs WORD QUOTED_STR
-//ec"ho" "hello" //WORD QUOTED_STR
-//ec"ho""hello" //WORD
+// echo"hello" vs echo "hello" //WORD vs WORD QUOTED_STR
+// ec"ho" "hello" //WORD QUOTED_STR
+// ec"ho""hello" //WORD
 void	init_token_arr(char *s, t_mshell *mshell)
 {
 	int		len;
@@ -64,7 +64,7 @@ void	init_token_arr(char *s, t_mshell *mshell)
 	i = -1;
 	while (s[++i])
 	{
-		printf("%s%d %c%s	", YELLOW, i, s[i], RE);
+		// printf("%s%d %c%s	", YELLOW, i, s[i], RE);
 		quote_opened_type(s[i], &q);
 		if (space(s[i]) && !q)
 			continue ;
@@ -76,10 +76,10 @@ void	init_token_arr(char *s, t_mshell *mshell)
 		else
 			i += pass_str(&s[i], &q);
 		len++;
-		printf("%s%d %c%s\n", GREEN, i, s[i], RE);
+		// printf("%s%d %c%s\n", GREEN, i, s[i], RE);
 	}
 	mshell->s_token_arr = malloc(sizeof(t_token) * len);
-	printf("len:%d\n", len);
+	// printf("len:%d\n", len);
 }
 
 // void    add_quote_token(char c)

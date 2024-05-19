@@ -3,32 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 23:22:23 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 13:26:13 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:54:40 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-//*For env, use env_lst_len fn from utils/env_lst.c
-//!this fn will be deleted
-int	arr_len(char **arr)
-{
-	int	len;
-
-	len = 0;
-	while (*arr)
-	{
-		len++;
-		arr++;
-	}
-	return (len);
-}
-
-//finds position from start of s. 
-//Not iteration(from 0), iterates from 1!
+// finds position from start of s.
+// Not iteration(from 0), iterates from 1!
 int	ft_strchr_pos(char *s, int c)
 {
 	int	i;
