@@ -6,162 +6,114 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/19 13:58:33 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:32:26 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execute.h"
 
-void	convert_envp(t_mshell *mshell)
+void	ft_print_env(t_env_lst *env)
 {
-	int		i;
-	int		j;
-	char	*tmp;
+	t_env_lst	*tmp;
 
-	i = 0;
-	while (mshell->envp[i] != NULL)
+	tmp = env;
+	while (tmp)
 	{
-		j = 0;
-		while (mshell->env[i].name[j] != '\0')
-		{
-			if (mshell->env[i].name[j] == '=')
-			{
-				tmp = ft_strjoin(mshell->env[i].name, mshell->env[i].val);
-				ft_free(mshell->envp[i]);
-				mshell->envp[i] = ft_strdup(tmp);
-				ft_free(tmp);
-				break ;
-			}
-			j++;
-		}
-		i++;
+		if (tmp->val)
+			printf("declare -x %s=\"%s\"\n", tmp->name, tmp->val);
+		else
+			printf("declare -x %s\n", tmp->name);
+		tmp = tmp->next;
 	}
 }
 
-void	sort_env(char **envp)
+void	sort_env(t_env_lst *env)
 {
-	int		i;
-	int		j;
-	char	*tmp;
+	t_env_lst	*tmp;
+	char		*tmp_name;
+	char		*tmp_val;
 
-	i = 0;
-	while (envp[i] != NULL)
+	while (env)
 	{
-		j = i + 1;
-		while (envp[j] != NULL)
+		tmp = env->next;
+		while (tmp)
 		{
-			if (ft_strncmp(envp[i], envp[j], ft_strlen(envp[i])) > 0)
+			if (ft_strncmp(env->name, tmp->name, ft_strlen(env->name)) > 0)
 			{
-				tmp = envp[i];
-				envp[i] = envp[j];
-				envp[j] = tmp;
+				tmp_name = env->name;
+				tmp_val = env->val;
+				env->name = tmp->name;
+				env->val = tmp->val;
+				tmp->name = tmp_name;
+				tmp->val = tmp_val;
 			}
-			j++;
+			tmp = tmp->next;
 		}
-		i++;
+		env = env->next;
 	}
-}
-
-char	**ft_add_var(char **envp, char *var)
-{
-	int		i;
-	int		found;
-	char	**new_envp;
-
-	found = 0;
-	i = 0;
-	while (envp[i] != NULL)
-		i++;
-	new_envp = ft_malloc(sizeof(char *) * (i + 2));
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		new_envp[i] = ft_strdup(envp[i]);
-		if (ft_strncmp(envp[i], var, ft_strlen(var)) == 0)
-			found = 1;
-		i++;
-	}
-	if (found == 1)
-		printf("export: '%s': not a valid identifier\n", var);
-	else
-		new_envp[i] = ft_strdup(var);
-	new_envp[i + 1] = NULL;
-	return (new_envp);
 }
 
 void	ft_export(t_mshell *mshell)
 {
+	char	**tmp;
 	int		i;
-	char	**new_vars;
 
+	sort_env(mshell->env);
 	if (ft_strlen(mshell->input) == 6)
-	{
-		convert_envp(mshell);
-		sort_env(mshell->envp);
-		i = 0;
-		while (mshell->envp[i] != NULL)
-		{
-			printf("declare -x %s\n", mshell->envp[i]);
-			i++;
-		}
-	}
+		ft_print_env(mshell->env);
 	else
 	{
-		new_vars = ft_split(mshell->input, ' ');
+		tmp = ft_split(mshell->input, ' ');
 		i = 1;
-		while (new_vars[i] != NULL)
+		while (tmp[i])
 		{
-			mshell->envp = ft_add_var(mshell->envp, new_vars[i]);
+			fill_str(tmp[i], &mshell->env);
 			i++;
 		}
-		init_env(mshell, mshell->envp);
+		ft_free(tmp);
 	}
 }
 
-//*For env, use env_lst_len fn from utils/env_lst.c
-//*env type is now t_env_lst, located in: mshell->env
-char	**ft_remove_var(char **envp, char *var)
+void	remove_one_node(char *str, t_env_lst **env)
 {
-	int		i;
-	int		j;
-	char	**new_envp;
+	t_env_lst	*tmp;
+	t_env_lst	*prev;
 
-	i = 0;
-	j = 0;
-	new_envp = ft_malloc(sizeof(char *) * (arr_len(envp) + 1));
-	while (envp[i] != NULL)
+	tmp = *env;
+	prev = NULL;
+	while (tmp)
 	{
-		if (ft_strncmp(envp[i], var, ft_strlen(var)) != 0)
+		if (ft_strncmp(tmp->name, str, ft_strlen(str)) == 0)
 		{
-			new_envp[j] = ft_strdup(envp[i]);
-			j++;
+			if (prev)
+				prev->next = tmp->next;
+			else
+				*env = tmp->next;
+			ft_free(tmp->name);
+			ft_free(tmp->val);
+			ft_free(tmp);
+			return ;
 		}
-		i++;
+		prev = tmp;
+		tmp = tmp->next;
 	}
-	if (j == arr_len(envp))
-		printf("unset: '%s': not a valid identifier\n", var);
-	else
-		new_envp[j] = NULL;
-	return (new_envp);
 }
 
 void	ft_unset(t_mshell *mshell)
 {
 	int		i;
-	char	**rm_vars;
+	char	**rm_names;
 
-	i = 0;
 	if (ft_strlen(mshell->input) == 5)
 		printf("unset: not enough arguments\n");
 	else
 	{
-		rm_vars = ft_split(mshell->input, ' ');
+		rm_names = ft_split(mshell->input, ' ');
 		i = 1;
-		while (rm_vars[i] != NULL)
+		while (rm_names[i] != NULL)
 		{
-			mshell->envp = ft_remove_var(mshell->envp, rm_vars[i]);
+			remove_one_node(rm_names[i], &mshell->env);
 			i++;
 		}
-		init_env(mshell, mshell->envp);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 16:43:12 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:39:44 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void	trim_input(char *src, char *dst)
 	while (src[++i])
 	{
 		quote_opened_type(src[i], &q);
-		if (!(((space(src[i]) && space(src[i + 1])) || (space(src[i])
-						&& (!d || !src[i + 1]))) && !q))
+		if (!(((space(src[i]) && space(src[i + 1])) || (space(src[i]) && (!d
+							|| !src[i + 1]))) && !q))
 			dst[d++] = src[i];
 	}
 }
@@ -62,9 +62,10 @@ static void	replace_dollars(char **s, t_mshell *mshell)
 static void	split_tokens(char *s, t_mshell *mshell)
 {
 	// char	q;
-
 	// q = '\0';
-	printf("--------------------------%stokens%s\n", GREEN, RE);
+	(void)s;
+	(void)mshell;
+	// printf("--------------------------%stokens%s\n", GREEN, RE);
 	init_token_arr(s, mshell);
 	// while (*s)
 	// {
@@ -79,8 +80,10 @@ static void	split_tokens(char *s, t_mshell *mshell)
 	// 		printf("c");
 	// 	s++;
 	// }
-	printf("--------------------------%stokens END%s\n\n\n", GREEN, RE);
+	// printf("--------------------------%stokens END%s\n\n\n", GREEN, RE);
 }
+
+
 
 int	parse_input(char *input, t_mshell *mshell)
 {
@@ -93,11 +96,10 @@ int	parse_input(char *input, t_mshell *mshell)
 	if (!dst)
 		alloc_err();
 	trim_input(input, dst);
-	printf("%s trim: |%s|\n%s", GREEN, dst, RE);
+	// printf("%s trim: |%s|\n%s", GREEN, dst, RE);
 	replace_dollars(&dst, mshell);
-	printf("%s $: |%s|\n%s", GREEN, dst, RE);
+	// printf("%s $: |%s|\n%s", GREEN, dst, RE);
 	split_tokens(dst, mshell);
 	mshell->input = dst;
 	return (0);
 }
-

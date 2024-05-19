@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 03:28:01 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 15:58:43 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:42:16 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	init_env(t_mshell *mshell, char **env)
 	int	i;
 
 	i = 0;
-	printf("env\n");
 	while (env[i])
 	{
 		if (fill_str(env[i], &mshell->env))
@@ -61,13 +60,12 @@ void	init_env(t_mshell *mshell, char **env)
 	// print_env(mshell->env);
 }
 
-//it can be used when env command is inputed
+// it can be used when env command is inputed
 void	print_env(t_env_lst *env)
 {
 	while (env)
 	{
-		printf("%s%s = %s%s%s\n", YELLOW, env->name, GREEN, \
-			env->val, RE);
+		printf("%s%s = %s%s%s\n", YELLOW, env->name, GREEN, env->val, RE);
 		env = env->next;
 	}
 }
