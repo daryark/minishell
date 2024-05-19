@@ -1,24 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.c                                           :+:      :+:    :+:   */
+/*   utils_signals.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:24:46 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/16 18:18:41 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/19 13:50:04 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
-
-void	init_mshell(t_mshell *mshell, char **env)
-{
-	init_env(mshell, env);
-	mshell->envp = env;
-	mshell->exit_status = 0;
-	mshell->input = NULL;
-}
 
 void	handle_sigint(int signals)
 {

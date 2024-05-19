@@ -6,11 +6,20 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/18 20:50:37 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/19 14:01:20 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
+
+void	init_mshell(t_mshell *mshell, char **env)
+{
+	mshell->env = NULL;
+	init_env(mshell, env);
+	mshell->envp = env;
+	mshell->exit_status = 0;
+	mshell->input = NULL;
+}
 
 char	*get_currect_path(char **envp)
 {
@@ -36,24 +45,35 @@ char	*get_currect_path(char **envp)
 	ft_free(tmp2);
 	return (path);
 }
+
 static void	minishell_loop(t_mshell *mshell, char **envp)
 {
 	char	*input;
 	char	*path;
 
+	(void)envp;
 	while (1)
 	{
 		path = get_currect_path(mshell->envp);
 		ignore_signals();
 		input = readline(path);
-		add_history(input);
-		if (!input || ft_strncmp(input, "exit", 4) == 0)
+		if (!ft_strncmp(input, "exit", 4) && ft_strlen(input) == 4)
 		{
 			printf("exit\n");
 			ft_free(input);
 			break ;
 		}
-		parse_input(input, mshell);
+		if (!input || !*input)
+		{
+			ft_free(input);
+			continue ;
+		}
+		add_history(input);
+		if (parse_input(input, mshell))
+		{
+			ft_free(input);
+			continue ;
+		}
 		ft_execute(mshell, envp);
 		ft_free(input);
 	}

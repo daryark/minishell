@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/16 18:12:57 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/19 13:58:21 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 # include "../ft_destructor/ft_alloc.h"
 # include "../libft/libft.h"
+# include "parsing.h"
 # include "execute.h"
 # include "sources.h"
 # include <dirent.h>
@@ -36,43 +37,18 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-typedef struct s_env_line
-{
-	char		*val;
-	char		*name;
-}				t_env_line;
 
-typedef struct s_mshell
-{
-	t_env_line	*env;
-	char		*input;
-	char		**envp;
-	int			exit_status;
 
-}				t_mshell;
-
-//*PARSING
-// init_env.c
-void			init_env(t_mshell *mshell, char **env);
-// parsing.c
-void			parse_input(char *input, t_mshell *mshell);
-// parse_err.c
-void			syntax_err(int c);
-int				input_err_check(char *input);
-// utils_parsing.c
-int				space(char c);
-int				arr_len(char **arr);
-int				ft_strchr_pos(char *s, int c);
-void			quote_opened_type(char c, char *quote);
-// dollar_parse.c
-void			dollar_question_replace(char **s, int i, t_mshell *mshell);
 //*UTILS
 // struct.c
 void			init_mshell(t_mshell *mshell, char **env);
 void			handle_sigint(int signals);
 void			ignore_signals(void);
 void			ft_free_array(char **array);
+void            alloc_err(void);
+char			**split_save_divider(char *s, char c);
 
-//*EXEC
-// execute.c
+void	        ft_lstadd_env(t_env_lst **lst, char *name, char *val);
+void	        clean_lst_env(t_env_lst **lst);
+void	        clean_node_env(t_env_lst **lst);
 #endif

@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/17 19:51:48 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/19 13:58:33 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ void	ft_export(t_mshell *mshell)
 	}
 }
 
+//*For env, use env_lst_len fn from utils/env_lst.c
+//*env type is now t_env_lst, located in: mshell->env
 char	**ft_remove_var(char **envp, char *var)
 {
 	int		i;
