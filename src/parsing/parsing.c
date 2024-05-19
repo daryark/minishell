@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 13:59:13 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/19 16:43:12 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static void	replace_dollars(char **s, t_mshell *mshell)
 	while (dllr_arr[++i])
 		dollar_value_subst(&dllr_arr[i], &q, mshell);
 	ft_free(*s);
-	i = 0;
-	while (dllr_arr[i])
+	i = -1;
+	while (dllr_arr[++i])
 	{
 		if (!i)
 			*s = ft_strdup(dllr_arr[i]);
@@ -55,7 +55,6 @@ static void	replace_dollars(char **s, t_mshell *mshell)
 			*s = ft_strjoin(*s, dllr_arr[i + 1]);
 		if (!*s)
 			alloc_err();
-		i++;
 	}
 	//*free dllr_arr write fn!!!!
 }
@@ -65,8 +64,6 @@ static void	split_tokens(char *s, t_mshell *mshell)
 	// char	q;
 
 	// q = '\0';
-	(void)s;
-	(void)mshell;
 	printf("--------------------------%stokens%s\n", GREEN, RE);
 	init_token_arr(s, mshell);
 	// while (*s)

@@ -6,36 +6,43 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:30:07 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/18 02:24:54 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:15:21 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-//finds part with env_var name in *s, updates *i(to pass back in strjoin)
-//return env_var value
-static char	*find_replace_env_var(char *s, int *i, t_env_lst *env)
-{
-	char	*value;
-	char	*name;
 
-	value = NULL;
-	name = NULL;
-	while (s[*i] && ft_isalnum(s[*i]))
-		(*i)++;
-	name = ft_substr(s, 1, (*i) - 1);
-	if (!name)
-		return (value);
+t_env_lst	*find_evn_var(char *name, t_env_lst *env)
+{
 	while (env->next)
 	{
 		if (ft_strlen(name) == ft_strlen(env->name)
 			&& !ft_strncmp(name, env->name, ft_strlen(name)))
-		{
-			value = ft_strdup(env->val);
-			break ;
-		}
+			return (env);
 		env = env->next;
 	}
+	return (NULL);
+}
+//finds part with env_var name in *s, updates *i(to pass back in strjoin)
+//return env_var value
+static char	*find_replace_env_var(char *s, int *i, t_env_lst *env)
+{
+	char		*value;
+	char		*name;
+	t_env_lst	*target;
+
+	value = NULL;
+	name = NULL;
+	target = NULL;
+	while (s[*i] && (ft_isalnum(s[*i] || s[*i] == '_')))
+		(*i)++;
+	name = ft_substr(s, 1, (*i) - 1);
+	if (!name)
+		return (NULL);
+	target = find_evn_var(name, env);
+	if (target != NULL)
+		value = ft_strdup(target->val);
 	if (!value)
 		value = ft_calloc(sizeof(char), 1);
 	return (ft_free(name), value);

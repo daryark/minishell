@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:30:36 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/18 18:38:05 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/19 17:13:20 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void			syntax_err(int c);
 int				input_err_check(char *input);
 //parsing
 void			init_env(t_mshell *mshell, char **env);
+int				fill_str(char *s, t_env_lst **lst);
 int				parse_input(char *input, t_mshell *mshell);
 // void			replace_dollars(char **s, t_mshell *mshell);
 void			dollar_value_subst(char **s, char *q, t_mshell *mshell);
@@ -68,6 +69,7 @@ void			quote_opened_type(char c, char *q);
 int				arr_len(char **arr); //!delete definition and fn
 int				env_lst_len(t_env_lst *lst);//*this fn instead
 int				ft_strchr_pos(char *s, int c);
+t_env_lst		*find_evn_var(char *name, t_env_lst *env);
 void            init_token_arr(char *s, t_mshell *mshell);
 
 #endif
