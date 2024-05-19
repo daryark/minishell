@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:30:36 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 17:38:55 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/19 18:04:06 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int						spec_symb(char *s, int i);
 void					quote_opened_type(char c, char *q);
 int						env_lst_len(t_env_lst *lst);
 int						ft_strchr_pos(char *s, int c);
-t_env_lst				*find_evn_var(char *name, t_env_lst *env);
+t_env_lst				*find_env_node(char *name, t_env_lst *env);
 void					init_token_arr(char *s, t_mshell *mshell);
 
 #endif

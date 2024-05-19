@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 17:29:17 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/19 18:27:35 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	minishell_loop(t_mshell *mshell, char **envp)
 		path = get_currect_path(mshell->envp);
 		ignore_signals();
 		input = readline(path);
-		if (!ft_strncmp(input, "exit", 4) && ft_strlen(input) == 4)
+		if (!ft_strncmp(input, "exit", 4))
 		{
 			printf("exit\n");
 			ft_free(input);
@@ -74,7 +74,7 @@ static void	minishell_loop(t_mshell *mshell, char **envp)
 			ft_free(input);
 			continue ;
 		}
-		ft_execute(mshell, envp);
+		// ft_execute(mshell, envp);
 		ft_free(input);
 	}
 }

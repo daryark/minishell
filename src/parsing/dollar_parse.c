@@ -6,43 +6,82 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:30:07 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 17:15:21 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/19 19:34:37 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
+// char	*find_name(char *s)
+// {
+// 	int i;
 
-t_env_lst	*find_evn_var(char *name, t_env_lst *env)
-{
-	while (env->next)
-	{
-		if (ft_strlen(name) == ft_strlen(env->name)
-			&& !ft_strncmp(name, env->name, ft_strlen(name)))
-			return (env);
-		env = env->next;
-	}
-	return (NULL);
-}
+// 	i = 0;
+// 	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
+// 		i++;
+// 	return (ft_substr(s, 0, i));
+// }
+
+// t_env_lst	*find_env_node(char *name, t_env_lst *env)
+// {
+// 	while (env->next != NULL)
+// 	{
+// 		printf("env->name:%s\n", env->name);
+// 		if (ft_strlen(name) == ft_strlen(env->name)
+// 			&& !ft_strncmp(name, env->name, ft_strlen(name)))
+// 			return (env);
+// 		env = env->next;
+// 	}
+// 	return (NULL);
+// }
+// //finds part with env_var name in *s, updates *i(to pass back in strjoin)
+// //return env_var value
+// static char	*find_replace_env_var(char *s, int *i, t_env_lst *env)
+// {
+// 	char		*name;
+// 	char		*value;
+// 	t_env_lst	*target;
+
+// 	value = NULL;
+// 	name = NULL;
+// 	target = NULL;
+// 	name = find_name(&s[*i]);
+// 	printf("after name: %s\n", name);
+// 	target = find_env_node(name, env);
+// 	printf("target value:%s\n", target->val);
+// 	*i += ft_strlen(target->name);
+// 	if (target != NULL)
+// 		value = ft_strdup(target->val);
+// 	if (!value)
+// 		value = ft_calloc(sizeof(char), 1);
+// 	return (ft_free(name), value);
+// }
+
+
 //finds part with env_var name in *s, updates *i(to pass back in strjoin)
 //return env_var value
 static char	*find_replace_env_var(char *s, int *i, t_env_lst *env)
 {
-	char		*value;
-	char		*name;
-	t_env_lst	*target;
+	char	*value;
+	char	*name;
 
 	value = NULL;
 	name = NULL;
-	target = NULL;
-	while (s[*i] && (ft_isalnum(s[*i] || s[*i] == '_')))
+	while (s[*i] && (ft_isalnum(s[*i]) || s[*i] == '_'))
 		(*i)++;
 	name = ft_substr(s, 1, (*i) - 1);
 	if (!name)
-		return (NULL);
-	target = find_evn_var(name, env);
-	if (target != NULL)
-		value = ft_strdup(target->val);
+		return (value);
+	while (env->next)
+	{
+		if (ft_strlen(name) == ft_strlen(env->name)
+			&& !ft_strncmp(name, env->name, ft_strlen(name)))
+		{
+			value = ft_strdup(env->val);
+			break ;
+		}
+		env = env->next;
+	}
 	if (!value)
 		value = ft_calloc(sizeof(char), 1);
 	return (ft_free(name), value);

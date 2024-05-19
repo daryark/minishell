@@ -41,3 +41,12 @@
     unclosed quotes " and '. ✅
     shell level after 999. ❌
     unclosed fds. ❌
+
+
+Dasha:
+    separate find_replace_env_var fn (to have find lst with the name and replace as two fns')
+    tokenize
+    check err (like redir to nowhere, pipe without both sides ...)
+    assign type to tokens
+    open quotes
+    put tokens into commands

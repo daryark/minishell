@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 17:39:44 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/19 19:34:09 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	replace_dollars(char **s, t_mshell *mshell)
 	int		i;
 	char	q;
 
+	printf("dollar parse\n");
 	dllr_arr = split_save_divider(*s, '$');
 	if (!dllr_arr)
 		alloc_err();
@@ -56,6 +57,7 @@ static void	replace_dollars(char **s, t_mshell *mshell)
 		if (!*s)
 			alloc_err();
 	}
+	printf("end dollar parse-------------\n");
 	//*free dllr_arr write fn!!!!
 }
 
@@ -96,9 +98,9 @@ int	parse_input(char *input, t_mshell *mshell)
 	if (!dst)
 		alloc_err();
 	trim_input(input, dst);
-	// printf("%s trim: |%s|\n%s", GREEN, dst, RE);
+	printf("%s trim: |%s|\n%s", GREEN, dst, RE);
 	replace_dollars(&dst, mshell);
-	// printf("%s $: |%s|\n%s", GREEN, dst, RE);
+	printf("%s $: |%s|\n%s", GREEN, dst, RE);
 	split_tokens(dst, mshell);
 	mshell->input = dst;
 	return (0);
