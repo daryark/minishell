@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 19:34:09 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/20 22:58:36 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static void	replace_dollars(char **s, t_mshell *mshell)
 	int		i;
 	char	q;
 
-	printf("dollar parse\n");
 	dllr_arr = split_save_divider(*s, '$');
 	if (!dllr_arr)
 		alloc_err();
@@ -57,16 +56,20 @@ static void	replace_dollars(char **s, t_mshell *mshell)
 		if (!*s)
 			alloc_err();
 	}
-	printf("end dollar parse-------------\n");
-	//*free dllr_arr write fn!!!!
+	ft_free_array(dllr_arr);
 }
 
 static void	split_tokens(char *s, t_mshell *mshell)
 {
 	// char	q;
+	// int		i;
+
 	// q = '\0';
-	(void)s;
-	(void)mshell;
+	// i = -1;
+	
+		//space && !q . Cut space, pass through
+		// spec_symb && !q . Just separate spec_symb into token
+
 	// printf("--------------------------%stokens%s\n", GREEN, RE);
 	init_token_arr(s, mshell);
 	// while (*s)

@@ -44,8 +44,8 @@
 
 
 Dasha:
-    separate find_replace_env_var fn (to have find lst with the name and replace as two fns')
     tokenize
+    fix cases when $ is not first in " (ex: echo "hello $SHLVL; echo "< $SHLVL" => hello 1; < 1)
     check err (like redir to nowhere, pipe without both sides ...)
     assign type to tokens
     open quotes

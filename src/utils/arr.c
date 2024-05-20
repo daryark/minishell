@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_signals.c                                    :+:      :+:    :+:   */
+/*   arr.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/12 14:24:46 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/20 22:43:29 by dyarkovs         ###   ########.fr       */
+/*   Created: 2024/05/20 22:42:17 by dyarkovs          #+#    #+#             */
+/*   Updated: 2024/05/20 22:43:48 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-void	handle_sigint(int signals)
+void	ft_free_array(char **array)
 {
-	(void)signals;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_redisplay();
-}
+	int	i;
 
-void	ignore_signals(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
+	i = 0;
+	while (array[i])
+	{
+		ft_free(array[i]);
+		i++;
+	}
+	ft_free(array);
 }
-

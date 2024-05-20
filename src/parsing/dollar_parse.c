@@ -6,85 +6,56 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:30:07 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 19:34:37 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/20 23:02:26 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-// char	*find_name(char *s)
-// {
-// 	int i;
+//cut env name from str
+char	*cut_name(char *s)
+{
+	int		i;
+	char	*name;
 
-// 	i = 0;
-// 	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
-// 		i++;
-// 	return (ft_substr(s, 0, i));
-// }
+	i = 0;
+	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
+		i++;
+	name = ft_substr(s, 0, i);
+	if (!name)
+		alloc_err();
+	return (name);
+}
 
-// t_env_lst	*find_env_node(char *name, t_env_lst *env)
-// {
-// 	while (env->next != NULL)
-// 	{
-// 		printf("env->name:%s\n", env->name);
-// 		if (ft_strlen(name) == ft_strlen(env->name)
-// 			&& !ft_strncmp(name, env->name, ft_strlen(name)))
-// 			return (env);
-// 		env = env->next;
-// 	}
-// 	return (NULL);
-// }
-// //finds part with env_var name in *s, updates *i(to pass back in strjoin)
-// //return env_var value
-// static char	*find_replace_env_var(char *s, int *i, t_env_lst *env)
-// {
-// 	char		*name;
-// 	char		*value;
-// 	t_env_lst	*target;
-
-// 	value = NULL;
-// 	name = NULL;
-// 	target = NULL;
-// 	name = find_name(&s[*i]);
-// 	printf("after name: %s\n", name);
-// 	target = find_env_node(name, env);
-// 	printf("target value:%s\n", target->val);
-// 	*i += ft_strlen(target->name);
-// 	if (target != NULL)
-// 		value = ft_strdup(target->val);
-// 	if (!value)
-// 		value = ft_calloc(sizeof(char), 1);
-// 	return (ft_free(name), value);
-// }
-
+//takes the name str and returns node with name:val, or NULL
+t_env_lst	*find_env_node(char *name, t_env_lst *env)
+{
+	while (env)
+	{
+		if (ft_strlen(name) == ft_strlen(env->name)
+			&& !ft_strncmp(name, env->name, ft_strlen(name)))
+			return (env);
+		env = env->next;
+	}
+	return (NULL);
+}
 
 //finds part with env_var name in *s, updates *i(to pass back in strjoin)
 //return env_var value
 static char	*find_replace_env_var(char *s, int *i, t_env_lst *env)
 {
-	char	*value;
-	char	*name;
+	char		*find;
+	t_env_lst	*target;
 
-	value = NULL;
-	name = NULL;
-	while (s[*i] && (ft_isalnum(s[*i]) || s[*i] == '_'))
-		(*i)++;
-	name = ft_substr(s, 1, (*i) - 1);
-	if (!name)
-		return (value);
-	while (env->next)
-	{
-		if (ft_strlen(name) == ft_strlen(env->name)
-			&& !ft_strncmp(name, env->name, ft_strlen(name)))
-		{
-			value = ft_strdup(env->val);
-			break ;
-		}
-		env = env->next;
-	}
-	if (!value)
-		value = ft_calloc(sizeof(char), 1);
-	return (ft_free(name), value);
+	find = cut_name(&s[*i]);
+	target = find_env_node(find, env);
+	*i += ft_strlen(find);
+	ft_free(find);
+	if (!target || !target->val)
+		find = ft_calloc(sizeof(char), 1);
+	else
+		find = ft_strdup(target->val);
+	return (find);
 }
 
 //question sign $? or $?blahd
@@ -101,7 +72,7 @@ static int	question_case(char *s)
 //0/1 - i form which copy str (leave or not $ at start)
 static int	not_replace_cases(char *s, char q)
 {
-	if (s[0] != '$')
+	if (s[0] != '$' && q != '\"')
 		return (0);
 	else if (space(s[1]) || !s[1] || q == '\''
 		|| (q && (spec_symb(s, 1) || quote(s[1]))))

@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 18:27:35 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:49:13 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	minishell_loop(t_mshell *mshell, char **envp)
 			ft_free(input);
 			continue ;
 		}
-		// ft_execute(mshell, envp);
+		ft_execute(mshell, envp);
 		ft_free(input);
 	}
 }
