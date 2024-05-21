@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:42:17 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/20 22:43:48 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:08:06 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,22 @@ void	ft_free_array(char **array)
 		i++;
 	}
 	ft_free(array);
+}
+
+char	*arrjoin(char **arr)
+{
+	int		i;
+	char	*res;
+
+	i = -1;
+	while (arr[++i])
+	{
+		if (!i)
+			res = ft_strdup(arr[i]);
+		if (arr[i + 1])
+			res = ft_strjoin(res, arr[i + 1]);
+		if (!res)
+			alloc_err();
+	}
+	return (res);
 }

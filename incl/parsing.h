@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:30:36 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/20 18:52:17 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/21 21:25:05 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,19 @@
 
 typedef enum e_type
 {
-	T_WORD = 0, // word, string, file ...
-	T_DQUOTE,   //"
-	T_SQUOTE,   //'
+	T_WORD = 1, // word, string, file, command ...
 	T_PIPE,     //|
-	T_LREDIR,   //<
-	T_RREDIR,   //>
 	T_HEREDOC,  //<<
-	T_ADDREDIR, //>>
-	T_CMD,      // command
-	T_SP,       // space
-	T_NL,       // newline
+	T_RED_FROM, //<
+	T_APPEND, 	//>>
+	T_RED_TO,   //>
+	T_NL,       // newline ??
 }						t_type;
 
 typedef struct s_token
 {
 	char				*word;
-	t_type type; // or char ? '|', '\"', 'w'-for word; 'c' - for cmd...?
+	t_type				type; // or char ? '|', '\"', 'w'-for word; 'c' - for cmd...?
 }						t_token;
 
 typedef struct s_env_lst
@@ -45,7 +41,7 @@ typedef struct s_mshell
 {
 	t_env_lst			*env;
 	char				**envp;
-	t_token				*s_token_arr;
+	t_token				*tokarr;
 	char				*input;
 	int					exit_status;
 
@@ -64,12 +60,14 @@ void					dollar_value_subst(char **s, char *q, t_mshell *mshell);
 // parsing utils
 int						space(char c);
 int						quote(char c);
-int						spec_symb(char *s, int i);
+int						spec_symb(char *s);
 void					quote_opened_type(char c, char *q);
+int						pass_str(char *s);
 int						env_lst_len(t_env_lst *lst);
 int						ft_strchr_pos(char *s, int c);
 char					*cut_name(char *s);
 t_env_lst				*find_env_node(char *name, t_env_lst *env);
 void					init_token_arr(char *s, t_mshell *mshell);
+t_type					token_typizator(char *s);
 
 #endif

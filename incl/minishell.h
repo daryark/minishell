@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 13:58:21 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:07:09 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,10 @@
 void			init_mshell(t_mshell *mshell, char **env);
 void			handle_sigint(int signals);
 void			ignore_signals(void);
+char			**split_save_divider(char *s, char c);
+char            *arrjoin(char **arr);
 void			ft_free_array(char **array);
 void            alloc_err(void);
-char			**split_save_divider(char *s, char c);
 
 void	        ft_lstadd_env(t_env_lst **lst, char *name, char *val);
 void	        clean_lst_env(t_env_lst **lst);

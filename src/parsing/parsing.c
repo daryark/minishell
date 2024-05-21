@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/20 22:58:36 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/21 21:47:28 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,55 +39,44 @@ static void	replace_dollars(char **s, t_mshell *mshell)
 	char	q;
 
 	dllr_arr = split_save_divider(*s, '$');
-	if (!dllr_arr)
-		alloc_err();
 	q = '\0';
 	i = -1;
 	while (dllr_arr[++i])
 		dollar_value_subst(&dllr_arr[i], &q, mshell);
 	ft_free(*s);
-	i = -1;
-	while (dllr_arr[++i])
-	{
-		if (!i)
-			*s = ft_strdup(dllr_arr[i]);
-		if (dllr_arr[i + 1])
-			*s = ft_strjoin(*s, dllr_arr[i + 1]);
-		if (!*s)
-			alloc_err();
-	}
+	*s = arrjoin(dllr_arr);
 	ft_free_array(dllr_arr);
 }
 
 static void	split_tokens(char *s, t_mshell *mshell)
 {
-	// char	q;
-	// int		i;
+	int		i;
+	int		a_i;
+	int		w_l;
 
-	// q = '\0';
-	// i = -1;
-	
-		//space && !q . Cut space, pass through
-		// spec_symb && !q . Just separate spec_symb into token
-
-	// printf("--------------------------%stokens%s\n", GREEN, RE);
+	i = -1;
+	a_i = 0;
 	init_token_arr(s, mshell);
-	// while (*s)
-	// {
-	// 	quote_opened_type(*s, &q);
-	// 	if (quote(*s) && q)
-	// 		add_quote_token(*s);
-	// 	else if (*s == '|')
-	// 		add_token(*s, 1, T_PIPE);
-	// 	else if (*s == '<' || *s == '>')
-	// 		printf("REDIR\n");
-	// 	else
-	// 		printf("c");
-	// 	s++;
-	// }
-	// printf("--------------------------%stokens END%s\n\n\n", GREEN, RE);
+	while (s[++i])
+	{
+		if (space(s[i]))
+			continue ;
+		mshell->tokarr[a_i].type = token_typizator(&s[i]);
+		w_l = spec_symb(&s[i]);
+		if (!w_l)
+			w_l = pass_str(&s[i]);
+		mshell->tokarr[a_i].word = ft_substr(s, i, w_l--);
+		i += w_l;
+		// printf("%s%s%s	", GREEN, mshell->tokarr[a_i].word, RE);
+		// printf("%s%d%s\n", YELLOW, mshell->tokarr[a_i].type, RE);
+		a_i++;
+	}
 }
 
+// static void	open_quotes(t_token *arr)
+// {
+
+// }
 
 
 int	parse_input(char *input, t_mshell *mshell)
@@ -105,6 +94,9 @@ int	parse_input(char *input, t_mshell *mshell)
 	replace_dollars(&dst, mshell);
 	printf("%s $: |%s|\n%s", GREEN, dst, RE);
 	split_tokens(dst, mshell);
+	open_quotes(mshell);
+	//check errors (if near < is not a word from both sides, if smth is from both sides of | ...)
 	mshell->input = dst;
+	ft_free(dst);
 	return (0);
 }
