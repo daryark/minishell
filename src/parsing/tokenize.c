@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:34:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 14:07:12 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:38:44 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,12 @@ int	pass_str(char *s, char *q)
 	}
 	return (i);
 }
+
 //*redo token search to handle cases:
 // echo"hello" vs echo "hello" //WORD vs WORD QUOTED_STR
 // ec"ho" "hello" //WORD QUOTED_STR
 // ec"ho""hello" //WORD
+
 void	init_token_arr(char *s, t_mshell *mshell)
 {
 	int		len;
@@ -78,7 +80,7 @@ void	init_token_arr(char *s, t_mshell *mshell)
 		len++;
 		// printf("%s%d %c%s\n", GREEN, i, s[i], RE);
 	}
-	mshell->s_token_arr = malloc(sizeof(t_token) * len);
+	mshell->s_token_arr = ft_malloc(sizeof(t_token) * len);
 	// printf("len:%d\n", len);
 }
 

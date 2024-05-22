@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 17:29:17 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:38:20 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,35 +46,30 @@ char	*get_currect_path(char **envp)
 	return (path);
 }
 
-static void	minishell_loop(t_mshell *mshell, char **envp)
+static void	minishell_loop(t_mshell *mshell)
 {
 	char	*input;
 	char	*path;
 
-	(void)envp;
+	ignore_signals();
 	while (1)
 	{
 		path = get_currect_path(mshell->envp);
-		ignore_signals();
 		input = readline(path);
-		if (!ft_strncmp(input, "exit", 4) && ft_strlen(input) == 4)
+		if (!input || (!ft_strncmp(input, "exit", 4) && ft_strlen(input) == 4))
 		{
 			printf("exit\n");
 			ft_free(input);
 			break ;
 		}
-		if (!input || !*input)
+		if(!*input)
 		{
 			ft_free(input);
 			continue ;
 		}
 		add_history(input);
-		if (parse_input(input, mshell))
-		{
-			ft_free(input);
-			continue ;
-		}
-		ft_execute(mshell, envp);
+		parse_input(input, mshell);
+		ft_execute(mshell);
 		ft_free(input);
 	}
 }
@@ -92,7 +87,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		write(1, GREEN "OK\n" RE, 14);
 		init_mshell(&mshell, envp);
-		minishell_loop(&mshell, envp);
+		minishell_loop(&mshell);
 	}
 	ft_destructor();
 	return (0);

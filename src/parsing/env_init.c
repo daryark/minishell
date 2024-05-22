@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 03:28:01 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 15:37:08 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:34:22 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	fill_str(char *s, t_env_lst **lst)
 	}
 	return (err);
 }
+
 //*Please, don't use this fn!!!!
 //*just add fn to change/add/remove needed name/value in the lst
 void	init_env(t_mshell *mshell, char **env)
