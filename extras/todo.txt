@@ -41,3 +41,11 @@
     unclosed quotes " and '. ✅
     shell level after 999. ❌
     unclosed fds. ❌
+
+
+Dasha:
+    open quotes
+    put tokens into commands
+    check err (like redir to nowhere, pipe without both sides ...)
+    fix cases when $ is not first in " (ex: echo "hello $SHLVL; echo "< $SHLVL" => hello 1; < 1)
+    separate fn split_save_divider

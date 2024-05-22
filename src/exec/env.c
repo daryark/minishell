@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/22 15:42:43 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:09:29 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	ft_export(t_mshell *mshell)
 {
 	char		**tmp;
 	int			i;
+	char		*name;
 	t_env_lst	*cpy_list;
 
 	cpy_list = NULL;
@@ -86,7 +87,10 @@ void	ft_export(t_mshell *mshell)
 		i = 1;
 		while (tmp[i])
 		{
-			fill_str(tmp[i], &mshell->env);
+			name = cut_name(tmp[i]);
+			if (!find_env_node(name, mshell->env))
+				fill_str(tmp[i], &mshell->env);
+			ft_free(name);
 			i++;
 		}
 		ft_free(tmp);

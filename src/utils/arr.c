@@ -1,31 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   arr.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/18 13:58:54 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/22 15:58:35 by dyarkovs         ###   ########.fr       */
+/*   Created: 2024/05/20 22:42:17 by dyarkovs          #+#    #+#             */
+/*   Updated: 2024/05/22 16:01:47 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../incl/minishell.h"
 
-int	ft_strncmp(char *s1, char *s2, size_t n)
+void	ft_free_array(char **array)
 {
-	unsigned char	*str1;
-	unsigned char	*str2;
-	size_t			i;
+	int	i;
 
-	if (!s1)
-		return (0);
-	str1 = (unsigned char *)s1;
-	str2 = (unsigned char *)s2;
 	i = 0;
-	while (i < n && str1[i] && str2[i] && str1[i] == str2[i])
+	while (array[i])
+	{
+		ft_free(array[i]);
 		i++;
-	if (i == n)
-		return (0);
-	return (str1[i] - str2[i]);
+	}
+	ft_free(array);
+}
+
+char	*arrjoin(char **arr)
+{
+	int		i;
+	char	*res;
+
+	i = -1;
+	while (arr[++i])
+	{
+		if (!i)
+			res = ft_strdup(arr[i]);
+		if (arr[i + 1])
+			res = ft_strjoin(res, arr[i + 1]);
+		if (!res)
+			alloc_err();
+	}
+	return (res);
 }

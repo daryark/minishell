@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/22 15:38:20 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/22 16:05:07 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,17 @@ static void	minishell_loop(t_mshell *mshell)
 			ft_free(input);
 			break ;
 		}
-		if(!*input)
+		if (!*input)
 		{
 			ft_free(input);
 			continue ;
 		}
 		add_history(input);
-		parse_input(input, mshell);
+		if (parse_input(input, mshell))
+		{
+			ft_free(input);
+			continue ;
+		}
 		ft_execute(mshell);
 		ft_free(input);
 	}
