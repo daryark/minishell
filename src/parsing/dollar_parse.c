@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:30:07 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/18 02:24:54 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:03:53 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-//finds part with env_var name in *s, updates *i(to pass back in strjoin)
-//return env_var value
+// finds part with env_var name in *s, updates *i(to pass back in strjoin)
+// return env_var value
 static char	*find_replace_env_var(char *s, int *i, t_env_lst *env)
 {
 	char	*value;
@@ -28,8 +28,8 @@ static char	*find_replace_env_var(char *s, int *i, t_env_lst *env)
 		return (value);
 	while (env->next)
 	{
-		if (ft_strlen(name) == ft_strlen(env->name)
-			&& !ft_strncmp(name, env->name, ft_strlen(name)))
+		if (ft_strlen(name) == ft_strlen(env->name) && !ft_strncmp(name,
+				env->name, ft_strlen(name)))
 		{
 			value = ft_strdup(env->val);
 			break ;
@@ -41,8 +41,8 @@ static char	*find_replace_env_var(char *s, int *i, t_env_lst *env)
 	return (ft_free(name), value);
 }
 
-//question sign $? or $?blahd
-//return i from which copy str
+// question sign $? or $?blahd
+// return i from which copy str
 static int	question_case(char *s)
 {
 	if (s[2])
@@ -51,14 +51,14 @@ static int	question_case(char *s)
 		return (ft_strlen(s));
 }
 
-//return -1 if not a case, 0/1 if yes,
-//0/1 - i form which copy str (leave or not $ at start)
+// return -1 if not a case, 0/1 if yes,
+// 0/1 - i form which copy str (leave or not $ at start)
 static int	not_replace_cases(char *s, char q)
 {
 	if (s[0] != '$')
 		return (0);
-	else if (space(s[1]) || !s[1] || q == '\''
-		|| (q && (spec_symb(s, 1) || quote(s[1]))))
+	else if (space(s[1]) || !s[1] || q == '\'' || (q && (spec_symb(s, 1)
+		|| quote(s[1]))))
 		return (0);
 	else if (!q && (spec_symb(s, 1) || quote(s[1])))
 		return (1);
@@ -85,7 +85,7 @@ static char	*replace_cases(char *s, t_mshell *mshell)
 }
 
 //*   echo$ "$"  echo$ "$" '$' "$<" $< adfds $df $PATH
-//String with one dollar (from splited arr) passed in arg
+// String with one dollar (from splited arr) passed in arg
 void	dollar_value_subst(char **s, char *q, t_mshell *mshell)
 {
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 15:34:39 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:08:27 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ static void	split_tokens(char *s, t_mshell *mshell)
 	// }
 	// printf("--------------------------%stokens END%s\n\n\n", GREEN, RE);
 }
-
-
 
 int	parse_input(char *input, t_mshell *mshell)
 {

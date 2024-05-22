@@ -6,28 +6,41 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/19 17:32:26 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:42:43 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execute.h"
 
-void	ft_print_env(t_env_lst *env)
+void	ft_env(t_env_lst *env, int i)
 {
 	t_env_lst	*tmp;
 
 	tmp = env;
+	if (i == 0)
+	{
+		while (tmp)
+		{
+			if (tmp->val)
+				printf("%s=%s\n", tmp->name, tmp->val);
+			tmp = tmp->next;
+		}
+		return ;
+	}
 	while (tmp)
 	{
-		if (tmp->val)
-			printf("declare -x %s=\"%s\"\n", tmp->name, tmp->val);
-		else
-			printf("declare -x %s\n", tmp->name);
+		if (ft_strncmp(tmp->name, "_", 1) != 0)
+		{
+			if (tmp->val)
+				printf("declare -x %s=\"%s\"\n", tmp->name, tmp->val);
+			else
+				printf("declare -x %s\n", tmp->name);
+		}
 		tmp = tmp->next;
 	}
 }
 
-void	sort_env(t_env_lst *env)
+void	tmp_sort_env(t_env_lst *env)
 {
 	t_env_lst	*tmp;
 	char		*tmp_name;
@@ -55,12 +68,18 @@ void	sort_env(t_env_lst *env)
 
 void	ft_export(t_mshell *mshell)
 {
-	char	**tmp;
-	int		i;
+	char		**tmp;
+	int			i;
+	t_env_lst	*cpy_list;
 
-	sort_env(mshell->env);
+	cpy_list = NULL;
 	if (ft_strlen(mshell->input) == 6)
-		ft_print_env(mshell->env);
+	{
+		copy_list(mshell->env, &cpy_list);
+		tmp_sort_env(cpy_list);
+		ft_env(cpy_list, 1);
+		clean_lst_env(&cpy_list);
+	}
 	else
 	{
 		tmp = ft_split(mshell->input, ' ');
@@ -105,7 +124,7 @@ void	ft_unset(t_mshell *mshell)
 	char	**rm_names;
 
 	if (ft_strlen(mshell->input) == 5)
-		printf("unset: not enough arguments\n");
+		return ;
 	else
 	{
 		rm_names = ft_split(mshell->input, ' ');

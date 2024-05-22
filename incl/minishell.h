@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/19 13:58:21 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:32:14 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 
 # include "../ft_destructor/ft_alloc.h"
 # include "../libft/libft.h"
-# include "parsing.h"
 # include "execute.h"
+# include "parsing.h"
 # include "sources.h"
 # include <dirent.h>
 # include <fcntl.h>
@@ -37,18 +37,17 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-
-
 //*UTILS
+void	copy_list(t_env_lst *env, t_env_lst **new);
 // struct.c
-void			init_mshell(t_mshell *mshell, char **env);
-void			handle_sigint(int signals);
-void			ignore_signals(void);
-void			ft_free_array(char **array);
-void            alloc_err(void);
-char			**split_save_divider(char *s, char c);
+void	init_mshell(t_mshell *mshell, char **env);
+void	handle_sigint(int signals);
+void	ignore_signals(void);
+void	ft_free_array(char **array);
+void	alloc_err(void);
+char	**split_save_divider(char *s, char c);
 
-void	        ft_lstadd_env(t_env_lst **lst, char *name, char *val);
-void	        clean_lst_env(t_env_lst **lst);
-void	        clean_node_env(t_env_lst **lst);
+void	ft_lstadd_env(t_env_lst **lst, char *name, char *val);
+void	clean_lst_env(t_env_lst **lst);
+void	clean_node_env(t_env_lst **lst);
 #endif
