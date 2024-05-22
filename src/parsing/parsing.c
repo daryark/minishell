@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/21 21:47:28 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:33:09 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,22 @@ static void	split_tokens(char *s, t_mshell *mshell)
 	}
 }
 
-// static void	open_quotes(t_token *arr)
-// {
+static void	open_quotes(t_token *arr)
+{
+	int	a_i;
+	int	i;
 
-// }
+	a_i = -1;
+	while (arr[++a_i].word)
+	{
+		i = -1;
+		while (arr[a_i].word[++i])
+		{
+			
+		}
+		
+	}
+}
 
 
 int	parse_input(char *input, t_mshell *mshell)
