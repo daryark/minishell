@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/22 19:31:54 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:33:38 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,14 @@ int	parse_input(char *input, t_mshell *mshell)
 	if (!dst)
 		alloc_err();
 	trim_input(input, dst);
-	printf("%s trim: |%s|\n%s", GREEN, dst, RE);
+	// printf("%s trim: |%s|\n%s", GREEN, dst, RE);
 	replace_dollars(&dst, mshell);
-	printf("%s $: |%s|\n%s", GREEN, dst, RE);
+	// printf("%s $: |%s|\n%s", GREEN, dst, RE);
 	split_tokens(dst, mshell);
 	// open_quotes(mshell);
+	//do tokens
 	//check errors (if near < is not a word from both sides, if smth is from both sides of | ...)
-	mshell->input = dst;
+	mshell->input = ft_strdup(input);
 	ft_free(dst);
 	return (0);
 }

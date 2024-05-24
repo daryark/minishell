@@ -6,29 +6,43 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:30:36 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/22 15:58:25 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:31:56 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
+typedef struct s_mshell		t_mshell;
+typedef struct s_builtin	t_builtin;
+
 typedef enum e_type
 {
-	T_WORD = 1, // word, string, file, command ...
-	T_PIPE,     //|
-	T_HEREDOC,  //<<
-	T_RED_FROM, //<
-	T_APPEND, 	//>>
-	T_RED_TO,   //>
-	T_NL,       // newline ??
+	T_WORD = 1,	// word, string, file, command ...
+	T_PIPE,		//|
+	T_HEREDOC,	//<<
+	T_RED_FROM,	//<
+	T_APPEND,	//>>
+	T_RED_TO,	//>
+	T_NL,		// *newline ??
 }						t_type;
 
 typedef struct s_token
 {
 	char				*word;
-	t_type				type; // or char ? '|', '\"', 'w'-for word; 'c' - for cmd...?
+	t_type				type;
 }						t_token;
+
+// typedef struct s_cmdarr
+// {
+// 	char	*cmd;
+// 	char	*args; //(files and strings..) ? if i need it or put with cmd?
+// 	char	**options; //arr[str] -flags
+// 	t_type	*in; //arr[struct{name, type}];
+// 	t_type	*out; //arr[struct{name, type}];
+
+// };
+
 
 typedef struct s_env_lst
 {
@@ -36,16 +50,6 @@ typedef struct s_env_lst
 	char				*name;
 	struct s_env_lst	*next;
 }						t_env_lst;
-
-typedef struct s_mshell
-{
-	t_env_lst			*env;
-	char				**envp;
-	t_token				*tokarr;
-	char				*input;
-	int					exit_status;
-
-}						t_mshell;
 
 // err check
 void					syntax_err(int c);

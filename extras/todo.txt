@@ -36,7 +36,7 @@
     exit with no options. ✅
 
 14. Error handle:
-    open minishell inside minishell. ❌
+    open minishell inside minishell. ✅
     remove currect directory from inside. ✅
     unclosed quotes " and '. ✅
     shell level after 999. ❌
@@ -46,6 +46,7 @@
 Dasha:
     open quotes
     put tokens into commands
+    make exec work with command array of structs, and check builtins work with arguments
     check err (like redir to nowhere, pipe without both sides ...)
     fix cases when $ is not first in " (ex: echo "hello $SHLVL; echo "< $SHLVL" => hello 1; < 1)
     separate fn split_save_divider
