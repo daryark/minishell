@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/24 15:23:29 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:30:55 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_env(t_mshell *mshell)
 	t_env_lst	*tmp;
 
 	tmp = mshell->env;
-	if (mshell->export)
+	if (!mshell->export)
 	{
 		while (tmp)
 		{
@@ -27,15 +27,13 @@ void	ft_env(t_mshell *mshell)
 		}
 		return ;
 	}
+	tmp = mshell->export;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->name, "_", 1) != 0)
-		{
-			if (tmp->val)
-				printf("declare -x %s=\"%s\"\n", tmp->name, tmp->val);
-			else
-				printf("declare -x %s\n", tmp->name);
-		}
+		if (tmp->val)
+			printf("declare -x %s=\"%s\"\n", tmp->name, tmp->val);
+		else
+			printf("declare -x %s\n", tmp->name);
 		tmp = tmp->next;
 	}
 }
@@ -75,8 +73,6 @@ static void	remove_one_node(char *str, t_env_lst **env)
 	prev = NULL;
 	while (tmp)
 	{
-		//*don't understand why the check for 0 is right, but it doesn't go into (if)
-		// printf("name:%s, %d\n", tmp->name, ft_strncmp(tmp->name, str, ft_strlen(str)));
 		if (ft_strncmp(tmp->name, str, ft_strlen(str)) == 0)
 		{
 			if (prev)
@@ -95,21 +91,18 @@ static void	remove_one_node(char *str, t_env_lst **env)
 
 void	ft_export(t_mshell *mshell)
 {
-	char		**tmp;
-	int			i;
-	char		*name;
-	t_env_lst	*cpy_list;
+	char	**tmp;
+	int		i;
+	char	*name;
 
-	cpy_list = NULL;
 	if (ft_strlen(mshell->input) == 6)
 	{
-		copy_list(mshell->env, &cpy_list);
-		tmp_sort_env(cpy_list);
-		mshell->export = cpy_list;
+		copy_list(mshell->env, &mshell->export);
 		remove_one_node("_", &mshell->export);
+		tmp_sort_env(mshell->export);
 		ft_env(mshell);
-		clean_lst_env(&cpy_list);
-		cpy_list = NULL;
+		clean_lst_env(&mshell->export);
+		mshell->export = NULL;
 	}
 	else
 	{

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/24 15:16:35 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:00:19 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-//n - amnt of fns choice
+// n - amnt of fns choice
 void	init_builtin_arr(t_mshell *mshell)
 {
 	int	n_cmds;
@@ -80,7 +80,6 @@ static void	minishell_loop(t_mshell *mshell)
 	while (1)
 	{
 		path = get_currect_path(mshell->envp);
-		// printf("here\n");
 		input = readline(path);
 		if (!input || (!ft_strncmp(input, "exit", 4) && ft_strlen(input) == 4))
 		{
