@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/22 16:11:04 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/24 15:17:24 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,18 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+typedef struct s_mshell
+{
+	t_env_lst			*export;
+	t_env_lst			*env;
+	char				**envp;
+	t_token				*tokarr;
+	char				*input;
+	int					exit_status;
+	t_builtin			*builtin  ;
+
+}						t_mshell;
 
 //*UTILS
 void	copy_list(t_env_lst *env, t_env_lst **new);

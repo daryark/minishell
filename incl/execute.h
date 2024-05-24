@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:02 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/22 15:43:38 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/23 23:30:10 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,23 @@
 typedef struct s_mshell		t_mshell;
 typedef struct s_env_lst	t_env_lst;
 
-void						ft_pwd(void);
+typedef void	(exec_fn)(t_mshell *mshell);
+typedef struct s_builtin
+{
+	char	*name;
+	exec_fn	*fn_ptr;
+}			t_builtin;
+
+void						ft_pwd(t_mshell *s_mshell);
 void						ft_cd(t_mshell *mshell);
 void						ft_echo(t_mshell *mshell);
 void						ft_unset(t_mshell *mshell);
 void						ft_export(t_mshell *mshell);
-void						ft_execute(t_mshell *mshell);
-void						ft_env(t_env_lst *env, int i);
-void						ft_execve(char *cmd, char **envp);
 void						ft_exec_just_cmd(t_mshell *mshell);
+// void						ft_env(t_env_lst *env, int i);
+void						ft_env(t_mshell *mshell);
+void						ft_execute(t_mshell *mshell);
+void						ft_execve(char *cmd, char **envp);
 char						*ft_remove_substr(char *str, char *sub);
 
 #endif

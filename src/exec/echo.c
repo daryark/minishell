@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:48:21 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/20 15:38:23 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/24 15:14:09 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,22 @@ void	ft_echo(t_mshell *mshell)
 {
 	int		i;
 	int		n_flag;
-	char	**tmp;
+	t_token	*tmp;
 
-	tmp = ft_split(mshell->input, ' ');
+	tmp = mshell->tokarr;
 	i = 1;
 	n_flag = 0;
-	if (tmp[1] && ft_strncmp(tmp[1], "-n", 2) == 0)
+	if (tmp[1].word && ft_strncmp(tmp[1].word, "-n", 2) == 0)
 	{
 		n_flag = 1;
 		i++;
 	}
-	while (tmp[i])
+	while (tmp[i].word && tmp[i].type < 7)
 	{
-		if (tmp[i + 1] != NULL)
-			printf("%s ", tmp[i]);
+		if (tmp[i + 1].word != NULL)
+			printf("%s ", tmp[i].word);
 		else
-			printf("%s", tmp[i]);
+			printf("%s", tmp[i].word);
 		i++;
 	}
 	if (n_flag == 0)
