@@ -50,3 +50,4 @@ Dasha:
     check err (like redir to nowhere, pipe without both sides ...)
     fix cases when $ is not first in " (ex: echo "hello $SHLVL; echo "< $SHLVL" => hello 1; < 1)
     separate fn split_save_divider
+    ///!clean all the lists and arrays, all data allocated after usage 

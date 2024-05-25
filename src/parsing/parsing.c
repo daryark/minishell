@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/24 14:33:38 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/25 19:33:19 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	replace_dollars(char **s, t_mshell *mshell)
 	ft_free_array(dllr_arr);
 }
 
+//word - text or pipe/redir symb, type - number of type
 static void	split_tokens(char *s, t_mshell *mshell)
 {
 	int		i;
@@ -56,7 +57,7 @@ static void	split_tokens(char *s, t_mshell *mshell)
 
 	i = -1;
 	a_i = 0;
-	init_token_arr(s, mshell);
+	init_tokarr(s, mshell);
 	while (s[++i])
 	{
 		if (space(s[i]))
@@ -71,6 +72,8 @@ static void	split_tokens(char *s, t_mshell *mshell)
 		printf("%s%d%s\n", YELLOW, mshell->tokarr[a_i].type, RE);
 		a_i++;
 	}
+	mshell->tokarr[a_i].word = NULL;
+	mshell->tokarr[a_i].type = 0;
 }
 
 // static void	open_quotes(t_token *arr)
@@ -90,6 +93,15 @@ static void	split_tokens(char *s, t_mshell *mshell)
 // 	}
 // }
 
+//cmdarr [{args - arr[char *],
+//inp - arr[word - file, type - type red_inp/heredoc],
+//out - arr[word - file, type - type red_out/append]}, {args, inp, out}];
+static void	create_cmdarr(t_mshell *mshell)
+{
+	// printf("init cmdarr--------------------\n");
+	init_cmdarr(mshell);
+
+}
 
 int	parse_input(char *input, t_mshell *mshell)
 {
@@ -107,8 +119,8 @@ int	parse_input(char *input, t_mshell *mshell)
 	// printf("%s $: |%s|\n%s", GREEN, dst, RE);
 	split_tokens(dst, mshell);
 	// open_quotes(mshell);
-	//do tokens
 	//check errors (if near < is not a word from both sides, if smth is from both sides of | ...)
+	create_cmdarr(mshell);
 	mshell->input = ft_strdup(input);
 	ft_free(dst);
 	return (0);

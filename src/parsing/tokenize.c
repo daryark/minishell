@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:34:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/22 19:42:34 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/25 19:29:12 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	pass_str(char *s)
 	return (i);
 }
 
-void	init_token_arr(char *s, t_mshell *mshell)
+void	init_tokarr(char *s, t_mshell *mshell)
 {
 	int		len;
 	int		i;
@@ -66,9 +66,10 @@ void	init_token_arr(char *s, t_mshell *mshell)
 			i += pass_str(&s[i]) - 1;
 		len++;
 	}
-	mshell->tokarr = ft_malloc(sizeof(t_token) * len);
+	mshell->tokarr = ft_malloc(sizeof(t_token) * (len + 1));
 	if (!mshell->tokarr)
 		alloc_err();
+	// mshell->tokarr_len = len;
 }
 
 //arg - &s[i] ptr on needed str part
@@ -79,11 +80,11 @@ t_type	token_typizator(char *s)
 	else if (*s == *(s + 1) && *s == '<')
 		return (T_HEREDOC);
 	else if (*s == '<')
-		return (T_RED_FROM);
+		return (T_RED_INP);
 	else if (*s == *(s + 1) && *s == '>')
 		return (T_APPEND);
 	else if (*s == '>')
-		return (T_RED_TO);
+		return (T_RED_OUT);
 	else
 		return (T_WORD);
 }
