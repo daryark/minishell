@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/24 15:16:35 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/26 00:27:34 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	init_mshell(t_mshell *mshell, char **env)
 	mshell->exit_status = 0;
 	mshell->input = NULL; //?*
 	mshell->tokarr = NULL;
+	mshell->cmdarr = NULL;
+	mshell->cmdarr_len = 0;
 	mshell->builtin = NULL;
 	init_builtin_arr(mshell);
 }

@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:30:36 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/25 19:24:41 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/26 00:18:17 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ typedef struct s_builtin	t_builtin;
 
 typedef enum e_type
 {
-	T_WORD = 1,	// word, string, file, command ...
+	T_NDEF,		// *notdefined
+	T_WORD,	// word, string, file, command ...
 	T_PIPE,		//|
 	T_HEREDOC,	//<<
 	T_RED_INP,	//<
 	T_APPEND,	//>>
 	T_RED_OUT,	//>
-	T_NL,		// *newline ??
 }						t_type;
 
 typedef struct s_token
@@ -40,7 +40,6 @@ typedef struct s_cmdarr
 	t_token				*out; //arr[struct{name, type}];
 }						t_cmdarr;
 
-
 typedef struct s_env_lst
 {
 	char				*val;
@@ -55,21 +54,22 @@ int						input_err_check(char *input);
 void					init_env(t_mshell *mshell, char **env);
 int						fill_str(char *s, t_env_lst **lst);
 int						parse_input(char *input, t_mshell *mshell);
-// void			replace_dollars(char **s, t_mshell *mshell);
 void					dollar_value_subst(char **s, char *q, t_mshell *mshell);
-// void			dollar_replace(char **s, int st, int en, t_mshell *mshell);
+int						fill_cmd(t_cmdarr *cmd, t_token *tokarr);
 // parsing utils
 int						space(char c);
 int						quote(char c);
 int						spec_symb(char *s);
 void					quote_opened_type(char c, char *q);
 int						pass_str(char *s);
-int						env_lst_len(t_env_lst *lst);
 int						ft_strchr_pos(char *s, int c);
-char					*cut_name(char *s);
+int						env_lst_len(t_env_lst *lst);
 t_env_lst				*find_env_node(char *name, t_env_lst *env);
+char					*cut_name(char *s);
 void					init_tokarr(char *s, t_mshell *mshell);
 void					init_cmdarr(t_mshell *mshell);
+void					set_default_arr(t_token *arr, int len);
 t_type					token_typizator(char *s);
-
+void					print_cmds(t_mshell *mshell);
+void					print_env(t_env_lst *env);
 #endif
