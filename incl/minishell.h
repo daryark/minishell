@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/24 16:44:09 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:13:03 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_mshell
 	t_env_lst	*env;
 	char		**envp;
 	t_token		*tokarr;
+	int			tokarr_len;
 	char		*input;
 	int			exit_status;
 	t_builtin	*builtin;

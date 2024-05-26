@@ -6,31 +6,11 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:10:22 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/24 17:03:12 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:45:07 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execute.h"
-
-void	ft_execute(t_mshell *mshell)
-{
-	int	i;
-	int	found;
-
-	found = 0;
-	i = -1;
-	while (mshell->builtin[++i].name && !found)
-		found = !ft_strncmp(mshell->builtin[i].name, mshell->tokarr[0].word,
-				ft_strlen(mshell->builtin[i].name))
-			&& !ft_strncmp(mshell->builtin[i].name, mshell->tokarr[0].word,
-				ft_strlen(mshell->tokarr[0].word));
-	if (!found)
-		ft_exec_just_cmd(mshell);
-	else
-	{
-		mshell->builtin[i - 1].fn_ptr(mshell);
-	}
-}
 
 void	ft_cd(t_mshell *mshell)
 {

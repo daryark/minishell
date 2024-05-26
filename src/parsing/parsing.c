@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/24 16:43:36 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:15:13 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static void	replace_dollars(char **s, t_mshell *mshell)
 
 static void	split_tokens(char *s, t_mshell *mshell)
 {
-	int		i;
-	int		a_i;
-	int		w_l;
+	int	i;
+	int	a_i;
+	int	w_l;
 
 	i = -1;
 	a_i = 0;
@@ -71,6 +71,7 @@ static void	split_tokens(char *s, t_mshell *mshell)
 		// printf("%s%d%s\n", YELLOW, mshell->tokarr[a_i].type, RE);
 		a_i++;
 	}
+	mshell->tokarr_len = a_i;
 }
 
 // static void	open_quotes(t_token *arr)
@@ -84,12 +85,11 @@ static void	split_tokens(char *s, t_mshell *mshell)
 // 		i = -1;
 // 		while (arr[a_i].word[++i])
 // 		{
-			
+
 // 		}
-		
+
 // 	}
 // }
-
 
 int	parse_input(char *input, t_mshell *mshell)
 {
@@ -107,8 +107,9 @@ int	parse_input(char *input, t_mshell *mshell)
 	// printf("%s $: |%s|\n%s", GREEN, dst, RE);
 	split_tokens(dst, mshell);
 	// open_quotes(mshell);
-	//do tokens
-	//check errors (if near < is not a word from both sides, if smth is from both sides of | ...)
+	// do tokens
+	// check errors (if near < is not a word from both sides,
+	// if smth is from both sides of | ...)
 	mshell->input = ft_strdup(input);
 	ft_free(dst);
 	return (0);
