@@ -6,24 +6,22 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:04:49 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/26 00:28:58 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/26 17:12:44 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static void	alloc_cmd_default(int args, int inp, int out, t_cmdarr *cmd)
+static void	alloc_cmd(int args, int inp, int out, t_cmdarr *cmd)
 {
 	cmd->args = ft_malloc(sizeof(char *) * (args + 1));
-	cmd->inp = ft_malloc(sizeof(t_token) * (inp + 1));
-	cmd->out = ft_malloc(sizeof(t_token) * (out + 1));
+	cmd->inp = ft_malloc(sizeof(t_token) * inp);
+	cmd->out = ft_malloc(sizeof(t_token) * out);
 	if (!cmd->args || !cmd->inp || !cmd->out)
 		alloc_err();
-	// cmd->args[args] = NULL;
-	// set_default_arr(cmd->inp, ++inp);
-	// set_default_arr(cmd->out, ++out);
-	// cmd->inp[inp].word = NULL;
-	// cmd->out[out].word = NULL;
+	cmd->args[args] = NULL;
+	cmd->inp_l = inp;
+	cmd->out_l = out;
 }
 
 static void	init_cmd(int c, int *t, t_mshell *mshell)
@@ -35,8 +33,9 @@ static void	init_cmd(int c, int *t, t_mshell *mshell)
 	args = 0;
 	inp = 0;
 	out = 0;
-	while (mshell->tokarr[*t].type != T_PIPE
-		&& mshell->tokarr[*t].word != NULL)
+	// printf("%sinit cmd, *t:%d, cmd:%d	%s", RED, *t, c, RE);
+	while (mshell->tokarr && *t < mshell->tokarr_l && mshell->tokarr[*t].word 
+		&& mshell->tokarr[*t].type != T_PIPE)
 	{
 		// printf("i:%d, word:%s\n", *t, mshell->tokarr[*t].word);
 		if (mshell->tokarr[*t].type == T_WORD)
@@ -54,7 +53,7 @@ static void	init_cmd(int c, int *t, t_mshell *mshell)
 		(*t)++;
 	}
 	// printf("cmd[%d], args:%d, inp%d, out:%d\n", c, args, inp, out);
-	alloc_cmd_default(args, inp, out, &mshell->cmdarr[c]);
+	alloc_cmd(args, inp, out, &mshell->cmdarr[c]);
 }
 
 void    init_cmdarr(t_mshell *mshell)
@@ -64,58 +63,67 @@ void    init_cmdarr(t_mshell *mshell)
 
 	t = -1;
 	c = 1;
-	while (mshell->tokarr[++t].word != NULL)
+	while (++t < mshell->tokarr_l)
 	{
 		if (mshell->tokarr[t].type == T_PIPE)
 			c++;
 	}
-	mshell->cmdarr = malloc(sizeof(t_cmdarr) * c);
+	mshell->cmdarr = ft_malloc(sizeof(t_cmdarr) * c);
 	if (!mshell->cmdarr)
 		alloc_err();
-	// printf("check len of whole cmdarr:%d\n", len);
-	mshell->cmdarr_len = c;
+	mshell->cmdarr_l = c;
 	c = -1;
 	t = -1;
-	while (++c < mshell->cmdarr_len && mshell->tokarr[++t].word != NULL)
+	while (++c < mshell->cmdarr_l && ++t < mshell->tokarr_l)
 		init_cmd(c, &t, mshell);
 }
 
-static void	fill_redir_type(t_token *redir, t_token *tok)
+static void	fill_redir_type(t_token *redir, t_token *tokarr, int *t)
 {
-	redir->type = tok->type;
-	redir->word = (++tok)->word;
+	redir->type = tokarr[*t].type;
+	(*t)++;
+	if (!tokarr[*t].word)
+		alloc_err();
+	redir->word = ft_strdup(tokarr[*t].word);
+	// printf("%sredir->word:%s%s	", RED, redir->word, RE);
 }
 
 //takes curr cmd, and token start i for this cmd
 //returns token end i (where encounted pipe or end of arr)
-int	fill_cmd(t_cmdarr *cmd, t_token *tok)
+void	fill_cmd(int cmd, int *tok, t_mshell *mshell)
 {
 	int	a;
 	int	i;
 	int	o;
-	int	t_i;
 
 	a = -1;
 	i = -1;
 	o = -1;
-	t_i = 0;
-	while (tok[t_i].type != T_PIPE
-		&& tok[t_i].word != NULL)
+	while (*tok < mshell->tokarr_l && mshell->tokarr[*tok].type != T_PIPE)
 	{
-		if (tok[t_i].type == T_RED_INP
-			|| tok[t_i].type == T_HEREDOC)
-			fill_redir_type(&cmd->inp[++i], &tok[t_i++]);
-		else if (tok[t_i].type == T_RED_OUT
-			|| tok[t_i].type == T_APPEND)
-			fill_redir_type(&cmd->out[++o], &tok[t_i++]);
+		if (mshell->tokarr[*tok].type == T_RED_INP
+			|| mshell->tokarr[*tok].type == T_HEREDOC)
+		{
+			// mshell->cmdarr[cmd].inp[++i].word = mshell->tokarr[(*tok)++].word;
+			// mshell->cmdarr[cmd].inp[++i].type = ft_strdup(mshell->tokarr[(*tok)].type);
+			// printf("%sfill cmd, inp: %s%s\n", YELLOW, mshell->tokarr[*tok].word, RE);
+			fill_redir_type(&mshell->cmdarr[cmd].inp[++i], \
+			mshell->tokarr, tok);
+			// printf("%sinp->word:%s, tok:%s%s\n", RED, mshell->cmdarr[cmd].inp[i].word, RE, mshell->tokarr[*tok].word);
+		}
+		else if (mshell->tokarr[*tok].type == T_RED_OUT
+			|| mshell->tokarr[*tok].type == T_APPEND)
+		{
+			// mshell->cmdarr[cmd].out[++o].word = mshell->tokarr[(*tok)++].word;
+			// mshell->cmdarr[cmd].out[++o].type = ft_strdup(mshell->tokarr[(*tok)].type);
+			// printf("%sfill cmd, out: %s%s\n", YELLOW, mshell->tokarr[*tok].word, RE);
+			fill_redir_type(&mshell->cmdarr[cmd].out[++o], \
+			mshell->tokarr, tok);
+			// printf("%sout->word:%s, tok:%s%s\n", RED, mshell->cmdarr[cmd].out[o].word, RE, mshell->tokarr[*tok].word);
+		}
 		else
-			cmd->args[++a] = tok[t_i].word;
-		t_i++;
+			mshell->cmdarr[cmd].args[++a] = mshell->tokarr[*tok].word;
+		(*tok)++;
 	}
-	cmd->args[++a] = NULL;
-	cmd->inp[++i].type = T_NDEF;
-	cmd->inp[i].word = NULL;
-	cmd->out[++o].type = T_NDEF;
-	cmd->out[o].word = NULL;
-	return (t_i);
+
 }

@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 22:42:17 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/26 00:13:59 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/26 14:32:10 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,4 @@ char	*arrjoin(char **arr)
 			alloc_err();
 	}
 	return (res);
-}
-
-void	set_default_arr(t_token *arr, int len)
-{
-	int	i;
-
-	i = -1;
-	while (++i < len)
-	{
-		arr->word = NULL;
-		arr->type = T_NDEF;
-	}
 }

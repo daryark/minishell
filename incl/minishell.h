@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/25 19:09:13 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/26 14:42:06 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef struct s_mshell
 	t_cmdarr			*cmdarr;
 	t_builtin			*builtin;
 	int					exit_status;
-	// int					tokarr_len;
-	int					cmdarr_len;
+	int					tokarr_l;
+	int					cmdarr_l;
 	char				**envp;//*
 	char				*input;//*
 
@@ -64,7 +64,8 @@ void            alloc_err(void);
 char	        *arrjoin(char **arr);
 char			**split_save_divider(char *s, char c);
 
-void	ft_lstadd_env(t_env_lst **lst, char *name, char *val);
-void	clean_lst_env(t_env_lst **lst);
-void	clean_node_env(t_env_lst **lst);
+void			ft_lstadd_env(t_env_lst **lst, char *name, char *val);
+void			clean_lst_env(t_env_lst **lst);
+void			clean_node_env(t_env_lst **lst);
+void			clean_command_data(t_mshell *mshell);
 #endif

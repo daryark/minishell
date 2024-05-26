@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:30:36 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/26 00:18:17 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/26 14:32:12 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_cmdarr
 	char				**args;
 	t_token				*inp; //arr[struct{name, type}];
 	t_token				*out; //arr[struct{name, type}];
+	int					inp_l;
+	int					out_l;
 }						t_cmdarr;
 
 typedef struct s_env_lst
@@ -55,7 +57,7 @@ void					init_env(t_mshell *mshell, char **env);
 int						fill_str(char *s, t_env_lst **lst);
 int						parse_input(char *input, t_mshell *mshell);
 void					dollar_value_subst(char **s, char *q, t_mshell *mshell);
-int						fill_cmd(t_cmdarr *cmd, t_token *tokarr);
+void					fill_cmd(int cmd, int *tok, t_mshell *mshell);
 // parsing utils
 int						space(char c);
 int						quote(char c);
@@ -68,7 +70,6 @@ t_env_lst				*find_env_node(char *name, t_env_lst *env);
 char					*cut_name(char *s);
 void					init_tokarr(char *s, t_mshell *mshell);
 void					init_cmdarr(t_mshell *mshell);
-void					set_default_arr(t_token *arr, int len);
 t_type					token_typizator(char *s);
 void					print_cmds(t_mshell *mshell);
 void					print_env(t_env_lst *env);

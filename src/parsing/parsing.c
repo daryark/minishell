@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/26 00:16:55 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/26 17:15:08 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,11 @@ static void	split_tokens(char *s, t_mshell *mshell)
 			w_l = pass_str(&s[i]);
 		mshell->tokarr[a_i].word = ft_substr(s, i, w_l--);
 		i += w_l;
-		printf("%s%s%s	", GREEN, mshell->tokarr[a_i].word, RE);
-		printf("%s%d%s\n", YELLOW, mshell->tokarr[a_i].type, RE);
+		// printf("%s%s%s	", GREEN, mshell->tokarr[a_i].word, RE);
+		// printf("%s%d%s\n", YELLOW, mshell->tokarr[a_i].type, RE);
 		a_i++;
 	}
-	// mshell->tokarr[a_i].word = NULL;
-	// mshell->tokarr[a_i].type = T_NDEF;
+	// printf("tokarr_l:%d\n", mshell->tokarr_l);
 }
 
 // static void	open_quotes(t_token *arr)
@@ -95,20 +94,18 @@ static void	split_tokens(char *s, t_mshell *mshell)
 //out - arr[word - file, type - type red_out/append]}, {args, inp, out}];
 static void	create_cmdarr(t_mshell *mshell)
 {
-	int	c_i;
-	int	t_i;
-	// printf("init cmdarr--------------------\n");
+	int	c;
+	int	t;
+
 	init_cmdarr(mshell);
-	c_i = -1;
-	t_i = 0;
-	while (++c_i < mshell->cmdarr_len)
-		t_i += (fill_cmd(&mshell->cmdarr[c_i], &mshell->tokarr[t_i]) + 1);
-	//free each word in tokarr while it exists;
-	//now you can free the whole tokarr;
-	// ft_free(mshell->tokarr);
-	// mshell->tokarr = NULL;
-	printf("len cmds:%d\n\n", mshell->cmdarr_len);
-	print_cmds(mshell);
+	c = -1;
+	t = 0;
+	while (++c < mshell->cmdarr_l)
+	{
+		fill_cmd(c, &t, mshell);
+		t++;
+	}
+	// print_cmds(mshell);
 }
 
 int	parse_input(char *input, t_mshell *mshell)

@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 23:22:23 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/26 00:26:59 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/26 17:14:16 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,36 @@ void	print_cmds(t_mshell *mshell)
 	int	c;
 	int	i;
 
-	c = -1;
-	while (++c < mshell->cmdarr_len)
+	c = 0;
+	printf("%s---------PRINT CMDS------------%s", GREEN, RE);
+	printf("len cmds:%d\n\n", mshell->cmdarr_l);
+	while (c < mshell->cmdarr_l)
 	{
 		printf("cmd N: %d\nargs: ", c);
-		printf("---");
-		i = -1;
-		while (mshell->cmdarr[c].args[++i] != NULL)
+		i = 0;
+		while (mshell->cmdarr[c].args[i] != NULL)
+		{
 			printf("%s ", mshell->cmdarr[c].args[i]);
-		i = -1;
+			i++;
+		}
+		i = 0;
 		printf("\ninp: ");
-		while (mshell->cmdarr[c].inp[++i].word != NULL)
+		while (i < mshell->cmdarr[c].inp_l)
+		{
 			printf("{t: %i, w: %s},", \
 			mshell->cmdarr[c].inp[i].type, mshell->cmdarr[c].inp[i].word);
-		i = -1;
+			i++;
+		}
+		i = 0;
 		printf("\nout: ");
-		while (mshell->cmdarr[c].out[++i].word != NULL)
+		while (i < mshell->cmdarr[c].out_l)
+		{
 			printf("{t: %i, w: %s},", \
 			mshell->cmdarr[c].out[i].type, mshell->cmdarr[c].out[i].word);
-		printf("\n\n");
+			i++;
+		}
+		printf("\n%s-------------------------%s\n", GREEN, RE);
+		c++;
 	}
 }
 
