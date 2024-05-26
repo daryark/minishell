@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:30:36 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/24 14:31:56 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/26 14:32:12 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ typedef struct s_builtin	t_builtin;
 
 typedef enum e_type
 {
-	T_WORD = 1,	// word, string, file, command ...
+	T_NDEF,		// *notdefined
+	T_WORD,	// word, string, file, command ...
 	T_PIPE,		//|
 	T_HEREDOC,	//<<
-	T_RED_FROM,	//<
+	T_RED_INP,	//<
 	T_APPEND,	//>>
-	T_RED_TO,	//>
-	T_NL,		// *newline ??
+	T_RED_OUT,	//>
 }						t_type;
 
 typedef struct s_token
@@ -33,16 +33,14 @@ typedef struct s_token
 	t_type				type;
 }						t_token;
 
-// typedef struct s_cmdarr
-// {
-// 	char	*cmd;
-// 	char	*args; //(files and strings..) ? if i need it or put with cmd?
-// 	char	**options; //arr[str] -flags
-// 	t_type	*in; //arr[struct{name, type}];
-// 	t_type	*out; //arr[struct{name, type}];
-
-// };
-
+typedef struct s_cmdarr
+{
+	char				**args;
+	t_token				*inp; //arr[struct{name, type}];
+	t_token				*out; //arr[struct{name, type}];
+	int					inp_l;
+	int					out_l;
+}						t_cmdarr;
 
 typedef struct s_env_lst
 {
@@ -58,20 +56,21 @@ int						input_err_check(char *input);
 void					init_env(t_mshell *mshell, char **env);
 int						fill_str(char *s, t_env_lst **lst);
 int						parse_input(char *input, t_mshell *mshell);
-// void			replace_dollars(char **s, t_mshell *mshell);
 void					dollar_value_subst(char **s, char *q, t_mshell *mshell);
-// void			dollar_replace(char **s, int st, int en, t_mshell *mshell);
+void					fill_cmd(int cmd, int *tok, t_mshell *mshell);
 // parsing utils
 int						space(char c);
 int						quote(char c);
 int						spec_symb(char *s);
 void					quote_opened_type(char c, char *q);
 int						pass_str(char *s);
-int						env_lst_len(t_env_lst *lst);
 int						ft_strchr_pos(char *s, int c);
-char					*cut_name(char *s);
+int						env_lst_len(t_env_lst *lst);
 t_env_lst				*find_env_node(char *name, t_env_lst *env);
-void					init_token_arr(char *s, t_mshell *mshell);
+char					*cut_name(char *s);
+void					init_tokarr(char *s, t_mshell *mshell);
+void					init_cmdarr(t_mshell *mshell);
 t_type					token_typizator(char *s);
-
+void					print_cmds(t_mshell *mshell);
+void					print_env(t_env_lst *env);
 #endif
