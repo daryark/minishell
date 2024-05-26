@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/26 17:47:12 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/26 17:50:13 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ char	**get_only_files(t_mshell *mshell, int file)
 	i = 0;
 	j = 0;
 	k = 0;
-	tmp_join = ft_malloc(sizeof(char *) * (mshell->tokarr_len + 1));
-	while (i < mshell->tokarr_len)
+	tmp_join = ft_malloc(sizeof(char *) * (mshell->tokarr_l + 1));
+	while (i < mshell->tokarr_l)
 	{
-		if (mshell->tokarr[i].type == T_RED_TO && file == 0)
+		if (mshell->tokarr[i].type == T_RED_OUT && file == 0)
 		{
 			tmp_join[j] = ft_strdup(mshell->tokarr[i + 1].word);
 			j++;
 		}
-		else if (mshell->tokarr[i].type == T_RED_FROM && file == 1)
+		else if (mshell->tokarr[i].type == T_RED_INP && file == 1)
 		{
 			tmp_join[j] = ft_strdup(mshell->tokarr[i + 1].word);
 			j++;
@@ -66,8 +66,8 @@ char	**get_only_words(t_mshell *mshell, int i)
 	pipes_passed = 0;
 	j = 0;
 	k = 0;
-	tmp_join = ft_malloc(sizeof(char *) * (mshell->tokarr_len + 1));
-	while (k < mshell->tokarr_len)
+	tmp_join = ft_malloc(sizeof(char *) * (mshell->tokarr_l + 1));
+	while (k < mshell->tokarr_l)
 	{
 		if (mshell->tokarr[k].type == T_PIPE)
 			pipes_passed++;

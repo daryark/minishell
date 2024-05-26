@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/25 15:13:03 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/26 17:50:06 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,19 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+
 typedef struct s_mshell
 {
-	t_env_lst	*export;
-	t_env_lst	*env;
-	char		**envp;
-	t_token		*tokarr;
-	int			tokarr_len;
-	char		*input;
-	int			exit_status;
-	t_builtin	*builtin;
+	t_env_lst			*export;
+	t_env_lst			*env;
+	t_token				*tokarr;
+	t_cmdarr			*cmdarr;
+	t_builtin			*builtin;
+	int					exit_status;
+	int					tokarr_l;
+	int					cmdarr_l;
+	char				**envp;//*
+	char				*input;//*
 
 }				t_mshell;
 
@@ -64,4 +67,5 @@ char			**split_save_divider(char *s, char c);
 void			ft_lstadd_env(t_env_lst **lst, char *name, char *val);
 void			clean_lst_env(t_env_lst **lst);
 void			clean_node_env(t_env_lst **lst);
+void			clean_command_data(t_mshell *mshell);
 #endif

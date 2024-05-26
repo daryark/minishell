@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/25 17:00:56 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/26 17:51:29 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_builtin_arr(t_mshell *mshell)
 	int	n_cmds;
 
 	n_cmds = 6;
-	mshell->builtin = malloc(sizeof(t_builtin) * n_cmds);
+	mshell->builtin = ft_malloc(sizeof(t_builtin) * n_cmds);
 	mshell->builtin[0].name = "pwd";
 	mshell->builtin[0].fn_ptr = ft_pwd;
 	mshell->builtin[1].name = "cd";
@@ -36,14 +36,17 @@ void	init_builtin_arr(t_mshell *mshell)
 void	init_mshell(t_mshell *mshell, char **env)
 {
 	mshell->env = NULL;
-	mshell->export = 0;
+	mshell->export = NULL;
 	init_env(mshell, env);
-	mshell->envp = env; //*change for get_current_path in minishell_loop fn
 	mshell->exit_status = 0;
-	mshell->input = NULL; //?*
-	mshell->tokarr = NULL;
 	mshell->builtin = NULL;
 	init_builtin_arr(mshell);
+	mshell->tokarr = NULL;
+	mshell->cmdarr = NULL;
+	mshell->tokarr_l = 0;
+	mshell->cmdarr_l = 0;
+	mshell->envp = env; //*change for get_current_path in minishell_loop fn
+	mshell->input = NULL; //?*
 }
 
 char	*get_currect_path(char **envp)
@@ -96,6 +99,7 @@ static void	minishell_loop(t_mshell *mshell)
 			continue ;
 		}
 		ft_execute_with_pipes(mshell);
+		clean_command_data(mshell);
 		ft_free(input);
 	}
 }
@@ -114,6 +118,7 @@ int	main(int ac, char **av, char **envp)
 		write(1, GREEN "OK\n" RE, 14);
 		init_mshell(&mshell, envp);
 		minishell_loop(&mshell);
+		// clean_mshell(&mshell);//not written fn yet
 	}
 	ft_destructor();
 	return (0);
