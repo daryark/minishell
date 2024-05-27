@@ -6,92 +6,11 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/26 17:50:13 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/27 13:37:20 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execute.h"
-
-int	count_pipes(t_mshell *mshell)
-{
-	int	i;
-	int	pipes;
-
-	i = 0;
-	pipes = 0;
-	while (mshell->tokarr[i].type > 0 && mshell->tokarr[i].type < 7)
-	{
-		if (mshell->tokarr[i].type == T_PIPE)
-			pipes++;
-		i++;
-	}
-	return (pipes);
-}
-
-char	**get_only_files(t_mshell *mshell, int file)
-{
-	int		i;
-	int		j;
-	int		k;
-	char	**tmp_join;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	tmp_join = ft_malloc(sizeof(char *) * (mshell->tokarr_l + 1));
-	while (i < mshell->tokarr_l)
-	{
-		if (mshell->tokarr[i].type == T_RED_OUT && file == 0)
-		{
-			tmp_join[j] = ft_strdup(mshell->tokarr[i + 1].word);
-			j++;
-		}
-		else if (mshell->tokarr[i].type == T_RED_INP && file == 1)
-		{
-			tmp_join[j] = ft_strdup(mshell->tokarr[i + 1].word);
-			j++;
-		}
-		i++;
-	}
-	return (tmp_join);
-}
-
-char	**get_only_words(t_mshell *mshell, int i)
-{
-	int		j;
-	int		k;
-	char	**tmp_join;
-	int		pipes_passed;
-
-	pipes_passed = 0;
-	j = 0;
-	k = 0;
-	tmp_join = ft_malloc(sizeof(char *) * (mshell->tokarr_l + 1));
-	while (k < mshell->tokarr_l)
-	{
-		if (mshell->tokarr[k].type == T_PIPE)
-			pipes_passed++;
-		if (pipes_passed == i)
-		{
-			if (i != 0)
-				k++;
-			while (mshell->tokarr[k].type > 0 && mshell->tokarr[k].type < 7)
-			{
-				if (mshell->tokarr[k].type == T_WORD)
-				{
-					tmp_join[j] = ft_strdup(mshell->tokarr[k].word);
-					j++;
-				}
-				if (mshell->tokarr[k].type != T_WORD)
-					return (tmp_join);
-				k++;
-			}
-		}
-		k++;
-	}
-	tmp_join[j] = NULL;
-	return (tmp_join);
-}
 
 int	open_file(char *argv, int i)
 {
@@ -113,57 +32,74 @@ void	ft_execute_with_pipes(t_mshell *mshell)
 	int		fd[2];
 	int		infile;
 	int		outfile;
-	int		pipes;
 	int		status;
-	char	**tmp_join;
-	char	**infiles;
-	char	**outfiles;
+	char	*line;
+	char	*limiter;
 	pid_t	pid;
 	int		j;
 
+	limiter = NULL;
+	line = NULL;
 	j = 0;
 	i = 0;
-	pipes = 0;
 	infile = 0;
 	outfile = 0;
 	status = 0;
-	pipes = count_pipes(mshell);
-	// read from
-	infiles = get_only_files(mshell, 1);
-	// read to
-	outfiles = get_only_files(mshell, 0);
-	while (i < pipes + 1)
+	// print_cmds(mshell);
+	// return ;
+	while (i < mshell->cmdarr_l) // cmds
 	{
 		pipe(fd);
 		pid = fork();
 		if (pid == 0)
 		{
-			tmp_join = get_only_words(mshell, i);
 			if (i != 0)
 			{
 				dup2(infile, 0);
 				close(infile);
 			}
-			if (i != pipes)
+			if (i != mshell->cmdarr_l - 1)
 				dup2(fd[1], 1);
 			close(fd[0]);
 			j = 0;
-			while (infiles[j] != NULL)
+			while (j < mshell->cmdarr[i].out_l)
 			{
-				infile = open_file(infiles[j], 2);
-				dup2(infile, 0);
-				close(infile);
-				j++;
-			}
-			j = 0;
-			while (outfiles[j] != NULL)
-			{
-				outfile = open_file(outfiles[j], 1);
+				if (mshell->cmdarr[i].out[j].type == T_APPEND)
+					outfile = open_file(mshell->cmdarr[i].out[j].word, 0);
+				else
+					outfile = open_file(mshell->cmdarr[i].out[j].word, 1);
 				dup2(outfile, 1);
 				close(outfile);
 				j++;
 			}
-			ft_execute(mshell, tmp_join);
+			j = 0;
+			while (j < mshell->cmdarr[i].inp_l)
+			{
+				if (mshell->cmdarr[i].inp[j].type == T_HEREDOC)
+				{
+					close(fd[0]);
+					limiter = mshell->cmdarr[i].inp[j].word;
+					while (1)
+					{
+						line = readline("heredoc> ");
+						if (!line || ft_strncmp(line, limiter,
+								ft_strlen(limiter)) == 0)
+						{
+							free(line);
+							break ;
+						}
+						write(fd[1], line, ft_strlen(line));
+						write(fd[1], "\n", 1);
+						free(line);
+					}
+				}
+				else
+					infile = open_file(mshell->cmdarr[i].inp[j].word, 2);
+				dup2(infile, 0);
+				close(infile);
+				j++;
+			}
+			ft_execute(mshell, mshell->cmdarr[i].args);
 			exit(0);
 		}
 		else
