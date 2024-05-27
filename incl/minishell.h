@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/26 17:53:01 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/27 22:06:38 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define LIGHTGREEN "\x1b[92m"
 
 # include "../ft_destructor/ft_alloc.h"
+# include "../ft_class/ft_class.h"
 # include "../libft/libft.h"
 # include "execute.h"
 # include "parsing.h"

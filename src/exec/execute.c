@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/27 13:37:20 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/27 22:46:22 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,35 +28,50 @@ int	open_file(char *argv, int i)
 
 void	ft_execute_with_pipes(t_mshell *mshell)
 {
+	t_class	*pipes;
 	int		i;
 	int		fd[2];
-	int		infile;
-	int		outfile;
-	int		status;
-	char	*line;
-	char	*limiter;
-	pid_t	pid;
 	int		j;
 
-	limiter = NULL;
-	line = NULL;
+	pipes = class();
 	j = 0;
 	i = 0;
-	infile = 0;
-	outfile = 0;
-	status = 0;
+	pipes->attribute(pipes, "infile", INT, &(int){0});
+	pipes->attribute(pipes, "outfile", INT, &(int){0});
 	// print_cmds(mshell);
 	// return ;
 	while (i < mshell->cmdarr_l) // cmds
 	{
 		pipe(fd);
-		pid = fork();
-		if (pid == 0)
+		pipes->attribute(pipes, "pid", INT, &(int){fork()});
+		if (get_int(pipes, "pid") == 0)
 		{
+			if (mshell->cmdarr[i].inp[j].type == T_HEREDOC)
+			{
+				close(fd[0]);
+				pipes->attribute(pipes, "limiter", STR,
+					mshell->cmdarr[i].inp[j].word);
+				while (1)
+				{
+					pipes->attribute(pipes, "line", STR, readline("heredoc> "));
+					if (!get_string(pipes, "line")
+						|| ft_strncmp(get_string(pipes, "line"),
+							get_string(pipes, "limiter"),
+							ft_strlen(get_string(pipes, "limiter"))) == 0)
+					{
+						free(get_string(pipes, "line"));
+						break ;
+					}
+					write(fd[1], get_string(pipes, "line"),
+						ft_strlen(get_string(pipes, "line")));
+					write(fd[1], "\n", 1);
+					free(get_string(pipes, "line"));
+				}
+			}
 			if (i != 0)
 			{
-				dup2(infile, 0);
-				close(infile);
+				dup2(get_int(pipes, "infile"), 0);
+				close(get_int(pipes, "infile"));
 			}
 			if (i != mshell->cmdarr_l - 1)
 				dup2(fd[1], 1);
@@ -65,38 +80,22 @@ void	ft_execute_with_pipes(t_mshell *mshell)
 			while (j < mshell->cmdarr[i].out_l)
 			{
 				if (mshell->cmdarr[i].out[j].type == T_APPEND)
-					outfile = open_file(mshell->cmdarr[i].out[j].word, 0);
+					pipes->attribute(pipes, "outfile", INT,
+						&(int){open_file(mshell->cmdarr[i].out[j].word, 0)});
 				else
-					outfile = open_file(mshell->cmdarr[i].out[j].word, 1);
-				dup2(outfile, 1);
-				close(outfile);
+					pipes->attribute(pipes, "outfile", INT,
+						&(int){open_file(mshell->cmdarr[i].out[j].word, 1)});
+				dup2(get_int(pipes, "outfile"), 1);
+				close(get_int(pipes, "outfile"));
 				j++;
 			}
 			j = 0;
 			while (j < mshell->cmdarr[i].inp_l)
 			{
-				if (mshell->cmdarr[i].inp[j].type == T_HEREDOC)
-				{
-					close(fd[0]);
-					limiter = mshell->cmdarr[i].inp[j].word;
-					while (1)
-					{
-						line = readline("heredoc> ");
-						if (!line || ft_strncmp(line, limiter,
-								ft_strlen(limiter)) == 0)
-						{
-							free(line);
-							break ;
-						}
-						write(fd[1], line, ft_strlen(line));
-						write(fd[1], "\n", 1);
-						free(line);
-					}
-				}
-				else
-					infile = open_file(mshell->cmdarr[i].inp[j].word, 2);
-				dup2(infile, 0);
-				close(infile);
+				pipes->attribute(pipes, "infile", INT,
+					&(int){open_file(mshell->cmdarr[i].inp[j].word, 2)});
+				dup2(get_int(pipes, "infile"), 0);
+				close(get_int(pipes, "infile"));
 				j++;
 			}
 			ft_execute(mshell, mshell->cmdarr[i].args);
@@ -104,9 +103,11 @@ void	ft_execute_with_pipes(t_mshell *mshell)
 		}
 		else
 		{
-			waitpid(pid, &status, 0);
+			waitpid(get_int(pipes, "pid"), NULL, 0);
 			close(fd[1]);
-			infile = fd[0];
+			if (i != 0)
+				close(get_int(pipes, "infile"));
+			pipes->attribute(pipes, "infile", INT, &(int){fd[0]});
 		}
 		i++;
 	}

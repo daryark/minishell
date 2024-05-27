@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:02 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/25 20:26:54 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/27 22:09:37 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define EXECUTE_H
 
 # include "../ft_destructor/ft_alloc.h"
+# include "../ft_class/ft_class.h"
 # include "../libft/libft.h"
 # include "minishell.h"
 # include <fcntl.h>
