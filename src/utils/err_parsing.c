@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:00:05 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/28 19:51:38 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/28 22:57:52 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int	token_order_check(t_mshell *mshell)
 	{
 		if (arr[i].type == T_PIPE && ((i - 1) < 0
 				|| (i + 1) >= mshell->tokarr_l))
-			return (syntax_err(arr[i].word), 1);
-		else if (arr[i].type > 1 && (i + 1) >= mshell->tokarr_l)
-			return (syntax_err("newline"), 1);
-		else if (arr[i].type > 1 && mshell->tokarr[i + 1].type > 1)
-			return (syntax_err(arr[i + 1].word), 1);
+			return (syntax_err(arr[i].word), i);
+		else if (arr[i].type > 2 && (i + 1) >= mshell->tokarr_l)
+			return (syntax_err("newline"), i);
+		else if (arr[i].type > 2 && mshell->tokarr[i + 1].type > 2)
+			return (syntax_err(arr[i + 1].word), i);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/28 20:16:02 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/28 21:27:46 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ static void	create_cmdarr(t_mshell *mshell)
 int	parse_input(char *input, t_mshell *mshell)
 {
 	char	*dst;
+	char	err;
 
 	if (input_err_check(input))
 		return (0);
@@ -124,16 +125,12 @@ int	parse_input(char *input, t_mshell *mshell)
 	// printf("%s $: |%s|\n%s", GREEN, dst, RE);
 	split_tokens(dst, mshell);
 	// open_quotes(mshell);
-	if (token_order_check(mshell))
-	{
-		//rewrite into herdoc function
-		//execte only the heredocs that are before the error token
-		int i = -1;
-		while(++i < mshell->tokarr_l && mshell->tokarr[i].type != T_HEREDOC)
-			return (printf("%sheredocs present\n%s", GREEN, RE), 1);
+	err = token_order_check(mshell);
+	printf("err_i: %d\n", err);
+	if (err && !leave_heredoc(mshell, err))
 		return (0);
-	}
-	create_cmdarr(mshell);
+	if (!err)
+		create_cmdarr(mshell);
 	mshell->input = ft_strdup(input);
 	ft_free(dst);
 	return (1);

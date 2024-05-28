@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/26 14:42:06 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/28 21:04:54 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,16 @@ typedef struct s_mshell
 }						t_mshell;
 
 //*UTILS
-void	copy_list(t_env_lst *env, t_env_lst **new);
+void			copy_list(t_env_lst *env, t_env_lst **new);
 // struct.c
 void			init_mshell(t_mshell *mshell, char **env);
 void			handle_sigint(int signals);
 void			ignore_signals(void);
 void			ft_free_array(char **array);
-void            alloc_err(void);
-char	        *arrjoin(char **arr);
+void			alloc_err(void);
+char			*arrjoin(char **arr);
 char			**split_save_divider(char *s, char c);
+int				leave_heredoc(t_mshell *mshell, int err_i);
 
 void			ft_lstadd_env(t_env_lst **lst, char *name, char *val);
 void			clean_lst_env(t_env_lst **lst);

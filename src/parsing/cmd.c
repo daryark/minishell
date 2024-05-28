@@ -6,13 +6,13 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:04:49 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/28 16:20:30 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/28 21:24:50 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static void	alloc_cmd(int args, int inp, int out, t_cmdarr *cmd)
+void	alloc_cmd(int args, int inp, int out, t_cmdarr *cmd)
 {
 	cmd->args = ft_malloc(sizeof(char *) * (args + 1));
 	cmd->inp = ft_malloc(sizeof(t_token) * inp);
@@ -83,7 +83,7 @@ void    init_cmdarr(t_mshell *mshell)
 		init_cmd(c, &t, mshell);
 }
 
-static void	fill_redir_type(t_token *redir, t_token *tokarr, int *t)
+void	fill_redir_type(t_token *redir, t_token *tokarr, int *t)
 {
 	redir->type = tokarr[*t].type;
 	(*t)++;

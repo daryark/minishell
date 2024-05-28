@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 23:22:23 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/28 16:12:23 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/28 22:59:40 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,36 @@ int	ft_strchr_pos(char *s, int c)
 		return (++i);
 	return (-1);
 }
+
+int	leave_heredoc(t_mshell *mshell, int err_i)
+{
+	int	i;
+	int	in;
+	int	heredoc;
+
+	i = -1;
+	heredoc = 0;
+	while (++i < err_i)
+	{
+		if (mshell->tokarr[i].type == T_HEREDOC)
+			heredoc++;
+	}
+	mshell->cmdarr = ft_malloc(sizeof(t_cmdarr) * 1);
+	if (!mshell->cmdarr)
+		alloc_err();
+	mshell->cmdarr_l = 1;
+	alloc_cmd(0, heredoc, 0, mshell->cmdarr);
+	i = -1;
+	in = -1;
+	while (++i < err_i)
+	{
+		if (mshell->tokarr[i].type == T_HEREDOC)
+			fill_redir_type(&mshell->cmdarr[0].inp[++in], mshell->tokarr, &i);
+	}
+	// print_cmds(mshell);
+	return (0);
+}
+
 
 void	print_cmds(t_mshell *mshell)
 {
