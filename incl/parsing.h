@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:30:36 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/26 14:32:12 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:23:34 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_env_lst
 // err check
 void					syntax_err(int c);
 int						input_err_check(char *input);
+int						check_syntax_order(t_mshell *mshell);
 // parsing
 void					init_env(t_mshell *mshell, char **env);
 int						fill_str(char *s, t_env_lst **lst);

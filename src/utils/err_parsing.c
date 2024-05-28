@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_err.c                                        :+:      :+:    :+:   */
+/*   err_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:00:05 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/13 21:51:19 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:45:55 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ static int	open_quotes(char *s)
 	int	i;
 	int	single_q;
 	int	double_q;
-
-	single_q = 0;
+		single_q = 0;
 	double_q = 0;
 	i = -1;
 	while (s[++i])
@@ -32,12 +31,24 @@ static int	open_quotes(char *s)
 	return (single_q || double_q);
 }
 
-// static int redir_err(char *s)
-// {
-//     (void)s;
-//     return (0);
-// }
+int	check_syntax_order(t_mshell *mshell)
+{
+    int		i;
+	t_token	node;
 
+	i = -1;
+	while (++i < mshell->tokarr_l)
+	{
+		node = mshell->tokarr[i];
+		if (node.type == T_PIPE)
+		{
+			if ((i - 1) < 0 || (i + 1) >= mshell->tokarr_l )
+				syntax_err(node.word);
+		}
+			else if (mshell->tokarr)
+	}
+    return (0);
+}
 static int	not_valid_symbols(char *s)
 {
 	char	quote;
@@ -53,14 +64,14 @@ static int	not_valid_symbols(char *s)
 	return (0);
 }
 
-void	syntax_err(int c)
+void	syntax_err(int *c)
 {
-	if (c == '\'')
+	if (*c == '\'' && !(*c + 1))
 	{
 		printf("Minishell: syntax error: unable to locate closing quotation\n");
 		return ;
 	}
-	printf("Minishell: syntax error near unexpected token `%c'\n", c);
+	printf("Minishell: syntax error near unexpected token `%s'\n", c);
 }
 
 int	input_err_check(char *input)
@@ -69,9 +80,9 @@ int	input_err_check(char *input)
 
 	err_c = 0;
 	if (open_quotes(input))
-		return (syntax_err('\''), 1);
+		return (syntax_err("\'"), 1);
 	err_c = not_valid_symbols(input);
 	if (err_c)
-		return (syntax_err(err_c), 1);
+		return (syntax_err((char *)&err_c), 1);
 	return (0);
 }
