@@ -6,11 +6,53 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/24 17:30:55 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:06:36 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execute.h"
+
+char	*find_env(t_env_lst *env, char *name)
+{
+	t_env_lst	*tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->name, name, ft_strlen(name)))
+			return (tmp->val);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+char	**convert_env(t_env_lst *env)
+{
+	t_env_lst	*tmp;
+	char		**envp;
+	int			i;
+
+	i = 0;
+	tmp = env;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	envp = ft_malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	tmp = env;
+	while (tmp)
+	{
+		envp[i] = ft_strjoin(tmp->name, "=");
+		if (tmp->val)
+			envp[i] = ft_strjoin(envp[i], tmp->val);
+		i++;
+		tmp = tmp->next;
+	}
+	envp[i] = NULL;
+	return (envp);
+}
 
 void	ft_env(t_mshell *mshell)
 {
@@ -89,34 +131,32 @@ static void	remove_one_node(char *str, t_env_lst **env)
 	}
 }
 
+// if there is variable we have to renew it
 void	ft_export(t_mshell *mshell)
 {
-	char	**tmp;
 	int		i;
 	char	*name;
+	char	**tmp;
 
-	if (ft_strlen(mshell->input) == 6)
+	tmp = mshell->cmdarr[mshell->cmd_num].args;
+	if (tmp[1] == NULL)
 	{
 		copy_list(mshell->env, &mshell->export);
 		remove_one_node("_", &mshell->export);
 		tmp_sort_env(mshell->export);
 		ft_env(mshell);
 		clean_lst_env(&mshell->export);
-		mshell->export = NULL;
 	}
 	else
 	{
-		tmp = ft_split(mshell->input, ' ');
 		i = 1;
 		while (tmp[i])
 		{
-			name = cut_name(tmp[i]);
+			name = ft_strdup(tmp[i]);
 			if (!find_env_node(name, mshell->env))
 				fill_str(tmp[i], &mshell->env);
-			ft_free(name);
 			i++;
 		}
-		ft_free(tmp);
 	}
 }
 
@@ -125,11 +165,14 @@ void	ft_unset(t_mshell *mshell)
 	int		i;
 	char	**rm_names;
 
-	if (ft_strlen(mshell->input) == 5)
+	rm_names = mshell->cmdarr[mshell->cmd_num].args;
+	if (rm_names[1] == NULL)
+	{
+		printf("minishell: unset: not enough arguments\n");
 		return ;
+	}
 	else
 	{
-		rm_names = ft_split(mshell->input, ' ');
 		i = 1;
 		while (rm_names[i] != NULL)
 		{

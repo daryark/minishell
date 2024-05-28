@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/28 14:19:57 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:07:31 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	init_mshell(t_mshell *mshell, char **env)
 	mshell->cmdarr = NULL;
 	mshell->tokarr_l = 0;
 	mshell->cmdarr_l = 0;
-	mshell->envp = env;   //*change for get_current_path in minishell_loop fn
-	mshell->input = NULL; //?*
 }
 
 static void	minishell_loop(t_mshell *mshell)
@@ -73,7 +71,7 @@ static void	minishell_loop(t_mshell *mshell)
 			ft_free(input);
 			continue ;
 		}
-		ft_execute_with_pipes(mshell);
+		execute(mshell);
 		clean_command_data(mshell);
 		ft_free(input);
 	}

@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/28 15:13:26 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:05:04 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	ft_execute_with_pipes(t_mshell *mshell)
 				j++;
 			}
 			mshell->cmd_num = i;
-			ft_execute(mshell, mshell->cmdarr[i].args);
+			ft_execute(mshell);
 			exit(0);
 		}
 		else
@@ -111,7 +111,27 @@ void	ft_execute_with_pipes(t_mshell *mshell)
 	}
 }
 
-void	ft_execute(t_mshell *mshell, char **cmds)
+void	execute(t_mshell *mshell)
+{
+	int	i;
+	int	found;
+
+	i = -1;
+	found = 0;
+	while (mshell->builtin[++i].name && !found)
+		found = !ft_strncmp(mshell->builtin[i].name,
+				mshell->cmdarr[mshell->cmd_num].args[0],
+				ft_strlen(mshell->builtin[i].name));
+	if (mshell->cmdarr_l == 1 && found)
+	{
+		mshell->cmd_num = 0;
+		ft_execute(mshell);
+	}
+	else
+		ft_execute_with_pipes(mshell);
+}
+
+void	ft_execute(t_mshell *mshell)
 {
 	int	i;
 	int	found;
@@ -123,22 +143,26 @@ void	ft_execute(t_mshell *mshell, char **cmds)
 				mshell->cmdarr[mshell->cmd_num].args[0],
 				ft_strlen(mshell->builtin[i].name));
 	if (!found)
-		ft_execve(cmds, mshell->envp);
+		ft_execve(mshell);
 	else
 		mshell->builtin[i - 1].fn_ptr(mshell);
 }
 
-void	ft_execve(char **cmds, char **envp)
+void	ft_execve(t_mshell *mshell)
 {
 	char	*path;
-	int		i;
+	char	**cmds;
 
-	i = 0;
 	path = NULL;
-	while (ft_strncmp(envp[i], "PATH=", 5) != 0)
-		i++;
+	cmds = mshell->cmdarr[mshell->cmd_num].args;
+	while (mshell->env)
+	{
+		if (ft_strncmp(mshell->env->name, "PATH", 4) == 0)
+			break ;
+		mshell->env = mshell->env->next;
+	}
 	if (ft_strchr(cmds[0], '/') == NULL)
-		path = find_path(cmds[0], envp[i]);
+		path = find_path(cmds[0], mshell->env->val);
 	else
 		path = ft_strdup(cmds[0]);
 	if (path == NULL)
@@ -147,7 +171,7 @@ void	ft_execve(char **cmds, char **envp)
 		ft_free_array(cmds);
 		exit(127);
 	}
-	execve(path, cmds, envp);
+	execve(path, cmds, convert_env(mshell->env));
 	printf("minishell: %s: command not found\n", cmds[0]);
 	ft_free_array(cmds);
 	exit(127);

@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:02 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/28 14:21:18 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:00:04 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,14 @@ typedef struct s_builtin
 void						ft_cd(t_mshell *mshell);
 void						ft_env(t_mshell *mshell);
 void						ft_pwd(t_mshell *mshell);
+void						execute(t_mshell *mshell);
 void						ft_echo(t_mshell *mshell);
 void						ft_unset(t_mshell *mshell);
+void						ft_execve(t_mshell *mshell);
 void						ft_export(t_mshell *mshell);
-void						ft_execute(t_mshell *mshell, char **cmds);
-void						ft_execve(char **cmds, char **envp);
+void						ft_execute(t_mshell *mshell);
+char						**convert_env(t_env_lst *env);
+char						*find_env(t_env_lst *env, char *name);
 char						*find_path(char *cmd, char *path);
 void						ft_execute_with_pipes(t_mshell *mshell);
 char						*ft_remove_substr(char *str, char *sub);

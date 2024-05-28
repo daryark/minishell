@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/26 17:54:55 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:34:16 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	replace_dollars(char **s, t_mshell *mshell)
 	ft_free_array(dllr_arr);
 }
 
-//word - text or pipe/redir symb, type - number of type
+// word - text or pipe/redir symb, type - number of type
 static void	split_tokens(char *s, t_mshell *mshell)
 {
 	int	i;
@@ -84,14 +84,14 @@ static void	split_tokens(char *s, t_mshell *mshell)
 // 	{
 // 		i = -1;
 // 		while (arr[a_i].word[++i])
-// 		{			
-// 		}		
+// 		{
+// 		}
 // 	}
 // }
 
-//cmdarr [{args - arr[char *],
-//inp - arr[word - file, type - type red_inp/heredoc],
-//out - arr[word - file, type - type red_out/append]}, {args, inp, out}];
+// cmdarr [{args - arr[char *],
+// inp - arr[word - file, type - type red_inp/heredoc],
+// out - arr[word - file, type - type red_out/append]}, {args, inp, out}];
 static void	create_cmdarr(t_mshell *mshell)
 {
 	int	c;
@@ -124,9 +124,9 @@ int	parse_input(char *input, t_mshell *mshell)
 	// printf("%s $: |%s|\n%s", GREEN, dst, RE);
 	split_tokens(dst, mshell);
 	// open_quotes(mshell);
-	//check errors (if near < is not a word from both sides, if smth is from both sides of | ...)
+	// check errors (if near < is not a word from both sides,
+	// if smth is from both sides of | ...)
 	create_cmdarr(mshell);
-	mshell->input = ft_strdup(input);
 	ft_free(dst);
 	return (0);
 }

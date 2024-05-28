@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/28 14:56:33 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:08:43 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct s_mshell
 	int			cmdarr_l;
 	int			cmd_num;
 	char **envp; //*
-	char *input; //*
 
 }				t_mshell;
 
