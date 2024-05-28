@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/27 22:06:38 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:11:11 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # define MAGENTA "\033[1;35m"
 # define LIGHTGREEN "\x1b[92m"
 
-# include "../ft_destructor/ft_alloc.h"
 # include "../ft_class/ft_class.h"
+# include "../ft_destructor/ft_alloc.h"
 # include "../libft/libft.h"
 # include "execute.h"
 # include "parsing.h"
@@ -38,24 +38,24 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-
 typedef struct s_mshell
 {
-	t_env_lst			*export;
-	t_env_lst			*env;
-	t_token				*tokarr;
-	t_cmdarr			*cmdarr;
-	t_builtin			*builtin;
-	int					exit_status;
-	int					tokarr_l;
-	int					cmdarr_l;
-	char				**envp;//*
-	char				*input;//*
+	t_env_lst	*export;
+	t_env_lst	*env;
+	t_token		*tokarr;
+	t_cmdarr	*cmdarr;
+	t_builtin	*builtin;
+	int			exit_status;
+	int			tokarr_l;
+	int			cmdarr_l;
+	char **envp; //*
+	char *input; //*
 
 }				t_mshell;
 
 //*UTILS
 void			copy_list(t_env_lst *env, t_env_lst **new);
+char			*get_currect_path(t_mshell *mshell);
 // struct.c
 void			init_mshell(t_mshell *mshell, char **env);
 void			handle_sigint(int signals);

@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/26 17:54:37 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:19:57 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,33 +45,8 @@ void	init_mshell(t_mshell *mshell, char **env)
 	mshell->cmdarr = NULL;
 	mshell->tokarr_l = 0;
 	mshell->cmdarr_l = 0;
-	mshell->envp = env; //*change for get_current_path in minishell_loop fn
+	mshell->envp = env;   //*change for get_current_path in minishell_loop fn
 	mshell->input = NULL; //?*
-}
-
-char	*get_currect_path(char **envp)
-{
-	static char	*path;
-	char		*tmp;
-	char		*tmp2;
-	char		*tmp3;
-	int			i;
-
-	i = 0;
-	while (envp[i] && ft_strncmp(envp[i], "USER=", 5) != 0)
-		i++;
-	tmp3 = getcwd(NULL, 0);
-	if (!tmp3)
-	{
-		printf("\nyou can use only 'cd ..' or 'exit'\n\n");
-		return (path);
-	}
-	tmp = ft_strjoin("/home/", envp[i] + 5);
-	tmp2 = ft_strjoin(ft_remove_substr(tmp3, tmp), "$ ");
-	ft_free(tmp3);
-	path = ft_strjoin(YELLOW "Minishell~" RE, tmp2);
-	ft_free(tmp2);
-	return (path);
 }
 
 static void	minishell_loop(t_mshell *mshell)
@@ -82,7 +57,7 @@ static void	minishell_loop(t_mshell *mshell)
 	ignore_signals();
 	while (1)
 	{
-		path = get_currect_path(mshell->envp);
+		path = get_currect_path(mshell);
 		input = readline(path);
 		if (!input || (!ft_strncmp(input, "exit", 4) && ft_strlen(input) == 4))
 		{
