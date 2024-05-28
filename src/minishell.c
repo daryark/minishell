@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/26 15:59:55 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:50:05 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,7 @@ static void	minishell_loop(t_mshell *mshell)
 		if (*input)
 			add_history(input);
 		if (parse_input(input, mshell))
-		{
-			ft_free(input);
-			continue ;
-		}
-		// ft_execute(mshell);
+			ft_execute(mshell);
 		clean_command_data(mshell);
 		ft_free(input);
 	}

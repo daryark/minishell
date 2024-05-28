@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:41:07 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/26 17:13:35 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:38:35 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	clean_cmdarr(t_mshell *mshell)
 	int	i;
 
 	i = -1;
+	// printf("before clean cmd arr\n");
 	while (++i < mshell->cmdarr_l && mshell->cmdarr)
 	{
 		ft_free(mshell->cmdarr[i].args);
@@ -47,7 +48,9 @@ static void	clean_cmdarr(t_mshell *mshell)
 void	clean_command_data(t_mshell *mshell)
 {
 	// printf("before clean, tokarr_l:%d	", mshell->tokarr_l);
-	clean_tokarr(&mshell->tokarr, &mshell->tokarr_l);
+	if (mshell->tokarr && mshell->tokarr_l)
+		clean_tokarr(&mshell->tokarr, &mshell->tokarr_l);
+	if (mshell->cmdarr && mshell->cmdarr_l)
 	clean_cmdarr(mshell);
 	//*if we need to clean anything else?
 }

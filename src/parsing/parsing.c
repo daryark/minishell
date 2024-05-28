@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/28 16:23:28 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/28 20:16:02 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ static void	split_tokens(char *s, t_mshell *mshell)
 			w_l = pass_str(&s[i]);
 		mshell->tokarr[a_i].word = ft_substr(s, i, w_l--);
 		i += w_l;
-		printf("%s%s%s	", GREEN, mshell->tokarr[a_i].word, RE);
-		printf("%s%d%s\n", YELLOW, mshell->tokarr[a_i].type, RE);
+		// printf("%s%s%s	", GREEN, mshell->tokarr[a_i].word, RE);
+		// printf("%s%d%s\n", YELLOW, mshell->tokarr[a_i].type, RE);
 		a_i++;
 	}
 	// printf("tokarr_l:%d\n", mshell->tokarr_l);
@@ -97,7 +97,6 @@ static void	create_cmdarr(t_mshell *mshell)
 	int	c;
 	int	t;
 
-	check_syntax_order(mshell);
 	init_cmdarr(mshell);
 	c = -1;
 	t = 0;
@@ -113,9 +112,9 @@ int	parse_input(char *input, t_mshell *mshell)
 {
 	char	*dst;
 
-	(void)mshell;
 	if (input_err_check(input))
-		return (1);
+		return (0);
+	//*put this alloc into trim_input fn
 	dst = (char *)ft_calloc(sizeof(char), ft_strlen(input) + 1);
 	if (!dst)
 		alloc_err();
@@ -125,9 +124,17 @@ int	parse_input(char *input, t_mshell *mshell)
 	// printf("%s $: |%s|\n%s", GREEN, dst, RE);
 	split_tokens(dst, mshell);
 	// open_quotes(mshell);
-	//check errors (if near < is not a word from both sides, if smth is from both sides of | ...)
+	if (token_order_check(mshell))
+	{
+		//rewrite into herdoc function
+		//execte only the heredocs that are before the error token
+		int i = -1;
+		while(++i < mshell->tokarr_l && mshell->tokarr[i].type != T_HEREDOC)
+			return (printf("%sheredocs present\n%s", GREEN, RE), 1);
+		return (0);
+	}
 	create_cmdarr(mshell);
 	mshell->input = ft_strdup(input);
 	ft_free(dst);
-	return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:00:05 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/28 16:45:55 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:51:38 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,24 @@ static int	open_quotes(char *s)
 	return (single_q || double_q);
 }
 
-int	check_syntax_order(t_mshell *mshell)
+int	token_order_check(t_mshell *mshell)
 {
-    int		i;
-	t_token	node;
+	int		i;
+	t_token	*arr;
 
 	i = -1;
+	arr = mshell->tokarr;
 	while (++i < mshell->tokarr_l)
 	{
-		node = mshell->tokarr[i];
-		if (node.type == T_PIPE)
-		{
-			if ((i - 1) < 0 || (i + 1) >= mshell->tokarr_l )
-				syntax_err(node.word);
-		}
-			else if (mshell->tokarr)
+		if (arr[i].type == T_PIPE && ((i - 1) < 0
+				|| (i + 1) >= mshell->tokarr_l))
+			return (syntax_err(arr[i].word), 1);
+		else if (arr[i].type > 1 && (i + 1) >= mshell->tokarr_l)
+			return (syntax_err("newline"), 1);
+		else if (arr[i].type > 1 && mshell->tokarr[i + 1].type > 1)
+			return (syntax_err(arr[i + 1].word), 1);
 	}
-    return (0);
+	return (0);
 }
 static int	not_valid_symbols(char *s)
 {
@@ -64,14 +65,12 @@ static int	not_valid_symbols(char *s)
 	return (0);
 }
 
-void	syntax_err(int *c)
+void	syntax_err(char *c)
 {
 	if (*c == '\'' && !(*c + 1))
-	{
 		printf("Minishell: syntax error: unable to locate closing quotation\n");
-		return ;
-	}
-	printf("Minishell: syntax error near unexpected token `%s'\n", c);
+	else
+		printf("Minishell: syntax error near unexpected token `%s'\n", c);
 }
 
 int	input_err_check(char *input)
