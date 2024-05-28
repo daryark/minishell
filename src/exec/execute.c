@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/28 14:19:17 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:13:26 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	ft_execute_with_pipes(t_mshell *mshell)
 				close(infile);
 				j++;
 			}
+			mshell->cmd_num = i;
 			ft_execute(mshell, mshell->cmdarr[i].args);
 			exit(0);
 		}
@@ -112,20 +113,19 @@ void	ft_execute_with_pipes(t_mshell *mshell)
 
 void	ft_execute(t_mshell *mshell, char **cmds)
 {
-	// int	i;
-	// int	found;
-	// found = 0;
-	// i = -1;
-	// while (mshell->builtin[++i].name && !found)
-	// 	found = !ft_strncmp(mshell->builtin[i].name, mshell->tokarr[0].word,
-	// 			ft_strlen(mshell->builtin[i].name))
-	// 		&& !ft_strncmp(mshell->builtin[i].name, mshell->tokarr[0].word,
-	// 			ft_strlen(mshell->tokarr[0].word));
-	// if (!found)
-	//
-	ft_execve(cmds, mshell->envp);
-	// else
-	// 	mshell->builtin[i - 1].fn_ptr(mshell);
+	int	i;
+	int	found;
+
+	found = 0;
+	i = -1;
+	while (mshell->builtin[++i].name && !found)
+		found = !ft_strncmp(mshell->builtin[i].name,
+				mshell->cmdarr[mshell->cmd_num].args[0],
+				ft_strlen(mshell->builtin[i].name));
+	if (!found)
+		ft_execve(cmds, mshell->envp);
+	else
+		mshell->builtin[i - 1].fn_ptr(mshell);
 }
 
 void	ft_execve(char **cmds, char **envp)
