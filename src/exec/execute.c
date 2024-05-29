@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/29 16:14:53 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:25:33 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,21 +82,15 @@ void	open_input_files(t_mshell *mshell, int i)
 
 void	ft_piping(t_mshell *mshell)
 {
-	int		i;
-	int		fd[2];
-	int		j;
-	int		infile;
-	int		outfile;
-	char	*line;
-	char	*limiter;
-	int		pid;
+	int	i;
+	int	fd[2];
+	int	j;
+	int	infile;
+	int	pid;
 
-	line = NULL;
-	limiter = NULL;
 	j = 0;
 	i = 0;
 	infile = 0;
-	outfile = 0;
 	while (i < mshell->cmdarr_l)
 	{
 		pipe(fd);
@@ -107,10 +101,7 @@ void	ft_piping(t_mshell *mshell)
 			while (j < mshell->cmdarr[i].inp_l)
 			{
 				if (mshell->cmdarr[i].inp[j].type == T_HEREDOC)
-				{
 					heredoc(mshell, i, j, fd);
-					break ;
-				}
 				j++;
 			}
 			if (i != 0)
