@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/28 17:07:31 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:30:54 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	init_builtin_arr(t_mshell *mshell)
 {
 	int	n_cmds;
 
-	n_cmds = 6;
-	mshell->builtin = ft_malloc(sizeof(t_builtin) * n_cmds);
+	n_cmds = 7;
+	mshell->builtin = ft_malloc(sizeof(t_builtin) * (n_cmds + 1));
 	mshell->builtin[0].name = "pwd";
 	mshell->builtin[0].fn_ptr = ft_pwd;
 	mshell->builtin[1].name = "cd";
@@ -31,20 +31,22 @@ void	init_builtin_arr(t_mshell *mshell)
 	mshell->builtin[4].fn_ptr = ft_export;
 	mshell->builtin[5].name = "env";
 	mshell->builtin[5].fn_ptr = ft_env;
+	mshell->builtin[6].name = NULL;
+	mshell->builtin[6].fn_ptr = NULL;
 }
 
 void	init_mshell(t_mshell *mshell, char **env)
 {
 	mshell->env = NULL;
 	mshell->export = NULL;
-	init_env(mshell, env);
 	mshell->exit_status = 0;
 	mshell->builtin = NULL;
-	init_builtin_arr(mshell);
 	mshell->tokarr = NULL;
 	mshell->cmdarr = NULL;
 	mshell->tokarr_l = 0;
 	mshell->cmdarr_l = 0;
+	init_env(mshell, env);
+	init_builtin_arr(mshell);
 }
 
 static void	minishell_loop(t_mshell *mshell)
@@ -89,7 +91,7 @@ int	main(int ac, char **av, char **envp)
 	else
 	{
 		write(1, GREEN "OK\n" RE, 14);
-		init_mshell(&mshell, envp);
+		init_mshell(&mshell, get_envp(envp));
 		minishell_loop(&mshell);
 		// clean_mshell(&mshell);//not written fn yet
 	}

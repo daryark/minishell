@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/28 17:06:36 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:57:48 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ static void	remove_one_node(char *str, t_env_lst **env)
 	}
 }
 
-// if there is variable we have to renew it
 void	ft_export(t_mshell *mshell)
 {
 	int		i;

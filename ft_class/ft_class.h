@@ -23,6 +23,12 @@
 typedef struct s_class	t_class;
 typedef void			(*t_functionpointer)(void *);
 
+typedef struct s_arg
+{
+	void				*arg;
+	size_t				type;
+}						t_arg;
+
 typedef enum e_value_type
 {
 	INT,
@@ -53,18 +59,17 @@ typedef struct s_attribute
 typedef struct s_class
 {
 	t_attribute			*attributes;
-	size_t				size;
-	void				(*attribute)(t_class *class, char *name,
-			t_value_type type, void *value);
-	void				*(*get_attribute)(t_class *class, char *name);
+	void				*(*attr)(t_class *, char *);
 
 }						t_class;
 
 int						ft_class_strncmp(char *s1, char *s2, size_t n);
-void					add_args(t_attribute *attribute, void **args);
-void					add_attribute(t_class *class, char *name,
-							t_value_type type, void *value);
-char					**get_string_arr(t_class *class, char *name);
+void					add(t_class *class, char *name, t_value_type type,
+							void *value);
+void					add_func_args(t_class *class, char *name, t_arg *args);
+char					**get_arr(t_class *class, char *name);
+
+void					*attr(t_class *class, char *name);
 void					*get_attribute(t_class *class, char *name);
 void					ft_class_memcpy(void *dst, void *src, size_t n);
 void					add_attribute_str(t_class *class, char *name,
@@ -75,7 +80,7 @@ void					add_attribute_int(t_class *class, char *name,
 							int *value);
 void					add_attribute_func(t_class *class, char *name,
 							void *value);
-char					*get_string(t_class *class, char *name);
+char					*get_str(t_class *class, char *name);
 void					call_func(t_class *class, char *name);
 int						get_int(t_class *class, char *name);
 // void					**create_args(int num_args, ...);

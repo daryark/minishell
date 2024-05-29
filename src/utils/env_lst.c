@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_lst.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 01:00:02 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/24 14:52:07 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:51:12 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,6 @@ void	clean_lst_env(t_env_lst **lst)
 		clean_node_env(lst);
 }
 
-// copy_list is a function that copies the env list
-// for example when you want to do something with list
-// and you don't want to change the original list
-// t_env_lst	*cpy_list;
-// copy_list(mshell->env, &cpy_list);
-// aftet using make sure to clean the list clean_lst_env(&cpy_list);
 void	copy_list(t_env_lst *env, t_env_lst **new)
 {
 	t_env_lst	*tmp;

@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:54:07 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/13 15:10:02 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:54:36 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char				*ft_strchr(char *s, int c);
 char				**ft_split(char *s, char c);
 char				*ft_strrchr(char *s, int c);
 void				*ft_memset(void *b, int c, size_t len);
+int					ft_strcmp(char *s1, char *s2);
 void				ft_lstadd_back(t_list **lst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 void				ft_lstadd_front(t_list **lst, t_list *new);

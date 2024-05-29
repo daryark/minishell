@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 19:33:15 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/27 21:09:21 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:01:19 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	get_int(t_class *class, char *name)
 }
 
 // for getting string attributes from the class
-char	*get_string(t_class *class, char *name)
+char	*get_str(t_class *class, char *name)
 {
 	t_attribute	*attr;
 
@@ -53,7 +53,7 @@ char	*get_string(t_class *class, char *name)
 }
 
 // for getting string array attributes from the class
-char	**get_string_arr(t_class *class, char *name)
+char	**get_arr(t_class *class, char *name)
 {
 	t_attribute	*attr;
 
@@ -83,4 +83,28 @@ void	call_func(t_class *class, char *name)
 		}
 		tmp = tmp->next;
 	}
+}
+
+void	*attr(t_class *class, char *name)
+{
+	char	*s;
+	char	**arr;
+	void	*ret;
+	int		i;
+
+	s = get_str(class, name);
+	i = get_int(class, name);
+	arr = get_arr(class, name);
+	if (s)
+		ret = &s;
+	else if (i)
+		ret = &i;
+	else if (arr)
+		ret = arr;
+	else
+	{
+		call_func(class, name);
+		ret = NULL;
+	}
+	return (ret);
 }

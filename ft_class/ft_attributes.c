@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 14:23:50 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/27 21:44:00 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/29 10:16:21 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ void	add_attribute_func(t_class *class, char *name, void *value)
 	class->attributes = new_attr;
 }
 
-void	add_attribute(t_class *class, char *name, t_value_type type,
-		void *value)
+void	add(t_class *class, char *name, t_value_type type, void *value)
 {
 	if (type == STR)
 		add_attribute_str(class, name, value);

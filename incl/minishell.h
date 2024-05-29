@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/28 17:08:43 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:49:24 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,14 @@ typedef struct s_mshell
 	int			tokarr_l;
 	int			cmdarr_l;
 	int			cmd_num;
-	char **envp; //*
 
 }				t_mshell;
 
 //*UTILS
 void			copy_list(t_env_lst *env, t_env_lst **new);
 char			*get_currect_path(t_mshell *mshell);
+char			**get_envp(char **envp);
+char			*find_path(char *cmd, char *path);
 // struct.c
 void			init_mshell(t_mshell *mshell, char **env);
 void			handle_sigint(int signals);
