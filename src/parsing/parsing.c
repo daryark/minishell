@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/28 21:27:46 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:33:25 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ static void	replace_dollars(char **s, t_mshell *mshell)
 //word - text or pipe/redir symb, type - number of type
 static void	split_tokens(char *s, t_mshell *mshell)
 {
-	int		i;
-	int		a_i;
-	int		w_l;
+	int	i;
+	int	a_i;
+	int	w_l;
 
 	i = -1;
 	a_i = 0;
@@ -129,6 +129,7 @@ int	parse_input(char *input, t_mshell *mshell)
 	printf("err_i: %d\n", err);
 	if (err && !leave_heredoc(mshell, err))
 		return (0);
+	printf("leave heredocs\n");
 	if (!err)
 		create_cmdarr(mshell);
 	mshell->input = ft_strdup(input);

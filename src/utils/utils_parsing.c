@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 23:22:23 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/28 22:59:40 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:35:09 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int	leave_heredoc(t_mshell *mshell, int err_i)
 		if (mshell->tokarr[i].type == T_HEREDOC)
 			fill_redir_type(&mshell->cmdarr[0].inp[++in], mshell->tokarr, &i);
 	}
-	// print_cmds(mshell);
-	return (0);
+	print_cmds(mshell);
+	return (heredoc);
 }
 
 
