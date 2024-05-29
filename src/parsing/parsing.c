@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/29 12:33:25 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:43:02 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ static void	split_tokens(char *s, t_mshell *mshell)
 			w_l = pass_str(&s[i]);
 		mshell->tokarr[a_i].word = ft_substr(s, i, w_l--);
 		i += w_l;
-		// printf("%s%s%s	", GREEN, mshell->tokarr[a_i].word, RE);
-		// printf("%s%d%s\n", YELLOW, mshell->tokarr[a_i].type, RE);
+		printf("%s%s%s	", GREEN, mshell->tokarr[a_i].word, RE);
+		printf("%s%d%s\n", YELLOW, mshell->tokarr[a_i].type, RE);
 		a_i++;
 	}
 	// printf("tokarr_l:%d\n", mshell->tokarr_l);
@@ -119,8 +119,8 @@ int	parse_input(char *input, t_mshell *mshell)
 	dst = (char *)ft_calloc(sizeof(char), ft_strlen(input) + 1);
 	if (!dst)
 		alloc_err();
-	trim_input(input, dst);
-	// printf("%s trim: |%s|\n%s", GREEN, dst, RE);
+			trim_input(input, dst);
+			// printf("%s trim: |%s|\n%s", GREEN, dst, RE);	
 	replace_dollars(&dst, mshell);
 	// printf("%s $: |%s|\n%s", GREEN, dst, RE);
 	split_tokens(dst, mshell);
