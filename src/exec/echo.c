@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:48:21 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/24 15:14:09 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/29 17:31:53 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,4 @@ void	ft_echo(t_mshell *mshell)
 	}
 	if (n_flag == 0)
 		printf("\n");
-	ft_free(tmp);
 }

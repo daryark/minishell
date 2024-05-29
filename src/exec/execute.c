@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/29 16:25:33 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/29 17:35:40 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,56 +26,69 @@ void	execute(t_mshell *mshell)
 		ft_piping(mshell);
 }
 
-void	heredoc(t_mshell *mshell, int i, int j, int fd[2])
+void	heredoc(t_mshell *mshell, int i, int j)
 {
 	char	*line;
 	char	*limiter;
+	int		tmp_fd;
 
-	line = NULL;
 	limiter = mshell->cmdarr[i].inp[j].word;
+	tmp_fd = open_file("/tmp/heredoc_tmp", 3);
+	if (tmp_fd < 0)
+	{
+		perror("open");
+		exit(EXIT_FAILURE);
+	}
 	while (1)
 	{
 		line = readline("heredoc> ");
-		if (ft_strcmp(line, limiter) == 0)
+		if (!line || ft_strcmp(line, limiter) == 0)
 		{
 			free(line);
 			break ;
 		}
-		write(fd[1], line, ft_strlen(line));
-		write(fd[1], "\n", 1);
+		write(tmp_fd, line, ft_strlen(line));
+		write(tmp_fd, "\n", 1);
 		free(line);
 	}
+	close(tmp_fd);
 }
 
-void	open_output_files(t_mshell *mshell, int i)
+void	open_files(t_mshell *mshell, int i)
 {
 	int	j;
-	int	outfile;
-
-	j = 0;
-	while (j < mshell->cmdarr[i].out_l)
-	{
-		if (mshell->cmdarr[i].out[j].type == T_APPEND)
-			outfile = open_file(mshell->cmdarr[i].out[j].word, 0);
-		else
-			outfile = open_file(mshell->cmdarr[i].out[j].word, 1);
-		dup2(outfile, 1);
-		close(outfile);
-		j++;
-	}
-}
-
-void	open_input_files(t_mshell *mshell, int i)
-{
-	int	j;
-	int	infile;
+	int	file;
 
 	j = 0;
 	while (j < mshell->cmdarr[i].inp_l)
 	{
-		infile = open_file(mshell->cmdarr[i].inp[j].word, 2);
-		dup2(infile, 0);
-		close(infile);
+		if (mshell->cmdarr[i].inp[j].type == T_HEREDOC)
+			file = open_file("/tmp/heredoc_tmp", 2);
+		else
+			file = open_file(mshell->cmdarr[i].inp[j].word, 2);
+		if (file < 0)
+		{
+			perror("open");
+			exit(EXIT_FAILURE);
+		}
+		dup2(file, 0);
+		close(file);
+		j++;
+	}
+	j = 0;
+	while (j < mshell->cmdarr[i].out_l)
+	{
+		if (mshell->cmdarr[i].out[j].type == T_APPEND)
+			file = open_file(mshell->cmdarr[i].out[j].word, 0);
+		else
+			file = open_file(mshell->cmdarr[i].out[j].word, 1);
+		if (file < 0)
+		{
+			perror("open");
+			exit(EXIT_FAILURE);
+		}
+		dup2(file, 1);
+		close(file);
 		j++;
 	}
 }
@@ -97,11 +110,10 @@ void	ft_piping(t_mshell *mshell)
 		pid = fork();
 		if (pid == 0)
 		{
-			j = 0;
 			while (j < mshell->cmdarr[i].inp_l)
 			{
 				if (mshell->cmdarr[i].inp[j].type == T_HEREDOC)
-					heredoc(mshell, i, j, fd);
+					heredoc(mshell, i, j);
 				j++;
 			}
 			if (i != 0)
@@ -112,8 +124,7 @@ void	ft_piping(t_mshell *mshell)
 			if (i != mshell->cmdarr_l - 1)
 				dup2(fd[1], 1);
 			close(fd[0]);
-			open_output_files(mshell, i);
-			open_input_files(mshell, i);
+			open_files(mshell, i);
 			mshell->cmd_num = i;
 			ft_execute(mshell);
 			exit(0);

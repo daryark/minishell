@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:54:09 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/29 15:59:12 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/29 17:05:37 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ int	open_file(char *argv, int i)
 		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	else if (i == 2)
 		file = open(argv, O_RDONLY, 0777);
+	else if (i == 3)
+		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (file < 0)
+	{
+		printf("minishell: %s: %s\n", argv, strerror(errno));
+		exit(1);
+	}
 	return (file);
 }
 
