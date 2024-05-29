@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/29 15:30:54 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:14:42 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	minishell_loop(t_mshell *mshell)
 	{
 		path = get_currect_path(mshell);
 		input = readline(path);
-		if (!input || (!ft_strncmp(input, "exit", 4) && ft_strlen(input) == 4))
+		if (!input || (ft_strcmp(input, "exit") == 0))
 		{
 			printf("exit\n");
 			ft_free(input);

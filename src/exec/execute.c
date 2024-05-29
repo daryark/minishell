@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/29 17:35:40 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:19:12 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,32 +26,36 @@ void	execute(t_mshell *mshell)
 		ft_piping(mshell);
 }
 
-void	heredoc(t_mshell *mshell, int i, int j)
+void	heredoc(t_mshell *mshell, int i)
 {
 	char	*line;
 	char	*limiter;
 	int		tmp_fd;
+	int		j;
 
-	limiter = mshell->cmdarr[i].inp[j].word;
-	tmp_fd = open_file("/tmp/heredoc_tmp", 3);
-	if (tmp_fd < 0)
+	j = 0;
+	while (j < mshell->cmdarr[i].inp_l)
 	{
-		perror("open");
-		exit(EXIT_FAILURE);
-	}
-	while (1)
-	{
-		line = readline("heredoc> ");
-		if (!line || ft_strcmp(line, limiter) == 0)
+		if (mshell->cmdarr[i].inp[j].type == T_HEREDOC)
 		{
-			free(line);
-			break ;
+			limiter = mshell->cmdarr[i].inp[j].word;
+			tmp_fd = open_file("/tmp/heredoc_tmp", 3);
+			while (1)
+			{
+				line = readline("heredoc> ");
+				if (!line || ft_strcmp(line, limiter) == 0)
+				{
+					free(line);
+					break ;
+				}
+				write(tmp_fd, line, ft_strlen(line));
+				write(tmp_fd, "\n", 1);
+				free(line);
+			}
+			close(tmp_fd);
 		}
-		write(tmp_fd, line, ft_strlen(line));
-		write(tmp_fd, "\n", 1);
-		free(line);
+		j++;
 	}
-	close(tmp_fd);
 }
 
 void	open_files(t_mshell *mshell, int i)
@@ -97,11 +101,9 @@ void	ft_piping(t_mshell *mshell)
 {
 	int	i;
 	int	fd[2];
-	int	j;
 	int	infile;
 	int	pid;
 
-	j = 0;
 	i = 0;
 	infile = 0;
 	while (i < mshell->cmdarr_l)
@@ -110,12 +112,7 @@ void	ft_piping(t_mshell *mshell)
 		pid = fork();
 		if (pid == 0)
 		{
-			while (j < mshell->cmdarr[i].inp_l)
-			{
-				if (mshell->cmdarr[i].inp[j].type == T_HEREDOC)
-					heredoc(mshell, i, j);
-				j++;
-			}
+			heredoc(mshell, i);
 			if (i != 0)
 			{
 				dup2(infile, 0);

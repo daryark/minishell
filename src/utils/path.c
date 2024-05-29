@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:09:10 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/29 15:48:57 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:14:00 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ char	*get_currect_path(t_mshell *mshell)
 		return (path);
 	}
 	tmp = ft_strjoin("/home/", mshell->env->val);
-	tmp2 = ft_strjoin(ft_remove_substr(tmp3, tmp), "$ ");
+	tmp2 = ft_strjoin(ft_remove_substr(tmp3, tmp), "$ \033[0m");
 	ft_free(tmp3);
 	path = ft_strjoin(YELLOW "Minishell~" RE, tmp2);
 	ft_free(tmp2);
+	ft_free(tmp);
 	return (path);
 }
