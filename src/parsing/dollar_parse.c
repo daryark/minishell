@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:30:07 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/22 16:03:42 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:43:16 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,18 @@ static int	question_case(char *s)
 		return (ft_strlen(s));
 }
 
-// return -1 if not a case, 0/1 if yes,
-// 0/1 - i form which copy str (leave or not $ at start)
+// return -1/-2 no, 0/1 - yes
+//-1 - standard ($ at start), -2 (no $ at start, still can be in the mid)
+// 0/1 -yes, i to copy str from (leave or not $ at start)
 static int	not_replace_cases(char *s, char q)
 {
 	if (s[0] != '$' && q != '\"')
 		return (0);
+	else if (q == '\"' && s[1] != '$')
+	{
+		return (-2);
+	printf("in the middle dollar can be\n");
+	}
 	else if (space(s[1]) || !s[1] || q == '\''
 		|| (q && (spec_symb(&s[1]) || quote(s[1]))))
 		return (0);
@@ -108,6 +114,7 @@ void	dollar_value_subst(char **s, char *q, t_mshell *mshell)
 	int		i;
 	char	*new;
 
+	// printf("%s%s%s\n", YELLOW, *s, RE);
 	i = not_replace_cases(*s, *q);
 	if (i >= 0)
 		new = ft_strdup(&(*s)[i]);
