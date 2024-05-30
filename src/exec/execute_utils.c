@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:54:09 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/29 17:05:37 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/29 19:29:42 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	open_file(char *argv, int i)
 
 	file = 0;
 	if (i == 0)
-		file = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0777);
+		file = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else if (i == 1)
-		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (i == 2)
-		file = open(argv, O_RDONLY, 0777);
+		file = open(argv, O_RDONLY, 0644);
 	else if (i == 3)
 		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (file < 0)
