@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/29 19:27:45 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:04:33 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,7 @@ static void	minishell_loop(t_mshell *mshell)
 			continue ;
 		add_history(input);
 		if (parse_input(input, mshell))
-		{
-			ft_free(input);
-			continue ;
-		}
-		execute(mshell);
+			execute(mshell);
 		clean_command_data(mshell);
 		ft_free(input);
 	}

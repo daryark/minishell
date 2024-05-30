@@ -48,6 +48,7 @@ Dasha:
     put tokens into commands
     make exec work with command array of structs, and check builtins work with arguments
     check err (like redir to nowhere, pipe without both sides ...)
+    fix cmdarr for exactly THIS CASE: some cmd <>file
     fix cases when $ is not first in " (ex: echo "hello $SHLVL; echo "< $SHLVL" => hello 1; < 1)
     separate fn split_save_divider
     ///!clean all the lists and arrays, all data allocated after usage 

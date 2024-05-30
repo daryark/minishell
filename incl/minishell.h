@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/29 15:49:24 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:02:49 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void			ft_free_array(char **array);
 void			alloc_err(void);
 char			*arrjoin(char **arr);
 char			**split_save_divider(char *s, char c);
+int				leave_heredoc(t_mshell *mshell, int err_i);
 
 void			ft_lstadd_env(t_env_lst **lst, char *name, char *val);
 void			clean_lst_env(t_env_lst **lst);

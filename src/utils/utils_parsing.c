@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 23:22:23 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/26 17:14:16 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:21:02 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,36 @@ int	ft_strchr_pos(char *s, int c)
 	return (-1);
 }
 
+int	leave_heredoc(t_mshell *mshell, int err_i)
+{
+	int	i;
+	int	in;
+	int	heredoc;
+
+	i = -1;
+	heredoc = 0;
+	while (++i < err_i)
+	{
+		if (mshell->tokarr[i].type == T_HEREDOC)
+			heredoc++;
+	}
+	mshell->cmdarr = ft_malloc(sizeof(t_cmdarr) * 1);
+	if (!mshell->cmdarr)
+		alloc_err();
+	mshell->cmdarr_l = 1;
+	alloc_cmd(0, heredoc, 0, mshell->cmdarr);
+	i = -1;
+	in = -1;
+	while (++i < err_i)
+	{
+		if (mshell->tokarr[i].type == T_HEREDOC)
+			fill_redir_type(&mshell->cmdarr[0].inp[++in], mshell->tokarr, &i);
+	}
+	// print_cmds(mshell);
+	return (heredoc);
+}
+
+
 void	print_cmds(t_mshell *mshell)
 {
 	int	c;
@@ -40,7 +70,7 @@ void	print_cmds(t_mshell *mshell)
 		i = 0;
 		while (mshell->cmdarr[c].args[i] != NULL)
 		{
-			printf("%s ", mshell->cmdarr[c].args[i]);
+			printf("(%s), ", mshell->cmdarr[c].args[i]);
 			i++;
 		}
 		i = 0;

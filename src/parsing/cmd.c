@@ -6,13 +6,13 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:04:49 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/26 17:12:44 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:21:38 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static void	alloc_cmd(int args, int inp, int out, t_cmdarr *cmd)
+void	alloc_cmd(int args, int inp, int out, t_cmdarr *cmd)
 {
 	cmd->args = ft_malloc(sizeof(char *) * (args + 1));
 	cmd->inp = ft_malloc(sizeof(t_token) * inp);
@@ -34,7 +34,7 @@ static void	init_cmd(int c, int *t, t_mshell *mshell)
 	inp = 0;
 	out = 0;
 	// printf("%sinit cmd, *t:%d, cmd:%d	%s", RED, *t, c, RE);
-	while (mshell->tokarr && *t < mshell->tokarr_l && mshell->tokarr[*t].word 
+	while (mshell->tokarr && *t < mshell->tokarr_l && mshell->tokarr[*t].word
 		&& mshell->tokarr[*t].type != T_PIPE)
 	{
 		// printf("i:%d, word:%s\n", *t, mshell->tokarr[*t].word);
@@ -42,7 +42,12 @@ static void	init_cmd(int c, int *t, t_mshell *mshell)
 			args++;
 		else
 		{
-			if (mshell->tokarr[*t].type == T_RED_INP
+			if (mshell->tokarr[*t].type == T_RED_INP && spec_symb(mshell->tokarr[*t].word) == 2)
+			{
+				inp++;
+				out++;
+			}
+			else if (mshell->tokarr[*t].type == T_RED_INP
 				|| mshell->tokarr[*t].type == T_HEREDOC)
 				inp++;
 			else if (mshell->tokarr[*t].type == T_RED_OUT
@@ -78,7 +83,7 @@ void    init_cmdarr(t_mshell *mshell)
 		init_cmd(c, &t, mshell);
 }
 
-static void	fill_redir_type(t_token *redir, t_token *tokarr, int *t)
+void	fill_redir_type(t_token *redir, t_token *tokarr, int *t)
 {
 	redir->type = tokarr[*t].type;
 	(*t)++;
@@ -86,6 +91,12 @@ static void	fill_redir_type(t_token *redir, t_token *tokarr, int *t)
 		alloc_err();
 	redir->word = ft_strdup(tokarr[*t].word);
 	// printf("%sredir->word:%s%s	", RED, redir->word, RE);
+}
+
+void	double_redir_case(t_token *redir, t_token *tokarr, int *t)
+{
+	fill_redir_type(redir, tokarr, t);
+	tokarr[--(*t)].type = T_RED_OUT;
 }
 
 //takes curr cmd, and token start i for this cmd
@@ -101,26 +112,15 @@ void	fill_cmd(int cmd, int *tok, t_mshell *mshell)
 	o = -1;
 	while (*tok < mshell->tokarr_l && mshell->tokarr[*tok].type != T_PIPE)
 	{
+		if (mshell->tokarr[*tok].type == T_RED_INP && \
+		spec_symb(mshell->tokarr[*tok].word) == 2)
+			double_redir_case(&mshell->cmdarr[cmd].inp[++i],  mshell->tokarr, tok);
 		if (mshell->tokarr[*tok].type == T_RED_INP
 			|| mshell->tokarr[*tok].type == T_HEREDOC)
-		{
-			// mshell->cmdarr[cmd].inp[++i].word = mshell->tokarr[(*tok)++].word;
-			// mshell->cmdarr[cmd].inp[++i].type = ft_strdup(mshell->tokarr[(*tok)].type);
-			// printf("%sfill cmd, inp: %s%s\n", YELLOW, mshell->tokarr[*tok].word, RE);
-			fill_redir_type(&mshell->cmdarr[cmd].inp[++i], \
-			mshell->tokarr, tok);
-			// printf("%sinp->word:%s, tok:%s%s\n", RED, mshell->cmdarr[cmd].inp[i].word, RE, mshell->tokarr[*tok].word);
-		}
+			fill_redir_type(&mshell->cmdarr[cmd].inp[++i], mshell->tokarr, tok);
 		else if (mshell->tokarr[*tok].type == T_RED_OUT
 			|| mshell->tokarr[*tok].type == T_APPEND)
-		{
-			// mshell->cmdarr[cmd].out[++o].word = mshell->tokarr[(*tok)++].word;
-			// mshell->cmdarr[cmd].out[++o].type = ft_strdup(mshell->tokarr[(*tok)].type);
-			// printf("%sfill cmd, out: %s%s\n", YELLOW, mshell->tokarr[*tok].word, RE);
-			fill_redir_type(&mshell->cmdarr[cmd].out[++o], \
-			mshell->tokarr, tok);
-			// printf("%sout->word:%s, tok:%s%s\n", RED, mshell->cmdarr[cmd].out[o].word, RE, mshell->tokarr[*tok].word);
-		}
+			fill_redir_type(&mshell->cmdarr[cmd].out[++o], mshell->tokarr, tok);
 		else
 			mshell->cmdarr[cmd].args[++a] = mshell->tokarr[*tok].word;
 		(*tok)++;
