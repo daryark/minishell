@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/30 15:40:15 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:21:47 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,43 +99,60 @@ void	open_files(t_mshell *mshell, int i)
 
 void	ft_piping(t_mshell *mshell)
 {
-	int	i;
-	int	fd[2];
-	int	infile;
-	int	pid;
-	int	exit_code;
+	int		i;
+	pid_t	pid;
+	int		j;
+	int		cmd_count;
+	int		pipes[mshell->cmdarr_l - 1][2];
 
+	j = 0;
+	cmd_count = mshell->cmdarr_l;
 	i = 0;
-	infile = 0;
-	while (i < mshell->cmdarr_l)
+	while (i < cmd_count - 1)
 	{
-		exit_code = 0;
-		pipe(fd);
+		if (pipe(pipes[i]) == -1)
+		{
+			perror("pipe");
+			exit(EXIT_FAILURE);
+		}
+		i++;
+	}
+	i = 0;
+	while (i < cmd_count)
+	{
 		pid = fork();
 		if (pid == 0)
 		{
-			heredoc(mshell, i);
 			if (i != 0)
+				dup2(pipes[i - 1][0], 0);
+			if (i != cmd_count - 1)
+				dup2(pipes[i][1], 1);
+			j = 0;
+			while (j < cmd_count - 1)
 			{
-				dup2(infile, 0);
-				close(infile);
+				close(pipes[j][0]);
+				close(pipes[j][1]);
+				j++;
 			}
-			if (i != mshell->cmdarr_l - 1)
-				dup2(fd[1], 1);
-			close(fd[0]);
+			heredoc(mshell, i);
 			open_files(mshell, i);
 			mshell->cmd_num = i;
-			exit_code = 127;
 			ft_execute(mshell);
+			exit(EXIT_SUCCESS);
 		}
-		else
-		{
-			waitpid(pid, NULL, 0);
-			close(fd[1]);
-			if (i != 0)
-				close(infile);
-			infile = fd[0];
-		}
+		i++;
+	}
+	i = 0;
+	while (i < cmd_count - 1)
+	{
+		close(pipes[i][0]);
+		close(pipes[i][1]);
+		i++;
+	}
+	i = 0;
+	while (i < cmd_count)
+	{
+		wait(NULL);
 		i++;
 	}
 }
