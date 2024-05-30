@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:54:09 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/29 19:29:42 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:35:06 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	open_file(char *argv, int i)
 	if (file < 0)
 	{
 		printf("minishell: %s: %s\n", argv, strerror(errno));
-		exit(1);
+		exit(2);
 	}
 	return (file);
 }
@@ -75,10 +75,12 @@ void	ft_execve(t_mshell *mshell)
 	{
 		printf("minishell: %s: command not found\n", cmds[0]);
 		ft_free_array(cmds);
+		mshell->exit_status = 127;
 		exit(127);
 	}
 	execve(path, cmds, envp);
 	printf("minishell: %s: command not found\n", cmds[0]);
 	ft_free_array(cmds);
+	mshell->exit_status = 127;
 	exit(127);
 }

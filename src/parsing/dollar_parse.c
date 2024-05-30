@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:30:07 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/30 13:43:16 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:28:21 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-//cut env name from str
+// cut env name from str
 char	*cut_name(char *s)
 {
 	int		i;
@@ -27,21 +27,21 @@ char	*cut_name(char *s)
 	return (name);
 }
 
-//takes the name str and returns node with name:val, or NULL
+// takes the name str and returns node with name:val, or NULL
 t_env_lst	*find_env_node(char *name, t_env_lst *env)
 {
 	while (env)
 	{
-		if (ft_strlen(name) == ft_strlen(env->name)
-			&& !ft_strncmp(name, env->name, ft_strlen(name)))
+		if (ft_strlen(name) == ft_strlen(env->name) && !ft_strncmp(name,
+				env->name, ft_strlen(name)))
 			return (env);
 		env = env->next;
 	}
 	return (NULL);
 }
 
-//finds part with env_var name in *s, updates *i(to pass back in strjoin)
-//return env_var value
+// finds part with env_var name in *s, updates *i(to pass back in strjoin)
+// return env_var value
 static char	*find_replace_env_var(char *s, int *i, t_env_lst *env)
 {
 	char		*find;
@@ -78,10 +78,10 @@ static int	not_replace_cases(char *s, char q)
 	else if (q == '\"' && s[1] != '$')
 	{
 		return (-2);
-	printf("in the middle dollar can be\n");
+		printf("in the middle dollar can be\n");
 	}
-	else if (space(s[1]) || !s[1] || q == '\''
-		|| (q && (spec_symb(&s[1]) || quote(s[1]))))
+	else if (space(s[1]) || !s[1] || q == '\'' || (q && (spec_symb(&s[1])
+		|| quote(s[1]))))
 		return (0);
 	else if (!q && (spec_symb(&s[1]) || quote(s[1])))
 		return (1);

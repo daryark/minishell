@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:00:05 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/30 11:22:45 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:20:20 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static int	not_closed_quotes(char *s)
 	int	i;
 	int	single_q;
 	int	double_q;
-		single_q = 0;
+
+	single_q = 0;
 	double_q = 0;
 	i = -1;
 	while (s[++i])
@@ -40,8 +41,8 @@ int	token_order_check(t_mshell *mshell)
 	arr = mshell->tokarr;
 	while (++i < mshell->tokarr_l)
 	{
-		if (arr[i].type == T_PIPE && ((i - 1) < 0
-				|| (i + 1) >= mshell->tokarr_l))
+		if (arr[i].type == T_PIPE && ((i - 1) < 0 || (i
+					+ 1) >= mshell->tokarr_l))
 			return (syntax_err(arr[i].word), i);
 		else if (arr[i].type > 2 && (i + 1) >= mshell->tokarr_l)
 			return (syntax_err("newline"), i);
@@ -79,9 +80,9 @@ int	input_err_check(char *input)
 
 	err_c = 0;
 	if (not_closed_quotes(input))
-		return (syntax_err("\'"), 1);
+		return (syntax_err("\'"), 2);
 	err_c = not_valid_symbols(input);
 	if (err_c)
-		return (syntax_err((char *)&err_c), 1);
+		return (syntax_err((char *)&err_c), 2);
 	return (0);
 }

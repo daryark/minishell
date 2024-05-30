@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/29 15:57:48 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:28:51 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ void	ft_unset(t_mshell *mshell)
 	if (rm_names[1] == NULL)
 	{
 		printf("minishell: unset: not enough arguments\n");
+		mshell->exit_status = 1;
 		return ;
 	}
 	else

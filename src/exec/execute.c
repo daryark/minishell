@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/30 15:09:06 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:40:15 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,13 @@ void	ft_piping(t_mshell *mshell)
 	int	fd[2];
 	int	infile;
 	int	pid;
+	int	exit_code;
 
 	i = 0;
 	infile = 0;
 	while (i < mshell->cmdarr_l)
 	{
+		exit_code = 0;
 		pipe(fd);
 		pid = fork();
 		if (pid == 0)
@@ -123,8 +125,8 @@ void	ft_piping(t_mshell *mshell)
 			close(fd[0]);
 			open_files(mshell, i);
 			mshell->cmd_num = i;
+			exit_code = 127;
 			ft_execute(mshell);
-			exit(0);
 		}
 		else
 		{
