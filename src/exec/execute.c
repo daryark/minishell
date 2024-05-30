@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/28 15:14:43 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/29 13:20:51 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_execute_with_pipes(t_mshell *mshell)
 				while (1)
 				{
 					line = readline("heredoc> ");
-					if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+					if ((ft_strncmp(line, limiter, ft_strlen(limiter)) == 0) && (ft_strlen(line) == ft_strlen(limiter)))
 					{
 						free(line);
 						break ;

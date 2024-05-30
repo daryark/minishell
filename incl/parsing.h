@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:30:36 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/29 12:27:51 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/30 10:39:43 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ typedef struct s_builtin	t_builtin;
 typedef enum e_type
 {
 	T_NDEF,		// *notdefined
-	T_WORD,	// word, string, file, command ...
+	T_WORD,		// word, string, file, command ...
 	T_PIPE,		//|
 	T_HEREDOC,	//<<
 	T_RED_INP,	//<
@@ -36,8 +36,8 @@ typedef struct s_token
 typedef struct s_cmdarr
 {
 	char				**args;
-	t_token				*inp; //arr[struct{name, type}];
-	t_token				*out; //arr[struct{name, type}];
+	t_token				*inp; //arr[struct{word, type}];
+	t_token				*out; //arr[struct{word, type}];
 	int					inp_l;
 	int					out_l;
 }						t_cmdarr;
@@ -58,6 +58,7 @@ void					init_env(t_mshell *mshell, char **env);
 int						fill_str(char *s, t_env_lst **lst);
 int						parse_input(char *input, t_mshell *mshell);
 void					dollar_value_subst(char **s, char *q, t_mshell *mshell);
+void					open_quotes(t_mshell *mshell);
 void					fill_cmd(int cmd, int *tok, t_mshell *mshell);
 // parsing utils
 int						space(char c);
@@ -73,7 +74,7 @@ void					init_tokarr(char *s, t_mshell *mshell);
 void					init_cmdarr(t_mshell *mshell);
 void					alloc_cmd(int args, int inp, int out, t_cmdarr *cmd);
 t_type					token_typizator(char *s);
-void					fill_redir_type(t_token *redir, t_token *tokarr, int *t);
+void					fill_redir_type(t_token *rdr, t_token *tarr, int *t);
 void					print_cmds(t_mshell *mshell);
 void					print_env(t_env_lst *env);
 #endif

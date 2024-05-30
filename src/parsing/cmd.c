@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 18:04:49 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/28 21:24:50 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:21:38 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	init_cmd(int c, int *t, t_mshell *mshell)
 		}
 		(*t)++;
 	}
-	printf("cmd[%d], args:%d, inp%d, out:%d\n", c, args, inp, out);
+	// printf("cmd[%d], args:%d, inp%d, out:%d\n", c, args, inp, out);
 	alloc_cmd(args, inp, out, &mshell->cmdarr[c]);
 }
 

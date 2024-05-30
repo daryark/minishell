@@ -6,13 +6,13 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:00:05 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/28 22:57:52 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/30 11:22:45 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static int	open_quotes(char *s)
+static int	not_closed_quotes(char *s)
 {
 	int	i;
 	int	single_q;
@@ -78,7 +78,7 @@ int	input_err_check(char *input)
 	int	err_c;
 
 	err_c = 0;
-	if (open_quotes(input))
+	if (not_closed_quotes(input))
 		return (syntax_err("\'"), 1);
 	err_c = not_valid_symbols(input);
 	if (err_c)

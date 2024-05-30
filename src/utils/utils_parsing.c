@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 23:22:23 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/29 12:35:09 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:21:02 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	leave_heredoc(t_mshell *mshell, int err_i)
 		if (mshell->tokarr[i].type == T_HEREDOC)
 			fill_redir_type(&mshell->cmdarr[0].inp[++in], mshell->tokarr, &i);
 	}
-	print_cmds(mshell);
+	// print_cmds(mshell);
 	return (heredoc);
 }
 
@@ -70,7 +70,7 @@ void	print_cmds(t_mshell *mshell)
 		i = 0;
 		while (mshell->cmdarr[c].args[i] != NULL)
 		{
-			printf("%s ", mshell->cmdarr[c].args[i]);
+			printf("(%s), ", mshell->cmdarr[c].args[i]);
 			i++;
 		}
 		i = 0;
