@@ -6,20 +6,20 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/30 15:25:12 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/30 21:11:13 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define RE "\033[0m"
+# define RE "\001\033[0m\002"
 # define BLUE "\x1b[34m"
 # define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
-# define YELLOW "\033[1;33m"
 # define MAGENTA "\033[1;35m"
 # define LIGHTGREEN "\x1b[92m"
+# define YELLOW "\001\033[1;33m\002"
 
 # include "../ft_class/ft_class.h"
 # include "../ft_destructor/ft_alloc.h"

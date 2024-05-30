@@ -58,5 +58,7 @@ invalid free:
     "something
     export "df dfd"=" df d f"
     export: not valid in this context: df dfd
-    echo HELLO | grep o ( grep problem !)
-
+    when env variable it there update it instead of adding new one every time
+    declare -x new="asdjh"
+    declare -x new="sjahdajk"
+    declare -x new="aksjdhaksjhd"

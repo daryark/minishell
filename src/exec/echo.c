@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:48:21 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/30 15:32:37 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/30 21:27:42 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,25 @@
 
 void	ft_echo(t_mshell *mshell)
 {
-	int		i;
-	int		n_flag;
-	t_token	*tmp;
+	int	i;
+	int	n_line;
 
-	tmp = mshell->tokarr;
 	i = 1;
-	n_flag = 0;
-	if (tmp[1].word && ft_strncmp(tmp[1].word, "-n", 2) == 0)
+	n_line = 1;
+	if (mshell->cmdarr[mshell->cmd_num].args[1]
+		&& !ft_strncmp(mshell->cmdarr[mshell->cmd_num].args[1], "-n", 3))
 	{
-		n_flag = 1;
+		n_line = 0;
 		i++;
 	}
-	while (tmp[i].word && tmp[i].type < 7)
+	while (mshell->cmdarr[mshell->cmd_num].args[i])
 	{
-		if (tmp[i + 1].word != NULL)
-			printf("%s ", tmp[i].word);
+		if (mshell->cmdarr[mshell->cmd_num].args[i + 1] != NULL)
+			printf("%s ", mshell->cmdarr[mshell->cmd_num].args[i]);
 		else
-			printf("%s", tmp[i].word);
+			printf("%s", mshell->cmdarr[mshell->cmd_num].args[i]);
 		i++;
 	}
-	if (n_flag == 0)
+	if (n_line)
 		printf("\n");
 }
