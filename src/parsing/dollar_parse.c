@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:30:07 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/30 15:28:21 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 00:45:20 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*cut_name(char *s)
 	i = 0;
 	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
 		i++;
+	if (s[i] && s[i] != '=')
+		return (NULL);
 	name = ft_substr(s, 0, i);
 	if (!name)
 		alloc_err();

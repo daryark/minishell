@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:00:05 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/30 15:20:20 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 00:31:20 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int	token_order_check(t_mshell *mshell)
 	{
 		if (arr[i].type == T_PIPE && ((i - 1) < 0 || (i
 					+ 1) >= mshell->tokarr_l))
-			return (syntax_err(arr[i].word), i);
+			return (syntax_err(arr[i].word, 0), i);
 		else if (arr[i].type > 2 && (i + 1) >= mshell->tokarr_l)
-			return (syntax_err("newline"), i);
+			return (syntax_err("newline", 0), i);
 		else if (arr[i].type > 2 && mshell->tokarr[i + 1].type > 2)
-			return (syntax_err(arr[i + 1].word), i);
+			return (syntax_err(arr[i + 1].word, 0), i);
 	}
 	return (0);
 }
@@ -66,13 +66,16 @@ static int	not_valid_symbols(char *s)
 	return (0);
 }
 
-void	syntax_err(char *c)
+void	syntax_err(char *c, int type)
 {
-	if (*c == '\'' && !(*c + 1))
+	if (*c == '\'' && !(*c + 1) && !type)
 		printf("Minishell: syntax error: unable to locate closing quotation\n");
-	else
+	else if (!type)
 		printf("Minishell: syntax error near unexpected token `%s'\n", c);
+	else if (type == 4) //position of export in builtin arr;
+		printf("minishell: export: `%s': not a valid identifier\n", c);
 }
+
 
 int	input_err_check(char *input)
 {
@@ -80,9 +83,9 @@ int	input_err_check(char *input)
 
 	err_c = 0;
 	if (not_closed_quotes(input))
-		return (syntax_err("\'"), 2);
+		return (syntax_err("\'", 0), 2);
 	err_c = not_valid_symbols(input);
 	if (err_c)
-		return (syntax_err((char *)&err_c), 2);
+		return (syntax_err((char *)&err_c, 0), 2);
 	return (0);
 }

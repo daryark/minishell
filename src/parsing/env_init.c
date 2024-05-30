@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 03:28:01 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/29 15:29:18 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 00:51:13 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
+static void	set_shlvl(t_mshell *mshell)
+{
+	t_env_lst	*shlvl_node;
+	int			shlvl;
+
+	shlvl_node = find_env_node("SHLVL", mshell->env);
+	shlvl = ft_atoi(shlvl_node->val);
+	ft_free(shlvl_node->val);
+	if (shlvl == 999)
+	{
+		printf("mminishell: warning: shell level (1000) too high, resetting to 1\n");
+		shlvl_node->val = "1";
+	}
+	else
+		shlvl_node->val = ft_itoa(shlvl + 1);
+}
 
 int	fill_str(char *s, t_env_lst **lst)
 {
@@ -40,7 +57,7 @@ int	fill_str(char *s, t_env_lst **lst)
 	return (err);
 }
 
-//*Please, don't use this fn!!!!
+//*Please, don't use this fn!!!! :))
 //*just add fn to change/add/remove needed name/value in the lst
 void	init_env(t_mshell *mshell, char **env)
 {
@@ -56,5 +73,6 @@ void	init_env(t_mshell *mshell, char **env)
 		}
 		i++;
 	}
+	set_shlvl(mshell);
 	// print_env(mshell->env);
 }

@@ -51,6 +51,7 @@ Dasha:
     fix cmdarr for exactly THIS CASE: some cmd <>file
     fix cases when $ is not first in " (ex: echo "hello $SHLVL; echo "< $SHLVL" => hello 1; < 1)
     separate fn split_save_divider
+    cut all the prinf-errors into the error function with differnt type nums
     ///!clean all the lists and arrays, all data allocated after usage 
     add exit status at the end
 
@@ -62,3 +63,11 @@ invalid free:
     declare -x new="asdjh"
     declare -x new="sjahdajk"
     declare -x new="aksjdhaksjhd"
+
+different with bash:
+-> dyarkovs@c2r12s2:~/Desktop/42_core/curr_proj/minishell$ export "hello bro"=hye | echo hello
+    hello
+    bash: export: `hello bro=hye': not a valid identifier
+->  Minishell~/Desktop/42_core/curr_proj/minishell$ export "hello bro"=hey | echo hello
+    hello
+(error being returned right, when withou pipe. No matter, if echo is first or second in pipes, we doesn't have an out?)
