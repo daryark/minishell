@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 23:22:23 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/30 13:21:02 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:11:15 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,15 @@ void	print_env(t_env_lst *env)
 		printf("%s%s = %s%s%s\n", YELLOW, env->name, GREEN, env->val, RE);
 		env = env->next;
 	}
+}
+
+int	empty_str(char *s)
+{
+	if (!s)
+		return (1);
+	while (*s && space(*s))
+		s++;
+	if (*s)
+		return (0);
+	return (1);
 }

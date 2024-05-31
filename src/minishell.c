@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/31 12:51:57 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:27:34 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	init_builtin_arr(t_mshell *mshell)
 {
 	int	n_cmds;
 
-	n_cmds = 7;
+	n_cmds = 6;
 	mshell->builtin = ft_malloc(sizeof(t_builtin) * (n_cmds + 1));
 	mshell->builtin[0].name = "pwd";
 	mshell->builtin[0].fn_ptr = ft_pwd;

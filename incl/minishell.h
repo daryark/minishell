@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/30 21:11:13 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:11:29 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,5 @@ void			ft_lstadd_env(t_env_lst **lst, char *name, char *val);
 void			clean_lst_env(t_env_lst **lst);
 void			clean_node_env(t_env_lst **lst);
 void			clean_command_data(t_mshell *mshell);
+int				empty_str(char *s);
 #endif
