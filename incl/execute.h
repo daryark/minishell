@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:02 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 12:22:39 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:43:52 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void						open_input_files(t_mshell *mshell, int i);
 void						open_output_files(t_mshell *mshell, int i);
 void						heredoc(t_mshell *mshell, int i);
 void						ft_cd(t_mshell *mshell);
+void						ft_execute(t_mshell *mshell);
 void						ft_env(t_mshell *mshell);
 void						ft_pwd(t_mshell *mshell);
 void						execute(t_mshell *mshell);
