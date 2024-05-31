@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/31 14:10:09 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:44:40 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,14 +114,20 @@ int	parse_input(char *input, t_mshell *mshell)
 	char	err;
 
 	if (input_err_check(input))
+	{
+		mshell->exit_status = 1;
 		return (0);
+	}
 	// dst = (char *)ft_calloc(sizeof(char), ft_strlen(input) + 1);
 	// if (!dst)
 	// 	alloc_err();
 	// else
 	// 	printf("len alloc: %zu\n", ft_strlen(input) + 1);
 	if (empty_str(input))
+	{
+		mshell->exit_status = 0;
 		return (0);
+	}
 	dst = trim_input(input);
 	if (ft_strlen(dst) == 1)
 		return (0);
@@ -137,5 +143,6 @@ int	parse_input(char *input, t_mshell *mshell)
 		create_cmdarr(mshell);
 	ft_free(dst);
 	// printf("%sPARSED%s\n", GREEN, RE);
+	mshell->exit_status = 0;
 	return (1);
 }
