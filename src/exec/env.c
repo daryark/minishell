@@ -6,53 +6,11 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 16:21:40 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:07:21 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execute.h"
-
-char	*find_env(t_env_lst *env, char *name)
-{
-	t_env_lst	*tmp;
-
-	tmp = env;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->name, name, ft_strlen(name)))
-			return (tmp->val);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
-char	**convert_env(t_env_lst *env)
-{
-	t_env_lst	*tmp;
-	char		**envp;
-	int			i;
-
-	i = 0;
-	tmp = env;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	envp = ft_malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	tmp = env;
-	while (tmp)
-	{
-		envp[i] = ft_strjoin(tmp->name, "=");
-		if (tmp->val)
-			envp[i] = ft_strjoin(envp[i], tmp->val);
-		i++;
-		tmp = tmp->next;
-	}
-	envp[i] = NULL;
-	return (envp);
-}
 
 void	ft_env(t_mshell *mshell)
 {
@@ -82,67 +40,39 @@ void	ft_env(t_mshell *mshell)
 	mshell->exit_status = 0;
 }
 
-void	tmp_sort_env(t_env_lst *env)
+void	export_arg_loop(t_mshell *mshell, char **args, int i)
 {
-	t_env_lst	*tmp;
-	char		*tmp_name;
-	char		*tmp_val;
+	char		*name;
+	t_env_lst	*env_node;
+	int			divider_pos;
 
-	while (env)
+	while (args[i])
 	{
-		tmp = env->next;
-		while (tmp)
+		name = cut_name(args[i]);
+		if (!name)
+			return (syntax_err(args[i], 4));
+		env_node = find_env_node(name, mshell->env);
+		if (!env_node)
+			fill_str(args[i], &mshell->env);
+		else
 		{
-			if (ft_strncmp(env->name, tmp->name, ft_strlen(env->name)) > 0)
+			divider_pos = ft_strchr_pos(args[i], '=');
+			if (divider_pos >= 0)
 			{
-				tmp_name = env->name;
-				tmp_val = env->val;
-				env->name = tmp->name;
-				env->val = tmp->val;
-				tmp->name = tmp_name;
-				tmp->val = tmp_val;
+				if (env_node->val)
+					ft_free(env_node->val);
+				env_node->val = ft_strdup(&args[i][divider_pos]);
 			}
-			tmp = tmp->next;
 		}
-		env = env->next;
-	}
-}
-
-static void	remove_one_node(char *str, t_env_lst **env)
-{
-	t_env_lst	*tmp;
-	t_env_lst	*prev;
-
-	tmp = *env;
-	prev = NULL;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->name, str, ft_strlen(str)) == 0)
-		{
-			if (prev)
-				prev->next = tmp->next;
-			else
-				*env = tmp->next;
-			ft_free(tmp->name);
-			ft_free(tmp->val);
-			ft_free(tmp);
-			return ;
-		}
-		prev = tmp;
-		tmp = tmp->next;
+		i++;
 	}
 }
 
 void	ft_export(t_mshell *mshell)
 {
-	int			i;
-	char		*name;
-	char		**args;
-	t_env_lst	*env_node;
-	int			divider_pos;
+	char	**args;
 
 	args = mshell->cmdarr[mshell->cmd_num].args;
-	env_node = NULL;
 	if (args[1] == NULL)
 	{
 		copy_list(mshell->env, &mshell->export);
@@ -152,29 +82,7 @@ void	ft_export(t_mshell *mshell)
 		clean_lst_env(&mshell->export);
 	}
 	else
-	{
-		i = 1;
-		while (args[i])
-		{
-			name = cut_name(args[i]);
-			if (!name)
-				return (syntax_err(args[i], 4));
-			env_node = find_env_node(name, mshell->env);
-			if (!env_node)
-				fill_str(args[i], &mshell->env);
-			else
-			{
-				divider_pos = ft_strchr_pos(args[i], '=');
-				if (divider_pos >= 0)
-				{
-					if (env_node->val)
-						ft_free(env_node->val);
-					env_node->val = ft_strdup(&args[i][divider_pos]);
-				}
-			}
-			i++;
-		}
-	}
+		export_arg_loop(mshell, args, 1);
 	mshell->exit_status = 0;
 }
 
