@@ -18,17 +18,17 @@
     << reads input until a specified delimiter without updating history. ✅?
     >> redirects output in append mode. ✅?
 
-9. Implement pipes (|) to connect command outputs to inputs of subsequent commands. ❌
-    unclosed fds. ❌
+9. Implement pipes (|) to connect command outputs to inputs of subsequent commands. ✅
+    unclosed fds. ✅
 
 10. Expand environment variables ($ followed by characters). ✅
 
-11. Expand $? to the exit status of the most recent foreground pipeline. ❌
+11. Expand $? to the exit status of the most recent foreground pipeline. ✅
 
 12. Handle ctrl-C, ctrl-D, and ctrl-\ as in bash. ✅
 
 13. Shell builtins:
-    echo -n option. ❌
+    echo -n option. ✅
     cd with relative or absolute path. ✅
     pwd with no options. ✅
     export with no options. ✅
@@ -40,7 +40,7 @@
     open minishell inside minishell. ✅
     remove currect directory from inside. ✅
     unclosed quotes " and '. ✅
-    shell level after 999. ❌
+    shell level after 999. ✅
 
 
 Dasha:
@@ -48,31 +48,9 @@ Dasha:
     put tokens into commands ✅
     make exec work with command array of structs, and check builtins work with arguments ✅
     check err (like redir to nowhere, pipe without both sides ...) ✅
-    fix cmdarr for exactly THIS CASE: some cmd <>file
-    fix cases when $ is not first in " (ex: echo "hello $SHLVL; echo "< $SHLVL" => hello 1; < 1)
-    separate fn split_save_divider
+    fix cmdarr for exactly THIS CASE: some cmd <>file ✅
+    fix cases when $ is not first in " (ex: echo "hello $SHLVL; echo "< $SHLVL" => hello 1; < 1)✅
+
+    separate fn split_save_divider NORM
     cut all the prinf-errors into the error function with differnt type nums
-    ///!clean all the lists and arrays, all data allocated after usage 
     add exit status at the end
-
-invalid free:
-    "something
-    export "df dfd"=" df d f"
-    export: not valid in this context: df dfd
-    when env variable it there update it instead of adding new one every time
-    declare -x new="asdjh"
-    declare -x new="sjahdajk"
-    declare -x new="aksjdhaksjhd"
-
-different with bash:
--> dyarkovs@c2r12s2:~/Desktop/42_core/curr_proj/minishell$ export "hello bro"=hye | echo hello
-    hello
-    bash: export: `hello bro=hye': not a valid identifier
-->  Minishell~/Desktop/42_core/curr_proj/minishell$ export "hello bro"=hey | echo hello
-    hello
-(error being returned right, when withou pipe. No matter, if echo is first or second in pipes, we doesn't have an out?)
-    export | grep SYS_INFO
-    env | grep SYS_INFO
-    [export SYS_INFO=$(uname -a)] (Test passed) ✅
-    [echo $SYS_INFO | cat > file1 | wc -w >file2] (Test passed)
-    heredoc ony
