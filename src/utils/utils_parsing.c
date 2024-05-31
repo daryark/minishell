@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 23:22:23 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/31 13:11:15 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:52:58 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,12 @@ int	leave_heredoc(t_mshell *mshell, int err_i)
 	heredoc = 0;
 	while (++i < err_i)
 	{
-		if (mshell->tokarr[i].type == T_HEREDOC)
+		if (mshell->tokarr[i].type == T_HEREDOC && (i + 1) < mshell->tokarr_l
+			&& mshell->tokarr[i + 1].type == T_WORD)
 			heredoc++;
 	}
+	if (!heredoc)
+		return (0);
 	mshell->cmdarr = ft_malloc(sizeof(t_cmdarr) * 1);
 	if (!mshell->cmdarr)
 		alloc_err();
@@ -51,10 +54,8 @@ int	leave_heredoc(t_mshell *mshell, int err_i)
 		if (mshell->tokarr[i].type == T_HEREDOC)
 			fill_redir_type(&mshell->cmdarr[0].inp[++in], mshell->tokarr, &i);
 	}
-	// print_cmds(mshell);
 	return (heredoc);
 }
-
 
 void	print_cmds(t_mshell *mshell)
 {
@@ -77,16 +78,16 @@ void	print_cmds(t_mshell *mshell)
 		printf("\ninp: ");
 		while (i < mshell->cmdarr[c].inp_l)
 		{
-			printf("{t: %i, w: %s},", \
-			mshell->cmdarr[c].inp[i].type, mshell->cmdarr[c].inp[i].word);
+			printf("{t: %i, w: %s},", mshell->cmdarr[c].inp[i].type,
+				mshell->cmdarr[c].inp[i].word);
 			i++;
 		}
 		i = 0;
 		printf("\nout: ");
 		while (i < mshell->cmdarr[c].out_l)
 		{
-			printf("{t: %i, w: %s},", \
-			mshell->cmdarr[c].out[i].type, mshell->cmdarr[c].out[i].word);
+			printf("{t: %i, w: %s},", mshell->cmdarr[c].out[i].type,
+				mshell->cmdarr[c].out[i].word);
 			i++;
 		}
 		printf("\n%s-------------------------%s\n", GREEN, RE);
