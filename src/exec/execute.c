@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/30 18:21:47 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:22:11 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,22 @@
 void	execute(t_mshell *mshell)
 {
 	int	i;
+	int	std_in;
+	int	std_out;
 
+	std_in = dup(0);
+	std_out = dup(1);
 	i = return_builtin_num(mshell->cmdarr[0].args[0]);
 	if (mshell->cmdarr_l == 1 && i != -1)
 	{
-		mshell->cmd_num = 0;
+		heredoc(mshell, 0);
+		open_input_files(mshell, 0);
+		open_output_files(mshell, 0);
 		mshell->builtin[i].fn_ptr(mshell);
+		dup2(std_in, 0);
+		dup2(std_out, 1);
+		close(std_in);
+		close(std_out);
 	}
 	else
 		ft_piping(mshell);
@@ -58,7 +68,7 @@ void	heredoc(t_mshell *mshell, int i)
 	}
 }
 
-void	open_files(t_mshell *mshell, int i)
+void	open_input_files(t_mshell *mshell, int i)
 {
 	int	j;
 	int	file;
@@ -79,6 +89,12 @@ void	open_files(t_mshell *mshell, int i)
 		close(file);
 		j++;
 	}
+}
+void	open_output_files(t_mshell *mshell, int i)
+{
+	int	j;
+	int	file;
+
 	j = 0;
 	while (j < mshell->cmdarr[i].out_l)
 	{
@@ -106,8 +122,8 @@ void	ft_piping(t_mshell *mshell)
 	int		pipes[mshell->cmdarr_l - 1][2];
 
 	j = 0;
-	cmd_count = mshell->cmdarr_l;
 	i = 0;
+	cmd_count = mshell->cmdarr_l;
 	while (i < cmd_count - 1)
 	{
 		if (pipe(pipes[i]) == -1)
@@ -135,7 +151,8 @@ void	ft_piping(t_mshell *mshell)
 				j++;
 			}
 			heredoc(mshell, i);
-			open_files(mshell, i);
+			open_input_files(mshell, i);
+			open_output_files(mshell, i);
 			mshell->cmd_num = i;
 			ft_execute(mshell);
 			exit(EXIT_SUCCESS);
@@ -159,7 +176,7 @@ void	ft_piping(t_mshell *mshell)
 
 void	ft_execute(t_mshell *mshell)
 {
-	int	i;
+	int i;
 
 	i = return_builtin_num(mshell->cmdarr[mshell->cmd_num].args[0]);
 	if (i == -1)

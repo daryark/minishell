@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:24:46 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/27 22:55:01 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 11:20:32 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	handle_sigint(int signals)
 	(void)signals;
 	write(1, "\n", 1);
 	rl_on_new_line();
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 

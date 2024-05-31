@@ -62,3 +62,9 @@ invalid free:
     declare -x new="asdjh"
     declare -x new="sjahdajk"
     declare -x new="aksjdhaksjhd"
+
+    export | grep SYS_INFO
+    env | grep SYS_INFO
+    [export SYS_INFO=$(uname -a)] (Test passed) ✅
+    [echo $SYS_INFO | cat > file1 | wc -w >file2] (Test passed)
+    heredoc ony
