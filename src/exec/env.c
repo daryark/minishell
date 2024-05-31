@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 00:35:16 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:44:46 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,48 +131,48 @@ static void	remove_one_node(char *str, t_env_lst **env)
 	}
 }
 
-void    ft_export(t_mshell *mshell)
+void	ft_export(t_mshell *mshell)
 {
-    int         i;
-    char        *name;
-    char        **args;
-    t_env_lst   *env_node;
-    int         divider_pos;
+	int			i;
+	char		*name;
+	char		**args;
+	t_env_lst	*env_node;
+	int			divider_pos;
 
-    args = mshell->cmdarr[mshell->cmd_num].args;
-    env_node = NULL;
-    if (args[1] == NULL)
-    {
-        copy_list(mshell->env, &mshell->export);
-        remove_one_node("_", &mshell->export);
-        tmp_sort_env(mshell->export);
-        ft_env(mshell);
-        clean_lst_env(&mshell->export);
-    }
-    else
-    {
-        i = 1;
-        while (args[i])
-        {
-            name = cut_name(args[i]);
+	args = mshell->cmdarr[mshell->cmd_num].args;
+	env_node = NULL;
+	if (args[1] == NULL)
+	{
+		copy_list(mshell->env, &mshell->export);
+		remove_one_node("_", &mshell->export);
+		tmp_sort_env(mshell->export);
+		ft_env(mshell);
+		clean_lst_env(&mshell->export);
+	}
+	else
+	{
+		i = 1;
+		while (args[i])
+		{
+			name = cut_name(args[i]);
 			if (!name)
 				return (syntax_err(args[i], 4));
-            env_node = find_env_node(name, mshell->env);
-            if (!env_node)
+			env_node = find_env_node(name, mshell->env);
+			if (!env_node)
 				fill_str(args[i], &mshell->env);
-            else
-            {
-                divider_pos = ft_strchr_pos(args[i], '=');
-                if (divider_pos >= 0)
-                {
+			else
+			{
+				divider_pos = ft_strchr_pos(args[i], '=');
+				if (divider_pos >= 0)
+				{
 					if (env_node->val)
 						ft_free(env_node->val);
 					env_node->val = ft_strdup(&args[i][divider_pos]);
 				}
-            }
-            i++;
-        }
-    }
+			}
+			i++;
+		}
+	}
 }
 
 void	ft_unset(t_mshell *mshell)
