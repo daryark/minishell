@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:09:10 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 16:16:07 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:01:39 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,42 @@ char	**get_envp(char **envp)
 	}
 }
 
-// ☹ ☻
-char	*exit_status_smile(char *tmp2, t_mshell *mshell)
+// get_brackets is function which will takes string and color as arguments
+// and return string with brackets in that color
+
+char	*get_brackets(char *str, int color)
 {
 	char	*tmp;
 
-	if (mshell->exit_status == 0)
-		printf(BLUE "(%d)" RE, mshell->exit_status);
+	if (color == 1)
+		tmp = ft_strjoin(BLUE, str);
 	else
-		printf(RED "(%d)" RE, mshell->exit_status);
-	tmp = ft_strjoin(YELLOW "Minishell~" RE, tmp2);
+		tmp = ft_strjoin(RED, str);
+	ft_free(str);
+	str = ft_strjoin(tmp, RE);
+	ft_free(tmp);
+	tmp = ft_strjoin("[", str);
+	ft_free(str);
+	str = ft_strjoin(tmp, "]" RE);
+	ft_free(tmp);
+	return (str);
+}
+
+char	*exit_status_smile(char *tmp2, t_mshell *mshell)
+{
+	char	*tmp;
+	char	*exit_status;
+	char	*tmp1;
+
+	exit_status = NULL;
+	if (mshell->exit_status == 0)
+		exit_status = get_brackets(ft_itoa(mshell->exit_status), 1);
+	else
+		exit_status = get_brackets(ft_itoa(mshell->exit_status), 0);
+	tmp1 = ft_strjoin(exit_status, YELLOW "Minishell~" RE);
+	tmp = ft_strjoin(tmp1, tmp2);
+	ft_free(tmp1);
+	ft_free(exit_status);
 	return (tmp);
 }
 
@@ -82,20 +108,16 @@ char	*get_currect_path(t_mshell *mshell)
 	char		*tmp;
 	char		*tmp2;
 	char		*tmp3;
+	t_env_lst	*user;
 
-	while (mshell->env)
-	{
-		if (!ft_strncmp(mshell->env->name, "USER", 5))
-			break ;
-		mshell->env = mshell->env->next;
-	}
+	user = find_env_node("USER", mshell->env);
 	tmp3 = getcwd(NULL, 0);
 	if (!tmp3)
 	{
 		printf("\nyou can use only 'cd ..' or 'exit'\n\n");
 		return (path);
 	}
-	tmp = ft_strjoin("/home/", mshell->env->val);
+	tmp = ft_strjoin("/home/", user->val);
 	tmp2 = ft_strjoin(ft_remove_substr(tmp3, tmp), "$ ");
 	ft_free(tmp3);
 	path = exit_status_smile(tmp2, mshell);
