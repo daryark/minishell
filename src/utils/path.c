@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:09:10 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 16:16:07 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 19:34:28 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,15 @@ char	*get_currect_path(t_mshell *mshell)
 	char		*tmp2;
 	char		*tmp3;
 
-	while (mshell->env)
-	{
-		if (!ft_strncmp(mshell->env->name, "USER", 5))
-			break ;
-		mshell->env = mshell->env->next;
-	}
+	t_env_lst* node = find_env_node("USER", mshell->env);
+	
 	tmp3 = getcwd(NULL, 0);
 	if (!tmp3)
 	{
 		printf("\nyou can use only 'cd ..' or 'exit'\n\n");
 		return (path);
 	}
-	tmp = ft_strjoin("/home/", mshell->env->val);
+	tmp = ft_strjoin("/home/", node->val);
 	tmp2 = ft_strjoin(ft_remove_substr(tmp3, tmp), "$ ");
 	ft_free(tmp3);
 	path = exit_status_smile(tmp2, mshell);
@@ -103,3 +99,4 @@ char	*get_currect_path(t_mshell *mshell)
 	ft_free(tmp);
 	return (path);
 }
+
