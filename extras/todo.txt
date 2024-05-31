@@ -71,3 +71,8 @@ different with bash:
 ->  Minishell~/Desktop/42_core/curr_proj/minishell$ export "hello bro"=hey | echo hello
     hello
 (error being returned right, when withou pipe. No matter, if echo is first or second in pipes, we doesn't have an out?)
+    export | grep SYS_INFO
+    env | grep SYS_INFO
+    [export SYS_INFO=$(uname -a)] (Test passed) ✅
+    [echo $SYS_INFO | cat > file1 | wc -w >file2] (Test passed)
+    heredoc ony
