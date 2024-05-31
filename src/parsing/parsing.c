@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/31 13:29:01 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:54:32 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,11 @@ static void	split_tokens(char *s, t_mshell *mshell)
 			w_l = pass_str(&s[i]);
 		mshell->tokarr[a_i].word = ft_substr(s, i, w_l--);
 		i += w_l;
-		printf("%s%s%s	", GREEN, mshell->tokarr[a_i].word, RE);
-		printf("%s%d%s\n", YELLOW, mshell->tokarr[a_i].type, RE);
+		// printf("%s%s%s	", GREEN, mshell->tokarr[a_i].word, RE);
+		// printf("%s%d%s\n", YELLOW, mshell->tokarr[a_i].type, RE);
 		a_i++;
 	}
-	printf("tokarr_l:%d\n", mshell->tokarr_l);
+	// printf("tokarr_l:%d\n", mshell->tokarr_l);
 }
 
 // cmdarr [{args - arr[char *],
@@ -105,7 +105,7 @@ static void	create_cmdarr(t_mshell *mshell)
 		fill_cmd(c, &t, mshell);
 		t++;
 	}
-	print_cmds(mshell);
+	// print_cmds(mshell);
 }
 
 int	parse_input(char *input, t_mshell *mshell)
@@ -113,29 +113,20 @@ int	parse_input(char *input, t_mshell *mshell)
 	char	*dst;
 	char	err;
 
-	if (input_err_check(input))
-		return (0);
-	// dst = (char *)ft_calloc(sizeof(char), ft_strlen(input) + 1);
-	// if (!dst)
-	// 	alloc_err();
-	// else
-	// 	printf("len alloc: %zu\n", ft_strlen(input) + 1);
-	if (empty_str(input))
+	if (input_err_check(input) || empty_str(input))
 		return (0);
 	dst = trim_input(input);
-	if (ft_strlen(dst) == 1)
-		return (0);
-	// printf("%s trim: |%s|\n%s", GREEN, dst, RE);
+	// printf("%s trim:	|%s|\n%s", GREEN, dst, RE);
 	replace_dollars(&dst, mshell);
-	// printf("%s $: |%s|\n%s", GREEN, dst, RE);
+	// printf("%s $:	|%s|\n%s", GREEN, dst, RE);
 	split_tokens(dst, mshell);
-	open_quotes(mshell);
 	err = token_order_check(mshell);
-	if (err && !leave_heredoc(mshell, err))
-		return (0);
-	if (!err)
+	if (err >= 0 && !leave_heredoc(mshell, err))
+		return (ft_free(dst), 0);
+	open_quotes(mshell);
+	if (err < 0)
 		create_cmdarr(mshell);
 	ft_free(dst);
-	// printf("%sPARSED%s\n", GREEN, RE);
+	printf("%sPARSED%s\n", GREEN, RE);
 	return (1);
 }
