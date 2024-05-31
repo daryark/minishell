@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:09:10 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/30 21:09:02 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:16:07 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,19 @@ char	**get_envp(char **envp)
 	}
 }
 
+// ☹ ☻
+char	*exit_status_smile(char *tmp2, t_mshell *mshell)
+{
+	char	*tmp;
+
+	if (mshell->exit_status == 0)
+		printf(BLUE "(%d)" RE, mshell->exit_status);
+	else
+		printf(RED "(%d)" RE, mshell->exit_status);
+	tmp = ft_strjoin(YELLOW "Minishell~" RE, tmp2);
+	return (tmp);
+}
+
 char	*get_currect_path(t_mshell *mshell)
 {
 	static char	*path;
@@ -85,7 +98,7 @@ char	*get_currect_path(t_mshell *mshell)
 	tmp = ft_strjoin("/home/", mshell->env->val);
 	tmp2 = ft_strjoin(ft_remove_substr(tmp3, tmp), "$ ");
 	ft_free(tmp3);
-	path = ft_strjoin(YELLOW "Minishell~" RE, tmp2);
+	path = exit_status_smile(tmp2, mshell);
 	ft_free(tmp2);
 	ft_free(tmp);
 	return (path);

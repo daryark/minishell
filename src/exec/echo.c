@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:48:21 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/30 21:27:42 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:20:39 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,5 @@ void	ft_echo(t_mshell *mshell)
 	}
 	if (n_line)
 		printf("\n");
+	mshell->exit_status = 0;
 }

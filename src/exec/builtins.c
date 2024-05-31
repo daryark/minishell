@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:10:22 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/29 15:58:12 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:20:29 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ void	ft_cd(t_mshell *mshell)
 	{
 		path = ft_strdup(find_env(mshell->env, "HOME"));
 		chdir(path);
+		ft_free(path);
 	}
 	else
 		chdir(tmp[1]);
+	mshell->exit_status = 0;
 }
 
 void	ft_pwd(t_mshell *mshell)
@@ -35,6 +37,9 @@ void	ft_pwd(t_mshell *mshell)
 
 	(void)mshell;
 	path = getcwd(NULL, 0);
+	if (!path)
+		ft_error_exit("pwd: ", strerror(errno), 1);
 	printf("%s\n", path);
 	ft_free(path);
+	mshell->exit_status = 0;
 }

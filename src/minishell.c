@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/31 13:27:34 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:37:41 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-// n - amnt of fns choice
 void	init_builtin_arr(t_mshell *mshell)
 {
 	int	n_cmds;
@@ -90,7 +89,6 @@ int	main(int ac, char **av, char **envp)
 		write(1, GREEN "OK\n" RE, 14);
 		init_mshell(&mshell, get_envp(envp));
 		minishell_loop(&mshell);
-		// clean_mshell(&mshell);//not written fn yet
 	}
 	ft_destructor();
 	return (0);

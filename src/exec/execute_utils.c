@@ -6,31 +6,50 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:54:09 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 12:06:47 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:25:39 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execute.h"
 
-int	open_file(char *argv, int i)
+void	wait_in_parent(t_mshell *mshell)
 {
-	int	file;
+	int	status;
+	int	i;
 
-	file = 0;
-	if (i == 0)
-		file = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	else if (i == 1)
-		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (i == 2)
-		file = open(argv, O_RDONLY, 0644);
-	else if (i == 3)
-		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (file < 0)
+	i = 0;
+	while (i < mshell->cmdarr_l)
 	{
-		printf("minishell: %s: %s\n", argv, strerror(errno));
-		exit(2);
+		wait(&status);
+		if (WIFEXITED(status))
+			mshell->exit_status = WEXITSTATUS(status);
+		i++;
 	}
-	return (file);
+}
+
+void	open_fds(t_mshell *mshell, int pipes[][2])
+{
+	int	i;
+
+	i = 0;
+	while (i < mshell->cmdarr_l - 1)
+	{
+		pipe(pipes[i]);
+		i++;
+	}
+}
+
+void	close_fds(t_mshell *mshell, int pipes[][2])
+{
+	int	i;
+
+	i = 0;
+	while (i < mshell->cmdarr_l - 1)
+	{
+		close(pipes[i][0]);
+		close(pipes[i][1]);
+		i++;
+	}
 }
 
 int	return_builtin_num(char *cmd)
@@ -72,15 +91,7 @@ void	ft_execve(t_mshell *mshell)
 	else
 		path = ft_strdup(cmds[0]);
 	if (path == NULL)
-	{
-		write(2, "minishell: command not found\n", 29);
-		ft_free_array(cmds);
-		mshell->exit_status = 127;
-		exit(127);
-	}
+		ft_error_exit(cmds[0], ": command not found\n", 127);
 	execve(path, cmds, envp);
-	perror("execve");
-	ft_free_array(cmds);
-	mshell->exit_status = 127;
-	exit(127);
+	ft_error_exit(cmds[0], ": command not found\n", 127);
 }

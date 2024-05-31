@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/31 13:11:29 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:00:04 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define MINISHELL_H
 
 # define RE "\001\033[0m\002"
-# define BLUE "\x1b[34m"
-# define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
 # define MAGENTA "\033[1;35m"
 # define LIGHTGREEN "\x1b[92m"
+# define RED "\001\033[1;31m\002"
+# define BLUE "\001\033[1;34m\002"
 # define YELLOW "\001\033[1;33m\002"
 
 # include "../ft_class/ft_class.h"
@@ -57,6 +57,7 @@ void			copy_list(t_env_lst *env, t_env_lst **new);
 char			*get_currect_path(t_mshell *mshell);
 char			**get_envp(char **envp);
 char			*find_path(char *cmd, char *path);
+void			ft_error_exit(char *str, char *str2, int status);
 // struct.c
 void			init_mshell(t_mshell *mshell, char **env);
 void			handle_sigint(int signals);

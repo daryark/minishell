@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 13:59:13 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:21:40 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	ft_env(t_mshell *mshell)
 				printf("%s=%s\n", tmp->name, tmp->val);
 			tmp = tmp->next;
 		}
+		mshell->exit_status = 0;
 		return ;
 	}
 	tmp = mshell->export;
@@ -78,6 +79,7 @@ void	ft_env(t_mshell *mshell)
 			printf("declare -x %s\n", tmp->name);
 		tmp = tmp->next;
 	}
+	mshell->exit_status = 0;
 }
 
 void	tmp_sort_env(t_env_lst *env)
@@ -173,6 +175,7 @@ void	ft_export(t_mshell *mshell)
 			i++;
 		}
 	}
+	mshell->exit_status = 0;
 }
 
 void	ft_unset(t_mshell *mshell)
@@ -196,4 +199,5 @@ void	ft_unset(t_mshell *mshell)
 			i++;
 		}
 	}
+	mshell->exit_status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 13:58:54 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/29 14:54:17 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:21:55 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	ft_strncmp(char *s1, char *s2, size_t n)
 
 int	ft_strcmp(char *s1, char *s2)
 {
-	unsigned char *str1;
-	unsigned char *str2;
-	size_t i;
+	unsigned char	*str1;
+	unsigned char	*str2;
+	size_t			i;
 
 	if (!s1)
 		return (0);

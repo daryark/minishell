@@ -6,23 +6,11 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/26 20:30:39 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/27 20:39:01 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:28:23 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_class.h"
-
-int	ft_class_strlen(char *s)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);
-}
 
 int	ft_class_arrlen(char **arr)
 {
@@ -59,7 +47,7 @@ char	*ft_class_strdup(char *s1)
 	char	*buffer;
 	int		i;
 
-	buffer = malloc(sizeof(char) * ft_class_strlen(s1) + 1);
+	buffer = malloc(sizeof(char) * ft_strlen(s1) + 1);
 	if (!buffer || !s1)
 		return (NULL);
 	i = 0;
@@ -86,4 +74,28 @@ void	ft_class_memcpy(void *dst, void *src, size_t n)
 		str1[i] = str2[i];
 		i++;
 	}
+}
+
+void	*attr(t_class *class, char *name)
+{
+	char	*s;
+	char	**arr;
+	void	*ret;
+	int		i;
+
+	s = get_str(class, name);
+	i = get_int(class, name);
+	arr = get_arr(class, name);
+	if (s)
+		ret = &s;
+	else if (i)
+		ret = &i;
+	else if (arr)
+		ret = arr;
+	else
+	{
+		call_func(class, name);
+		ret = NULL;
+	}
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 20:16:45 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/29 11:57:00 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:30:21 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ size_t	get_arg_size(t_arg *args)
 	return (arg_size);
 }
 
+// Add function arguments to the class
 void	add_func_args(t_class *class, char *name, t_arg *args)
 {
 	t_attribute	*attribute;

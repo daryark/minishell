@@ -13,6 +13,7 @@
 #ifndef FT_CLASS_H
 # define FT_CLASS_H
 
+# include "../libft/libft.h"
 # include <fcntl.h>
 # include <stdarg.h>
 # include <stdio.h>
@@ -87,7 +88,6 @@ int						get_int(t_class *class, char *name);
 void					destroy_class(t_class *class);
 int						ft_class_arrlen(char **arr);
 char					*ft_class_strdup(char *s1);
-int						ft_class_strlen(char *s);
 t_class					*class(void);
 
 #endif
