@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:54:09 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/30 21:55:26 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:06:47 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ void	ft_execve(t_mshell *mshell)
 		path = ft_strdup(cmds[0]);
 	if (path == NULL)
 	{
-		printf("minishell: %s: command not found\n", cmds[0]);
+		write(2, "minishell: command not found\n", 29);
 		ft_free_array(cmds);
 		mshell->exit_status = 127;
 		exit(127);
 	}
 	execve(path, cmds, envp);
-	printf("minishell: %s: command not found\n", cmds[0]);
+	perror("execve");
 	ft_free_array(cmds);
 	mshell->exit_status = 127;
 	exit(127);

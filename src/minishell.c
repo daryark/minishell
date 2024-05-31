@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/30 21:04:41 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 11:45:58 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	init_mshell(t_mshell *mshell, char **env)
 	mshell->cmdarr = NULL;
 	mshell->tokarr_l = 0;
 	mshell->cmdarr_l = 0;
+	mshell->cmd_num = 0;
 	init_env(mshell, env);
 	init_builtin_arr(mshell);
 }
@@ -69,7 +70,7 @@ static void	minishell_loop(t_mshell *mshell)
 			continue ;
 		add_history(input);
 		if (parse_input(input, mshell))
-			execute(mshell);
+			ft_piping(mshell);
 		clean_command_data(mshell);
 		ft_free(input);
 	}

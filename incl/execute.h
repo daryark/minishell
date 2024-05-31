@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:02 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/29 16:48:08 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:22:39 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ typedef struct s_builtin
 	exec_fn					*fn_ptr;
 }							t_builtin;
 
+void						open_input_files(t_mshell *mshell, int i);
+void						open_output_files(t_mshell *mshell, int i);
+void						heredoc(t_mshell *mshell, int i);
 void						ft_cd(t_mshell *mshell);
 void						ft_env(t_mshell *mshell);
 void						ft_pwd(t_mshell *mshell);
@@ -43,7 +46,6 @@ void						ft_unset(t_mshell *mshell);
 void						ft_execve(t_mshell *mshell);
 void						ft_export(t_mshell *mshell);
 void						ft_piping(t_mshell *mshell);
-void						ft_execute(t_mshell *mshell);
 char						**convert_env(t_env_lst *env);
 int							return_builtin_num(char *cmd);
 int							open_file(char *argv, int i);

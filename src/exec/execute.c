@@ -6,25 +6,11 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/30 18:21:47 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:22:30 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/execute.h"
-
-void	execute(t_mshell *mshell)
-{
-	int	i;
-
-	i = return_builtin_num(mshell->cmdarr[0].args[0]);
-	if (mshell->cmdarr_l == 1 && i != -1)
-	{
-		mshell->cmd_num = 0;
-		mshell->builtin[i].fn_ptr(mshell);
-	}
-	else
-		ft_piping(mshell);
-}
 
 void	heredoc(t_mshell *mshell, int i)
 {
@@ -58,7 +44,7 @@ void	heredoc(t_mshell *mshell, int i)
 	}
 }
 
-void	open_files(t_mshell *mshell, int i)
+void	open_input_files(t_mshell *mshell, int i)
 {
 	int	j;
 	int	file;
@@ -79,6 +65,12 @@ void	open_files(t_mshell *mshell, int i)
 		close(file);
 		j++;
 	}
+}
+void	open_output_files(t_mshell *mshell, int i)
+{
+	int	j;
+	int	file;
+
 	j = 0;
 	while (j < mshell->cmdarr[i].out_l)
 	{
@@ -104,10 +96,28 @@ void	ft_piping(t_mshell *mshell)
 	int		j;
 	int		cmd_count;
 	int		pipes[mshell->cmdarr_l - 1][2];
+	int		builtin_index;
+	int		stdin_backup;
+	int		stdout_backup;
 
 	j = 0;
-	cmd_count = mshell->cmdarr_l;
 	i = 0;
+	cmd_count = mshell->cmdarr_l;
+	builtin_index = return_builtin_num(mshell->cmdarr[0].args[0]);
+	if (mshell->cmdarr_l == 1 && builtin_index != -1)
+	{
+		stdin_backup = dup(0);
+		stdout_backup = dup(1);
+		heredoc(mshell, 0);
+		open_input_files(mshell, 0);
+		open_output_files(mshell, 0);
+		mshell->builtin[builtin_index].fn_ptr(mshell);
+		dup2(stdin_backup, 0);
+		dup2(stdout_backup, 1);
+		close(stdin_backup);
+		close(stdout_backup);
+		return ;
+	}
 	while (i < cmd_count - 1)
 	{
 		if (pipe(pipes[i]) == -1)
@@ -135,9 +145,11 @@ void	ft_piping(t_mshell *mshell)
 				j++;
 			}
 			heredoc(mshell, i);
-			open_files(mshell, i);
+			open_input_files(mshell, i);
+			open_output_files(mshell, i);
 			mshell->cmd_num = i;
-			ft_execute(mshell);
+			if (builtin_index == -1)
+				ft_execve(mshell);
 			exit(EXIT_SUCCESS);
 		}
 		i++;
@@ -155,15 +167,4 @@ void	ft_piping(t_mshell *mshell)
 		wait(NULL);
 		i++;
 	}
-}
-
-void	ft_execute(t_mshell *mshell)
-{
-	int	i;
-
-	i = return_builtin_num(mshell->cmdarr[mshell->cmd_num].args[0]);
-	if (i == -1)
-		ft_execve(mshell);
-	else
-		mshell->builtin[i].fn_ptr(mshell);
 }
