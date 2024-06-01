@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:54:09 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 16:25:39 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:55:51 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	wait_in_parent(t_mshell *mshell)
 	int	status;
 	int	i;
 
+	status = 0;
 	i = 0;
 	while (i < mshell->cmdarr_l)
 	{

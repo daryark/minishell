@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:09:10 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/01 17:22:37 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:50:39 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,4 +125,3 @@ char	*get_currect_path(t_mshell *mshell)
 	ft_free(tmp);
 	return (path);
 }
-
