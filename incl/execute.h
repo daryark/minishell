@@ -6,14 +6,13 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:02 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 17:07:28 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/01 13:35:03 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
 
-# include "../ft_class/ft_class.h"
 # include "../ft_destructor/ft_alloc.h"
 # include "../libft/libft.h"
 # include "minishell.h"

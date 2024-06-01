@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 21:25:10 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/01 13:37:34 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	ft_piping(t_mshell *mshell, int pipes[][2])
 			open_input_files(mshell, i);
 			open_output_files(mshell, i);
 			mshell->cmd_num = i;
+			signal(SIGINT, SIG_DFL);
 			ft_execute(mshell);
 			exit(mshell->exit_status);
 		}

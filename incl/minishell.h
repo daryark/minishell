@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/31 21:24:14 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/01 13:35:07 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # define BLUE "\001\033[1;34m\002"
 # define YELLOW "\001\033[1;33m\002"
 
-# include "../ft_class/ft_class.h"
 # include "../ft_destructor/ft_alloc.h"
 # include "../libft/libft.h"
 # include "execute.h"
@@ -62,6 +61,7 @@ void			ft_error_exit(char *str, char *str2, int status);
 void			init_mshell(t_mshell *mshell, char **env);
 void			handle_sigint(int signals);
 void			ignore_signals(void);
+void			heredoc_signal(int signal);
 void			ft_free_array(char **array);
 void			alloc_err(void);
 char			*arrjoin(char **arr);

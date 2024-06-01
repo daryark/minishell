@@ -10,7 +10,6 @@ LFLAGS = -lreadline -Ireadline -L$(LFT_F) -lft -I$(LFT_F)
 HEADERS = incl/minishell.h incl/execute.h incl/sources.h incl/parsing.h
 LFT_F = libft
 FT_DES = ft_destructor
-FT_CLASS = ft_class
 
 SRC =	minishell.c \
 		execute.c builtins.c echo.c env.c execute_utils.c open_files.c env_utils.c \
@@ -29,9 +28,8 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@printf "\n"
 	$(MAKE) -C $(FT_DES)
-	$(MAKE) -C $(FT_CLASS)
 	$(MAKE) -C $(LFT_F)
-	$(CC) -o $@ $(OBJ) $(LFLAGS) $(CFLAGS) ./ft_destructor/ft_alloc.a ./ft_class/ft_class.a
+	$(CC) -o $@ $(OBJ) $(LFLAGS) $(CFLAGS) ./ft_destructor/ft_alloc.a
 	@echo "$(GREEN)\n—————————————✣ MINISHELL COMPILED ✣—————————————\n$(RE)"
 
 $(OBJ_F)%.o: %.c $(HEADERS) Makefile
@@ -52,7 +50,6 @@ fclean: clean
 
 re: fclean all
 	$(MAKE) fclean -C $(LFT_F);
-	$(MAKE) fclean -C $(FT_CLASS);
 	$(MAKE) fclean -C $(FT_DES);
 	$(MAKE) -j 12 all
 
