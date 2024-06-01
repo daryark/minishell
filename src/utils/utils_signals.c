@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:24:46 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/01 14:52:02 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:48:00 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		g_signal;
 
-void	heredoc_signal(int signal)
+void	child_signal(int signal)
 {
 	if (signal == SIGINT)
 		exit(1);
@@ -44,9 +44,9 @@ void	ignore_signals(void)
 {
 	struct sigaction	sa;
 
-	g_signal = 0;
 	sa.sa_handler = handle_sigint;
 	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 	sigaction(SIGTSTP, &sa, NULL);

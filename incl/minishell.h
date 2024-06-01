@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/01 13:35:07 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:29:21 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+extern int		g_signal;
+
 typedef struct s_mshell
 {
 	t_env_lst	*export;
@@ -61,7 +63,8 @@ void			ft_error_exit(char *str, char *str2, int status);
 void			init_mshell(t_mshell *mshell, char **env);
 void			handle_sigint(int signals);
 void			ignore_signals(void);
-void			heredoc_signal(int signal);
+void			child_signal(int signal);
+void			parent_signal(int signal);
 void			ft_free_array(char **array);
 void			alloc_err(void);
 char			*arrjoin(char **arr);

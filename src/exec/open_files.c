@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 14:42:47 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/01 13:00:52 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:48:09 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	heredoc_loop(t_mshell *mshell, int i)
 	int	j;
 
 	j = 0;
-	signal(SIGINT, heredoc_signal);
 	while (j < mshell->cmdarr[i].inp_l)
 	{
 		if (mshell->cmdarr[i].inp[j].type == T_HEREDOC)
