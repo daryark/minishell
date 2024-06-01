@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:00:05 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/31 14:54:03 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:17:16 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static int	not_closed_quotes(char *s)
 			single_q = (single_q + 1) % 2;
 		if (s[i] == '\"' && !single_q)
 			double_q = (double_q + 1) % 2;
-		// printf("%d,%d  \n", single_q, double_q);
 	}
 	return (single_q || double_q);
 }
@@ -43,14 +42,15 @@ int	token_order_check(t_mshell *mshell)
 	{
 		if (arr[i].type == T_PIPE && ((i - 1) < 0 || (i
 					+ 1) >= mshell->tokarr_l))
-			return (syntax_err(arr[i].word, 0), i);
+			return (syntax_err(arr[i].word, mshell->exit_status = 2), i);
 		else if (arr[i].type > 2 && (i + 1) >= mshell->tokarr_l)
-			return (syntax_err("newline", 0), i);
-		else if (arr[i].type > 2 && mshell->tokarr[i + 1].type > 2)
-			return (syntax_err(arr[i + 1].word, 0), i);
+			return (syntax_err("newline", 2), mshell->exit_status = 2);
+		else if (arr[i].type > 2 && mshell->tokarr[i + 1].type > 1)
+			return (syntax_err(arr[i + 1].word, mshell->exit_status = 2), i);
 	}
 	return (-1);
 }
+
 static int	not_valid_symbols(char *s)
 {
 	char	quote;
@@ -66,26 +66,36 @@ static int	not_valid_symbols(char *s)
 	return (0);
 }
 
-void	syntax_err(char *c, int type)
+void	syntax_err(char *s, int status)
 {
-	if (*c == '\'' && !(*c + 1) && !type)
-		printf("Minishell: syntax error: unable to locate closing quotation\n");
-	else if (!type)
-		printf("Minishell: syntax error near unexpected token `%s'\n", c);
-	else if (type == 4) //position of export in builtin arr;
-		printf("minishell: export: `%s': not a valid identifier\n", c);
+	if (status == 2)
+		printf("Minishell: syntax error near unexpected token `%s'\n", s);
+	if (status == 39)
+		printf("Minishell: syntax error unable to locate closing quotation\n");
+	else if (status == 4)
+		printf("minishell: export: `%s': not a valid identifier\n", s);
 }
 
-
-int	input_err_check(char *input)
+int	input_err_check(t_mshell *mshell, char *input)
 {
-	int	err_c;
+	int	err_quote;
+	int	err_symb;
 
-	err_c = 0;
-	if (not_closed_quotes(input))
-		return (syntax_err("\'", 0), 2);
-	err_c = not_valid_symbols(input);
-	if (err_c)
-		return (syntax_err((char *)&err_c, 0), 2);
-	return (0);
+	err_quote = 0;
+	err_symb = 0;
+	err_quote = not_closed_quotes(input);
+	err_symb = not_valid_symbols(input);
+	if (err_quote || err_symb)
+	{
+		mshell->exit_status = 2;
+		if (err_quote)
+			syntax_err((char *)&err_quote, 39);
+		else if (err_symb)
+			syntax_err((char *)&err_symb, mshell->exit_status);
+	}
+	else if (empty_str(input))
+		mshell->exit_status = 0;
+	else
+		return (0);
+	return (1);
 }

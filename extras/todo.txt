@@ -28,7 +28,7 @@
 12. Handle ctrl-C, ctrl-D, and ctrl-\ as in bash. ✅
 
 13. Shell builtins:
-    echo -n option. ✅
+    echo -n option. ✅b
     cd with relative or absolute path. ✅
     pwd with no options. ✅
     export with no options. ✅

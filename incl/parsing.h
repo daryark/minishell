@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:30:36 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/31 14:31:18 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/01 13:55:01 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_env_lst
 
 // err check
 void						syntax_err(char *c, int type);
-int							input_err_check(char *input);
+int							input_err_check(t_mshell *mshell, char *input);
 int							token_order_check(t_mshell *mshell);
 // parsing
 void						init_env(t_mshell *mshell, char **env);

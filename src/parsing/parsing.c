@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/31 16:51:06 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:36:27 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,29 +113,21 @@ int	parse_input(char *input, t_mshell *mshell)
 	char	*dst;
 	char	err;
 
-	if (input_err_check(input))
-	{
-		mshell->exit_status = 1;
+	if (input_err_check(mshell, input))
 		return (0);
-	}
-	if (empty_str(input))
-	{
-		mshell->exit_status = 0;
-		return (0);
-	}
 	dst = trim_input(input);
-	// printf("%s trim:	|%s|\n%s", GREEN, dst, RE);
 	replace_dollars(&dst, mshell);
-	// printf("%s $:	|%s|\n%s", GREEN, dst, RE);
 	split_tokens(dst, mshell);
 	err = token_order_check(mshell);
-	if (err >= 0 && !leave_heredoc(mshell, err))
-		return (ft_free(dst), 0);
+	if (err >= 0)
+	{
+		// mshell->exit_status = 2;
+		if (!leave_heredoc(mshell, err))
+			return (ft_free(dst), 0);
+	}
 	open_quotes(mshell);
 	if (err < 0)
 		create_cmdarr(mshell);
-	ft_free(dst);
-	// printf("%sPARSED%s\n", GREEN, RE);
 	mshell->exit_status = 0;
-	return (1);
+	return (ft_free(dst), 1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:48:21 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 16:20:39 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:11:05 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@ void	ft_echo(t_mshell *mshell)
 
 	i = 1;
 	n_line = 1;
-	if (mshell->cmdarr[mshell->cmd_num].args[1]
-		&& !ft_strncmp(mshell->cmdarr[mshell->cmd_num].args[1], "-n", 3))
-	{
-		n_line = 0;
-		i++;
-	}
+	// while (mshell->cmdarr[mshell->cmd_num].args[i]
+	// 	&& !ft_strncmp(mshell->cmdarr[mshell->cmd_num].args[i], "-n", 3))
+	// 	i++;
+	// if (i > 1)
+	// 	n_line = 0;
 	while (mshell->cmdarr[mshell->cmd_num].args[i])
 	{
 		if (mshell->cmdarr[mshell->cmd_num].args[i + 1] != NULL)
@@ -37,3 +36,15 @@ void	ft_echo(t_mshell *mshell)
 		printf("\n");
 	mshell->exit_status = 0;
 }
+
+// while (mshell->cmdarr[mshell->cmd_num].args[i])
+// 	{
+// 		if (mshell->cmdarr[mshell->cmd_num].args[i][0] != '-')
+// 			break ;
+// 		if (!ft_memchr(&mshell->cmdarr[mshell->cmd_num].args[i][1], 'n',
+// 			ft_strlen(mshell->cmdarr[mshell->cmd_num].args[i]) - 1))
+// 			break ;
+// 		i++;
+// 	}
+// 	if (i > 1)
+// 		n_line = 0;
