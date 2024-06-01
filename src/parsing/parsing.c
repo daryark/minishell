@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/31 16:44:40 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:51:06 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,28 +118,21 @@ int	parse_input(char *input, t_mshell *mshell)
 		mshell->exit_status = 1;
 		return (0);
 	}
-	// dst = (char *)ft_calloc(sizeof(char), ft_strlen(input) + 1);
-	// if (!dst)
-	// 	alloc_err();
-	// else
-	// 	printf("len alloc: %zu\n", ft_strlen(input) + 1);
 	if (empty_str(input))
 	{
 		mshell->exit_status = 0;
 		return (0);
 	}
 	dst = trim_input(input);
-	if (ft_strlen(dst) == 1)
-		return (0);
-	// printf("%s trim: |%s|\n%s", GREEN, dst, RE);
+	// printf("%s trim:	|%s|\n%s", GREEN, dst, RE);
 	replace_dollars(&dst, mshell);
-	// printf("%s $: |%s|\n%s", GREEN, dst, RE);
+	// printf("%s $:	|%s|\n%s", GREEN, dst, RE);
 	split_tokens(dst, mshell);
-	open_quotes(mshell);
 	err = token_order_check(mshell);
-	if (err && !leave_heredoc(mshell, err))
-		return (0);
-	if (!err)
+	if (err >= 0 && !leave_heredoc(mshell, err))
+		return (ft_free(dst), 0);
+	open_quotes(mshell);
+	if (err < 0)
 		create_cmdarr(mshell);
 	ft_free(dst);
 	// printf("%sPARSED%s\n", GREEN, RE);
