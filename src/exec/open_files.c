@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 14:42:47 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 14:52:06 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:58:16 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	open_input_files(t_mshell *mshell, int i)
 		j++;
 	}
 }
+
 void	open_output_files(t_mshell *mshell, int i)
 {
 	int	j;
