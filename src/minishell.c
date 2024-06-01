@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/01 17:07:26 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/01 22:36:55 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,17 @@ static void	minishell_loop(t_mshell *mshell)
 			break ;
 		}
 		if (!*input)
+		{
+			ft_free(input);
 			continue ;
+		}
 		add_history(input);
 		if (parse_input(input, mshell))
 			execute(mshell);
 		clean_command_data(mshell);
 		ft_free(input);
 	}
+	ft_free(path);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -87,7 +91,6 @@ int	main(int ac, char **av, char **envp)
 		exit(write(1, RED "No arguments accepted!\n" RE, 32));
 	else
 	{
-		write(1, GREEN "OK\n" RE, 14);
 		init_mshell(&mshell, get_envp(envp));
 		minishell_loop(&mshell);
 	}
