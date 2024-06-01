@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:09:10 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/01 18:50:39 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:49:12 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,6 @@ char	**get_envp(char **envp)
 	}
 }
 
-// get_brackets is function which will takes string and color as arguments
-// and return string with brackets in that color
-
 char	*get_brackets(char *str, int color)
 {
 	char	*tmp;
@@ -77,9 +74,9 @@ char	*get_brackets(char *str, int color)
 	ft_free(str);
 	str = ft_strjoin(tmp, RE);
 	ft_free(tmp);
-	tmp = ft_strjoin("[", str);
+	tmp = ft_strjoin("(", str);
 	ft_free(str);
-	str = ft_strjoin(tmp, "]" RE);
+	str = ft_strjoin(tmp, ")" RE);
 	ft_free(tmp);
 	return (str);
 }
@@ -95,7 +92,7 @@ char	*exit_status_smile(char *tmp2, t_mshell *mshell)
 		exit_status = get_brackets(ft_itoa(mshell->exit_status), 1);
 	else
 		exit_status = get_brackets(ft_itoa(mshell->exit_status), 0);
-	tmp1 = ft_strjoin(exit_status, YELLOW "Minishell~" RE);
+	tmp1 = ft_strjoin(exit_status, YELLOW "Minishell:" RE);
 	tmp = ft_strjoin(tmp1, tmp2);
 	ft_free(tmp1);
 	ft_free(exit_status);
@@ -105,23 +102,25 @@ char	*exit_status_smile(char *tmp2, t_mshell *mshell)
 char	*get_currect_path(t_mshell *mshell)
 {
 	static char	*path;
-	char		*tmp;
 	char		*tmp2;
 	char		*tmp3;
 	t_env_lst	*user;
+	char		*home;
 
-	user = find_env_node("USER", mshell->env);
+	user = find_env_node("HOME", mshell->env);
 	tmp3 = getcwd(NULL, 0);
 	if (!tmp3)
 	{
 		printf("\nyou can use only 'cd ..' or 'exit'\n\n");
 		return (path);
 	}
-	tmp = ft_strjoin("/home/", user->val);
-	tmp2 = ft_strjoin(ft_remove_substr(tmp3, tmp), "$ ");
+	if (user == NULL)
+		home = "/";
+	else
+		home = user->val;
+	tmp2 = ft_strjoin(ft_remove_substr(tmp3, home), "$ ");
 	ft_free(tmp3);
 	path = exit_status_smile(tmp2, mshell);
 	ft_free(tmp2);
-	ft_free(tmp);
 	return (path);
 }

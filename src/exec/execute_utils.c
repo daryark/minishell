@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:54:09 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/01 22:28:43 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:36:13 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,7 @@ void	ft_execve(t_mshell *mshell)
 	if (path == NULL)
 		ft_error_exit(cmds[0], ": command not found\n", 127);
 	execve(path, cmds, envp);
-	ft_error_exit(cmds[0], ": command not found\n", 127);
+	if (cmds[0] != NULL)
+		ft_error_exit(cmds[0], ": command not found\n", 127);
+	exit(0);
 }

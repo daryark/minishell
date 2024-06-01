@@ -54,5 +54,3 @@ Dasha:
     separate fn split_save_divider NORM
     cut all the prinf-errors into the error function with differnt type nums
     add exit status at the end
-
-    ./file.sh

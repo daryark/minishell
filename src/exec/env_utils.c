@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:56:04 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 16:56:43 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:48:49 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*find_env(t_env_lst *env, char *name)
 {
 	t_env_lst	*tmp;
 
+	if (!name || !env)
+		return (NULL);
 	tmp = env;
 	while (tmp)
 	{

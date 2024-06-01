@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:30:30 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/01 13:19:01 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/01 23:51:48 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,23 @@ void	ft_error_exit(char *str, char *str2, int status)
 	write(2, str, ft_strlen(str));
 	write(2, str2, ft_strlen(str2));
 	exit(status);
+}
+
+void	ft_error_return(char *str, char *str2, t_mshell *mshell, int status)
+{
+	int	i;
+
+	i = 0;
+	if (str == NULL)
+	{
+		write(2, "minishell: ", 11);
+		write(2, str2, ft_strlen(str2));
+		write(2, "\n", 1);
+		mshell->exit_status = 1;
+	}
+	write(2, "minishell: ", 11);
+	write(2, str, ft_strlen(str));
+	write(2, str2, ft_strlen(str2));
+	write(2, "\n", 1);
+	mshell->exit_status = status;
 }

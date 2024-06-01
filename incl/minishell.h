@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/01 15:29:21 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:16:19 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char			*get_currect_path(t_mshell *mshell);
 char			**get_envp(char **envp);
 char			*find_path(char *cmd, char *path);
 void			ft_error_exit(char *str, char *str2, int status);
+void			ft_error_return(char *str, char *str2, t_mshell *mshell,
+					int status);
 // struct.c
 void			init_mshell(t_mshell *mshell, char **env);
 void			handle_sigint(int signals);
