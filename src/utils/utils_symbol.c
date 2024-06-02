@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_symbol.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:23:05 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/28 15:33:01 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/02 19:05:10 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,14 @@ void	quote_opened_type(char c, char *q)
 		*q = '\0';
 }
 
-//takes ptr on i being comapred, if needed - takes i+1
+// takes ptr on i being comapred, if needed - takes i+1
 int	spec_symb(char *s)
 {
 	if (*s == '|')
 		return (1);
 	else if (*s == '<')
 	{
-		if ((*(s + 1) && *(s + 1) == '<') ||
-			(*(s + 1) && *(s + 1) == '>'))
+		if ((*(s + 1) && *(s + 1) == '<') || (*(s + 1) && *(s + 1) == '>'))
 			return (2);
 		return (1);
 	}

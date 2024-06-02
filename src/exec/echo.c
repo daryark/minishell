@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 18:48:21 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/01 22:57:13 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/02 19:39:26 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_echo(t_mshell *mshell)
 {
-	int i;
-	int j;
-	int n_line;
+	int	i;
+	int	j;
+	int	n_line;
 
 	i = 1;
 	n_line = 1;

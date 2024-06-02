@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:02 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/01 13:35:03 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/02 19:38:39 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,25 @@ typedef struct s_builtin
 	exec_fn					*fn_ptr;
 }							t_builtin;
 
+// builtins
 void						ft_cd(t_mshell *mshell);
 void						ft_env(t_mshell *mshell);
 void						ft_pwd(t_mshell *mshell);
-void						execute(t_mshell *mshell);
 void						ft_echo(t_mshell *mshell);
 void						ft_unset(t_mshell *mshell);
 void						ft_execve(t_mshell *mshell);
 void						ft_export(t_mshell *mshell);
-void						tmp_sort_env(t_env_lst *env);
+void						init_builtin_arr(t_mshell *mshell);
+int							ft_exit(t_mshell *mshell, char *input);
+
+// execute
+void						execute(t_mshell *mshell);
 void						ft_execute(t_mshell *mshell);
 int							open_file(char *argv, int i);
-char						**convert_env(t_env_lst *env);
-int							return_builtin_num(char *cmd);
-void						wait_in_parent(t_mshell *mshell);
-char						*find_env(t_env_lst *env, char *name);
 void						heredoc_loop(t_mshell *mshell, int i);
-char						*ft_remove_substr(char *str, char *sub);
+void						heredoc(t_mshell *mshell, int i, int j);
+void						ft_piping(t_mshell *mshell, int **pipes);
 void						open_input_files(t_mshell *mshell, int i);
 void						open_output_files(t_mshell *mshell, int i);
-void						open_fds(t_mshell *mshell, int pipes[][2]);
-void						remove_one_node(char *str, t_env_lst **env);
-void						ft_piping(t_mshell *mshell, int pipes[][2]);
-void						close_fds(t_mshell *mshell, int pipes[][2]);
 
 #endif

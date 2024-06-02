@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/01 16:59:21 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/02 19:38:43 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ void	execute(t_mshell *mshell)
 	int	i;
 	int	std_in;
 	int	std_out;
-	int	pipes[mshell->cmdarr_l - 1][2];
+	int	**pipes;
 
+	pipes = ft_malloc(sizeof(int *) * (mshell->cmdarr_l - 1));
 	std_in = dup(0);
 	std_out = dup(1);
 	i = return_builtin_num(mshell->cmdarr[0].args[0]);
@@ -40,7 +41,7 @@ void	execute(t_mshell *mshell)
 	}
 }
 
-void	ft_piping(t_mshell *mshell, int pipes[][2])
+void	ft_piping(t_mshell *mshell, int **pipes)
 {
 	int		i;
 	pid_t	pid;

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 17:07:21 by btvildia         ###   ########.fr       */
+/*   Created: 2024/06/02 18:31:17 by btvildia          #+#    #+#             */
+/*   Updated: 2024/06/02 19:18:03 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/execute.h"
+#include "../../incl/minishell.h"
 
 void	ft_env(t_mshell *mshell)
 {
@@ -40,34 +40,6 @@ void	ft_env(t_mshell *mshell)
 	mshell->exit_status = 0;
 }
 
-void	export_arg_loop(t_mshell *mshell, char **args, int i)
-{
-	char		*name;
-	t_env_lst	*env_node;
-	int			divider_pos;
-
-	while (args[i])
-	{
-		name = cut_name(args[i]);
-		if (!name)
-			return (syntax_err(args[i], 4));
-		env_node = find_env_node(name, mshell->env);
-		if (!env_node)
-			fill_str(args[i], &mshell->env);
-		else
-		{
-			divider_pos = ft_strchr_pos(args[i], '=');
-			if (divider_pos >= 0)
-			{
-				if (env_node->val)
-					ft_free(env_node->val);
-				env_node->val = ft_strdup(&args[i][divider_pos]);
-			}
-		}
-		i++;
-	}
-}
-
 void	ft_export(t_mshell *mshell)
 {
 	char	**args;
@@ -82,7 +54,7 @@ void	ft_export(t_mshell *mshell)
 		clean_lst_env(&mshell->export);
 	}
 	else
-		export_arg_loop(mshell, args, 1);
+		export_loop(mshell, args, 1);
 	mshell->exit_status = 0;
 }
 
@@ -108,4 +80,27 @@ void	ft_unset(t_mshell *mshell)
 		}
 	}
 	mshell->exit_status = 0;
+}
+
+int	ft_exit(t_mshell *mshell, char *input)
+{
+	if (ft_strcmp(mshell->cmdarr[0].args[0], "exit") == 0)
+	{
+		ft_free(input);
+		printf("exit\n");
+		if (!mshell->cmdarr[0].args[1])
+			exit(mshell->exit_status);
+		else if (mshell->cmdarr[0].args[1]
+			&& !ft_isdigit(mshell->cmdarr[0].args[1][0]))
+			ft_error_exit("exit: ", "numeric argument required", 2);
+		else if (ft_isdigit(mshell->cmdarr[0].args[1][0])
+			&& mshell->cmdarr[0].args[2])
+		{
+			ft_error_return("exit: ", "too many arguments", mshell, 1);
+			return (1);
+		}
+		else if (mshell->cmdarr[0].args[1])
+			exit(ft_atoi(mshell->cmdarr[0].args[1]));
+	}
+	return (0);
 }

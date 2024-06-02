@@ -6,33 +6,11 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:47:29 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/02 00:06:06 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/02 19:23:37 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
-
-void	init_builtin_arr(t_mshell *mshell)
-{
-	int	n_cmds;
-
-	n_cmds = 6;
-	mshell->builtin = ft_malloc(sizeof(t_builtin) * (n_cmds + 1));
-	mshell->builtin[0].name = "pwd";
-	mshell->builtin[0].fn_ptr = ft_pwd;
-	mshell->builtin[1].name = "cd";
-	mshell->builtin[1].fn_ptr = ft_cd;
-	mshell->builtin[2].name = "echo";
-	mshell->builtin[2].fn_ptr = ft_echo;
-	mshell->builtin[3].name = "unset";
-	mshell->builtin[3].fn_ptr = ft_unset;
-	mshell->builtin[4].name = "export";
-	mshell->builtin[4].fn_ptr = ft_export;
-	mshell->builtin[5].name = "env";
-	mshell->builtin[5].fn_ptr = ft_env;
-	mshell->builtin[6].name = NULL;
-	mshell->builtin[6].fn_ptr = NULL;
-}
 
 void	init_mshell(t_mshell *mshell, char **env)
 {
@@ -49,31 +27,41 @@ void	init_mshell(t_mshell *mshell, char **env)
 	init_builtin_arr(mshell);
 }
 
+int	check_input(char *input)
+{
+	if (!input)
+	{
+		ft_free(input);
+		printf("exit\n");
+		exit(0);
+	}
+	else if (!*input)
+	{
+		ft_free(input);
+		return (1);
+	}
+	return (0);
+}
+
 static void	minishell_loop(t_mshell *mshell)
 {
 	char	*input;
 	char	*path;
 
-	ignore_signals();
 	while (1)
 	{
 		g_signal = 0;
 		path = get_currect_path(mshell);
 		input = readline(path);
-		if (!input || (ft_strcmp(input, "exit") == 0))
-		{
-			printf("exit\n");
-			ft_free(input);
-			break ;
-		}
-		if (!*input)
-		{
-			ft_free(input);
+		if (check_input(input))
 			continue ;
-		}
 		add_history(input);
 		if (parse_input(input, mshell))
+		{
+			if (ft_exit(mshell, input))
+				continue ;
 			execute(mshell);
+		}
 		clean_command_data(mshell);
 		ft_free(input);
 	}
@@ -85,6 +73,7 @@ int	main(int ac, char **av, char **envp)
 	t_mshell	mshell;
 
 	ft_alloc_init();
+	ignore_signals();
 	(void)av;
 	(void)ac;
 	if (ac != 1)

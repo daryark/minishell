@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:09:10 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/02 00:49:12 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/02 15:51:49 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ char	*get_brackets(char *str, int color)
 	ft_free(str);
 	str = ft_strjoin(tmp, RE);
 	ft_free(tmp);
-	tmp = ft_strjoin("(", str);
+	tmp = ft_strjoin("[", str);
 	ft_free(str);
-	str = ft_strjoin(tmp, ")" RE);
+	str = ft_strjoin(tmp, "]" RE);
 	ft_free(tmp);
 	return (str);
 }
