@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:00:05 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/03 16:51:30 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/03 19:57:35 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,3 +97,37 @@ int	input_err_check(t_mshell *mshell, char *input)
 		return (0);
 	return (1);
 }
+// void	syntax_err(char *s, int status)
+// {
+// 	printf("minishell: ");
+// 	if (status == 2)
+// 		printf("syntax error near unexpected token `%s'\n", s);
+// 	if (status == 39)
+// 		printf("syntax error unable to locate closing quotation\n");
+// 	if (status == 0)
+// 		printf("warning: shell level (1000) too high, resetting to 1\n");
+// }
+
+
+// void	ft_error_return(char *str, t_mshell *mshell, int status, int modif)
+// {
+// 	char	*name;
+// 	char	*content;
+
+// 	content = NULL;
+// 	name = mshell->cmdarr[mshell->cmd_num].args[0];
+// 	if (!ft_strcmp(name, "cd") && modif)
+// 		content = "HOME not set";
+// 	else if (!ft_strcmp(name, "cd") && !modif)
+// 		content = "No such file or directory";
+// 	else if (!ft_strcmp(name, "pwd"))
+// 		content = "error retrieving current directory";
+// 	else if (!ft_strcmp(name, "exit") && !modif)
+// 		content = "too many arguments";
+// 	else if (!ft_strcmp(name, "export"))
+// 		content = "not a valid identifier";
+// 	else if (!ft_strcmp(name, "unset"))
+// 		content = "not enough arguments";
+// 	ft_print_err(name, str, content);
+// 	mshell->exit_status = status;
+// }
