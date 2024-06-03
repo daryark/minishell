@@ -47,10 +47,11 @@ fclean: clean
 	if [ -d "$(LFT_F)" ]; then \
 		$(MAKE) fclean -C $(LFT_F); \
 	fi
+	if [ -d "$(FT_DES)" ]; then \
+		$(MAKE) fclean -C $(FT_DES); \
+	fi
 
 re: fclean all
-	$(MAKE) fclean -C $(LFT_F);
-	$(MAKE) fclean -C $(FT_DES);
 	$(MAKE) -j 12 all
 
 .PHONY:	all clean fclean re bonus

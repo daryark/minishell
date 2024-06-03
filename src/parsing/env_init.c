@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 03:28:01 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/03 15:41:44 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:10:18 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,13 @@ static void	set_shlvl(t_mshell *mshell)
 
 	shlvl_node = find_env_node("SHLVL", mshell->env);
 	shlvl = ft_atoi(shlvl_node->val);
-	ft_free(shlvl_node->val);
 	if (shlvl == 999)
 	{
-		printf("mminishell: warning: shell level (1000) too high, \
-			resetting to 1\n");
-		shlvl_node->val = "1";
+		syntax_err("", 0);
+		shlvl = 0;
 	}
-	else
-		shlvl_node->val = ft_itoa(shlvl + 1);
+	ft_free(shlvl_node->val);
+	shlvl_node->val = ft_itoa(shlvl + 1);
 }
 
 int	fill_str(char *s, t_env_lst **lst)
