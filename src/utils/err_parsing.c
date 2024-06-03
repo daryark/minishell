@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:00:05 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/01 16:17:16 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:11:51 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,13 @@ static int	not_valid_symbols(char *s)
 
 void	syntax_err(char *s, int status)
 {
+	printf("minishell: ");
 	if (status == 2)
-		printf("Minishell: syntax error near unexpected token `%s'\n", s);
+		printf("syntax error near unexpected token `%s'\n", s);
 	if (status == 39)
-		printf("Minishell: syntax error unable to locate closing quotation\n");
-	else if (status == 4)
-		printf("minishell: export: `%s': not a valid identifier\n", s);
+		printf("syntax error unable to locate closing quotation\n");
+	if (status == 0)
+		printf("warning: shell level (1000) too high, resetting to 1\n");
 }
 
 int	input_err_check(t_mshell *mshell, char *input)
@@ -99,3 +100,4 @@ int	input_err_check(t_mshell *mshell, char *input)
 		return (0);
 	return (1);
 }
+
