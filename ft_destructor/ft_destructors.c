@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 14:12:49 by escura            #+#    #+#             */
-/*   Updated: 2024/05/27 21:31:30 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/02 19:11:06 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_destructor(void)
 	free(lst);
 }
 
-void	ft_exit(int status)
+void	ft_alloc_exit(int status)
 {
 	ft_destructor();
 	exit(status);

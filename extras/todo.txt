@@ -54,3 +54,11 @@ Dasha:
     separate fn split_save_divider NORM
     cut all the prinf-errors into the error function with differnt type nums
     add exit status at the end
+
+todo:
+    exit with arguments
+	expansion doesn't exapnd correctly:
+		- echo $US"ER"
+		- echo $USER+
+		- echo $USER"hello"
+	having more than 2 variables in one command doesn't work

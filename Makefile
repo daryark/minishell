@@ -7,15 +7,15 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 LFLAGS = -lreadline -Ireadline -L$(LFT_F) -lft -I$(LFT_F)
-HEADERS = incl/minishell.h incl/execute.h incl/sources.h incl/parsing.h
+HEADERS = incl/minishell.h incl/execute.h incl/parsing.h
 LFT_F = libft
 FT_DES = ft_destructor
 
 SRC =	minishell.c \
-		execute.c builtins.c echo.c env.c execute_utils.c open_files.c env_utils.c \
+		execute.c builtins1.c builtins2.c echo.c open_files.c \
 		env_init.c parsing.c dollar_parse.c tokenize.c open_quotes.c cmd.c \
-		utils_signals.c  utils_parsing.c utils_symbol.c path.c \
-		err.c err_parsing.c env_lst.c arr.c split_save_divider.c clean.c \
+		utils_signals.c  utils_parsing.c utils_symbol.c utils_path.c utils_execute.c \
+		utils_env.c err.c err_parsing.c env_lst.c arr.c split_save_divider.c clean.c \
 
 SRC_F = src/
 OBJ_F = obj/

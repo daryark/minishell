@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/03 11:24:07 by dyarkovs         ###   ########.fr       */
+/*   Created: 2024/06/02 18:31:17 by btvildia          #+#    #+#             */
+/*   Updated: 2024/06/03 11:56:20 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/execute.h"
+#include "../../incl/minishell.h"
 
 void	ft_env(t_mshell *mshell)
 {
@@ -87,7 +87,7 @@ void	ft_export(t_mshell *mshell)
 		clean_lst_env(&mshell->export);
 	}
 	else
-		export_arg_loop(mshell, args, 1);
+		export_loop(mshell, args, 1);
 	mshell->exit_status = 0;
 }
 
@@ -113,4 +113,27 @@ void	ft_unset(t_mshell *mshell)
 		}
 	}
 	mshell->exit_status = 0;
+}
+
+int	ft_exit(t_mshell *mshell, char *input)
+{
+	if (ft_strcmp(mshell->cmdarr[0].args[0], "exit") == 0)
+	{
+		ft_free(input);
+		printf("exit\n");
+		if (!mshell->cmdarr[0].args[1])
+			exit(mshell->exit_status);
+		else if (mshell->cmdarr[0].args[1]
+			&& !ft_isdigit(mshell->cmdarr[0].args[1][0]))
+			ft_error_exit("exit: ", "numeric argument required", 2);
+		else if (ft_isdigit(mshell->cmdarr[0].args[1][0])
+			&& mshell->cmdarr[0].args[2])
+		{
+			ft_error_return("exit: ", "too many arguments", mshell, 1);
+			return (1);
+		}
+		else if (mshell->cmdarr[0].args[1])
+			exit(ft_atoi(mshell->cmdarr[0].args[1]));
+	}
+	return (0);
 }

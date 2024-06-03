@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 14:42:47 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/01 16:58:16 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/02 18:24:18 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	open_file(char *argv, int i)
 	else if (i == 3)
 		file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (file < 0)
-		ft_error_exit(argv, ": No such file or directory\n", 1);
+		ft_error_exit(argv, ": No such file or directory", 1);
 	return (file);
 }
 

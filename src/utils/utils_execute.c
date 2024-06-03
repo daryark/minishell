@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_utils.c                                    :+:      :+:    :+:   */
+/*   utils_execute.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:54:09 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 16:25:39 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/02 19:34:14 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/execute.h"
+#include "../../incl/minishell.h"
 
 void	wait_in_parent(t_mshell *mshell)
 {
 	int	status;
 	int	i;
 
+	status = 0;
 	i = 0;
 	while (i < mshell->cmdarr_l)
 	{
@@ -27,19 +28,20 @@ void	wait_in_parent(t_mshell *mshell)
 	}
 }
 
-void	open_fds(t_mshell *mshell, int pipes[][2])
+void	open_fds(t_mshell *mshell, int **pipes)
 {
 	int	i;
 
 	i = 0;
 	while (i < mshell->cmdarr_l - 1)
 	{
+		pipes[i] = ft_malloc(sizeof(int) * 2);
 		pipe(pipes[i]);
 		i++;
 	}
 }
 
-void	close_fds(t_mshell *mshell, int pipes[][2])
+void	close_fds(t_mshell *mshell, int **pipes)
 {
 	int	i;
 
@@ -48,6 +50,7 @@ void	close_fds(t_mshell *mshell, int pipes[][2])
 	{
 		close(pipes[i][0]);
 		close(pipes[i][1]);
+		ft_free(pipes[i]);
 		i++;
 	}
 }
@@ -73,25 +76,25 @@ int	return_builtin_num(char *cmd)
 
 void	ft_execve(t_mshell *mshell)
 {
-	char	*path;
-	char	**cmds;
-	char	**envp;
+	char		*path;
+	char		**cmds;
+	char		**envp;
+	t_env_lst	*env;
 
 	path = NULL;
 	envp = convert_env(mshell->env);
 	cmds = mshell->cmdarr[mshell->cmd_num].args;
-	while (mshell->env)
-	{
-		if (ft_strncmp(mshell->env->name, "PATH", 4) == 0)
-			break ;
-		mshell->env = mshell->env->next;
-	}
+	env = find_env_node("PATH", mshell->env);
+	if (!env)
+		ft_error_exit(cmds[0], ": command not found", 127);
 	if (ft_strchr(cmds[0], '/') == NULL)
-		path = find_path(cmds[0], mshell->env->val);
+		path = find_path(cmds[0], env->val);
 	else
 		path = ft_strdup(cmds[0]);
 	if (path == NULL)
-		ft_error_exit(cmds[0], ": command not found\n", 127);
+		ft_error_exit(cmds[0], ": command not found", 127);
 	execve(path, cmds, envp);
-	ft_error_exit(cmds[0], ": command not found\n", 127);
+	if (cmds[0] != NULL)
+		ft_error_exit(cmds[0], ": command not found", 127);
+	exit(0);
 }
