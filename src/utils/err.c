@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:30:30 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/02 18:23:22 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:56:08 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,7 @@ void	alloc_err(void)
 
 void	ft_error_exit(char *str, char *str2, int status)
 {
-	int	i;
-
-	i = 0;
-	if (str == NULL)
-	{
-		write(2, "minishell: ", 11);
-		write(2, str2, ft_strlen(str2));
-		write(2, "\n", 1);
-		exit(1);
-	}
+	printf("here\n");
 	write(2, "minishell: ", 11);
 	write(2, str, ft_strlen(str));
 	write(2, str2, ft_strlen(str2));
@@ -36,21 +27,26 @@ void	ft_error_exit(char *str, char *str2, int status)
 	exit(status);
 }
 
-void	ft_error_return(char *str, char *str2, t_mshell *mshell, int status)
+void	ft_error_return(char *str, t_mshell *mshell, int status, int modif)
 {
-	int	i;
+	char	*name;
+	char	*content;
 
-	i = 0;
-	if (str == NULL)
-	{
-		write(2, "minishell: ", 11);
-		write(2, str2, ft_strlen(str2));
-		write(2, "\n", 1);
-		mshell->exit_status = 1;
-	}
-	write(2, "minishell: ", 11);
-	write(2, str, ft_strlen(str));
-	write(2, str2, ft_strlen(str2));
-	write(2, "\n", 1);
+	content = NULL;
+	name = mshell->cmdarr[mshell->cmd_num].args[0];
+	if (!ft_strcmp(name, "cd") && modif)
+		content = "HOME not set";
+	else if (!ft_strcmp(name, "cd") && !modif)
+		content = "No such file or directory";
+	else if (!ft_strcmp(name, "pwd"))
+		content = "error retrieving current directory";
+	else if (!ft_strcmp(name, "exit") && !modif)
+		content = "too many arguments";
+	else if (!ft_strcmp(name, "export"))
+		content = "not a valid identifier";
+	printf("minishell: %s:", name);
+	if (*str)
+		printf(" `%s':", str);
+	printf(" %s\n", content);
 	mshell->exit_status = status;
 }

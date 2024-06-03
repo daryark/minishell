@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 23:22:23 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/31 14:52:58 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:23:16 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	leave_heredoc(t_mshell *mshell, int err_i)
 	if (!mshell->cmdarr)
 		alloc_err();
 	mshell->cmdarr_l = 1;
-	alloc_cmd(0, heredoc, 0, mshell->cmdarr);
+	alloc_cmd((t_count){.arg = 0, .in = heredoc, .out = 0}, mshell->cmdarr);
 	i = -1;
 	in = -1;
 	while (++i < err_i)

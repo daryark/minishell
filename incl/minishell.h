@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:09:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/02 19:32:16 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:39:14 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void			copy_list(t_env_lst *env, t_env_lst **new);
 void			remove_one_node(char *str, t_env_lst **env);
 void			ft_error_exit(char *str, char *str2, int status);
 void			export_loop(t_mshell *mshell, char **args, int i);
-void			ft_error_return(char *str, char *str2, t_mshell *mshell,
-					int status);
-// struct.c
+void			ft_error_return(char *str, t_mshell *mshell, int status, \
+				int modif);
+	// struct.c
 void			alloc_err(void);
 int				empty_str(char *s);
 char			*arrjoin(char **arr);

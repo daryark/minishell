@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:30:07 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/03 11:57:12 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:16:09 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*cut_name(char *s)
 	return (name);
 }
 
-// takes the name str and returns node with name:val, or NULL
+// takes the name str and returns node with name:val pair, or NULL
 t_env_lst	*find_env_node(char *name, t_env_lst *env)
 {
 	while (env)
@@ -73,7 +73,7 @@ static int	not_replace_cases(char *s, char q)
 	if (s[0] != '$')
 		return (0);
 	else if (space(s[1]) || !s[1] || q == '\'' || (q && (spec_symb(&s[1])
-		|| quote(s[1]))))
+				|| quote(s[1]))))
 		return (0);
 	else if (!q && (spec_symb(&s[1]) || quote(s[1])))
 		return (1);
@@ -99,14 +99,12 @@ static char	*replace_cases(char *s, t_mshell *mshell)
 	return (ft_strjoin(subst, &s[i]));
 }
 
-//*   echo$ "$"  echo$ "$" '$' "$<" $< adfds $df $PATH
 // String with one dollar (from splited arr) passed in arg
 void	dollar_value_subst(char **s, char *q, t_mshell *mshell)
 {
 	int		i;
 	char	*new;
 
-	printf("%s%s%s\n", YELLOW, *s, RE);
 	i = not_replace_cases(*s, *q);
 	if (i >= 0)
 		new = ft_strdup(&(*s)[i]);
@@ -119,5 +117,4 @@ void	dollar_value_subst(char **s, char *q, t_mshell *mshell)
 		quote_opened_type((*s)[i], q);
 	ft_free(*s);
 	*s = new;
-	// printf("%s%c%s	", GREEN, s[i], RE);
 }

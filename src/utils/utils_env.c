@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:56:04 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/02 19:16:51 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:33:35 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-char	*find_env(t_env_lst *env, char *name)
-{
-	t_env_lst	*tmp;
+// char	*find_env(t_env_lst *env, char *name)
+// {
+// 	t_env_lst	*tmp;
 
-	if (!name || !env)
-		return (NULL);
-	tmp = env;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->name, name, ft_strlen(name)))
-			return (tmp->val);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
+// 	if (!name || !env)
+// 		return (NULL);
+// 	tmp = env;
+// 	while (tmp)
+// 	{
+// 		if (!ft_strncmp(tmp->name, name, ft_strlen(name)))
+// 			return (tmp->val);
+// 		tmp = tmp->next;
+// 	}
+// 	return (NULL);
+// }
 
 char	**convert_env(t_env_lst *env)
 {
@@ -104,33 +104,5 @@ void	remove_one_node(char *str, t_env_lst **env)
 		}
 		prev = tmp;
 		tmp = tmp->next;
-	}
-}
-
-void	export_loop(t_mshell *mshell, char **args, int i)
-{
-	char		*name;
-	t_env_lst	*env_node;
-	int			divider_pos;
-
-	while (args[i])
-	{
-		name = cut_name(args[i]);
-		if (!name)
-			return (syntax_err(args[i], 4));
-		env_node = find_env_node(name, mshell->env);
-		if (!env_node)
-			fill_str(args[i], &mshell->env);
-		else
-		{
-			divider_pos = ft_strchr_pos(args[i], '=');
-			if (divider_pos >= 0)
-			{
-				if (env_node->val)
-					ft_free(env_node->val);
-				env_node->val = ft_strdup(&args[i][divider_pos]);
-			}
-		}
-		i++;
 	}
 }

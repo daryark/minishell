@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 13:30:36 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/01 17:20:20 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:24:00 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ typedef struct s_builtin	t_builtin;
 typedef enum e_type
 {
 	T_NDEF,    // *notdefined
-	T_WORD,    // word, string, file, command ...
+	T_WORD,    // word, string, file, cmd ...
 	T_PIPE,    //|
 	T_HEREDOC, //<<
 	T_RED_INP, //<
@@ -36,11 +36,18 @@ typedef struct s_token
 typedef struct s_cmdarr
 {
 	char					**args;
-	t_token *inp; // arr[struct{word, type}];
-	t_token *out; // arr[struct{word, type}];
+	t_token 				*inp; // arr[struct{word, type}];
+	t_token 				*out; // arr[struct{word, type}];
 	int						inp_l;
 	int						out_l;
 }							t_cmdarr;
+
+typedef struct s_count
+{
+	int						arg;
+	int						in;
+	int						out;
+}							t_count;
 
 typedef struct s_env_lst
 {
@@ -73,8 +80,8 @@ t_env_lst					*find_env_node(char *name, t_env_lst *env);
 char						*cut_name(char *s);
 void						init_tokarr(char *s, t_mshell *mshell);
 void						init_cmdarr(t_mshell *mshell);
-void						alloc_cmd(int args, int inp, int out,
-								t_cmdarr *cmd);
+void						init_cmd(int c, int *t, t_mshell *mshell);
+void						alloc_cmd(t_count sizes, t_cmdarr *cmd);
 t_type						token_typizator(char *s);
 void						fill_redir_type(t_token *rdr, t_token *tarr,
 								int *t);

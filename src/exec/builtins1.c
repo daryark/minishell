@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:10:22 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/02 18:40:48 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:32:58 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +36,28 @@ void	init_builtin_arr(t_mshell *mshell)
 
 void	ft_cd(t_mshell *mshell)
 {
-	char	**tmp;
-	char	*path;
-	int		i;
+	char		**tmp;
+	char		*path;
+	t_env_lst	*node;
+	int			i;
 
 	i = 0;
+	node = NULL;
+	path = NULL;
 	tmp = mshell->cmdarr[mshell->cmd_num].args;
 	if (!tmp[1])
 	{
-		path = ft_strdup(find_env(mshell->env, "HOME"));
+		node = find_env_node("HOME", mshell->env);
+		if (node)
+			path = ft_strdup(node->name);
 		if (!path || chdir(path) == -1)
-		{
-			ft_error_return("cd: ", "HOME not set", mshell, 1);
-			return ;
-		}
+			return (ft_error_return("", mshell, 1, 1));
 		ft_free(path);
 	}
 	else
 	{
 		if (chdir(tmp[1]) == -1)
-		{
-			ft_error_return("cd: ", "No such file or directory", mshell, 1);
-			return ;
-		}
+			return (ft_error_return(tmp[1], mshell, 1, 0));
 	}
 	mshell->exit_status = 0;
 }
@@ -70,12 +69,28 @@ void	ft_pwd(t_mshell *mshell)
 	(void)mshell;
 	path = getcwd(NULL, 0);
 	if (!path)
-	{
-		ft_error_return("pwd: ", "error retrieving current directory", mshell,
-			1);
-		return ;
-	}
+		return (ft_error_return(path, mshell, 1, 0));
 	printf("%s\n", path);
 	ft_free(path);
 	mshell->exit_status = 0;
+}
+
+int	ft_exit(t_mshell *mshell, char *input)
+{
+	if (ft_strcmp(mshell->cmdarr[0].args[0], "exit") == 0)
+	{
+		ft_free(input);
+		printf("exit\n");
+		if (!mshell->cmdarr[0].args[1])
+			exit(mshell->exit_status);
+		else if (mshell->cmdarr[0].args[1]
+			&& !ft_isdigit(mshell->cmdarr[0].args[1][0]))
+			ft_error_exit("exit: ", "numeric argument required", 2);
+		else if (ft_isdigit(mshell->cmdarr[0].args[1][0])
+			&& mshell->cmdarr[0].args[2])
+			return (ft_error_return("", mshell, 1, 0), 1);
+		else if (mshell->cmdarr[0].args[1])
+			exit(ft_atoi(mshell->cmdarr[0].args[1]));
+	}
+	return (0);
 }

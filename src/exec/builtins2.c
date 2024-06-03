@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:31:17 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/03 11:56:20 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:45:04 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,37 +40,14 @@ void	ft_env(t_mshell *mshell)
 	mshell->exit_status = 0;
 }
 
-void	export_arg_loop(t_mshell *mshell, char **args, int i)
+static int	check_var_validity(char *var, char *name)
 {
-	char		*name;
-	t_env_lst	*env_node;
-	int			divider_pos;
+	int	n_l;
 
-	while (args[i])
-	{
-		name = cut_name(args[i]);
-		if (args[i][ft_strlen(name)] && args[i][ft_strlen(name)] != '=')
-		{
-			ft_free(name);
-			name = NULL;
-		}
-		if (!name)
-			return (syntax_err(args[i], 4));
-		env_node = find_env_node(name, mshell->env);
-		if (!env_node)
-			fill_str(args[i], &mshell->env);
-		else
-		{
-			divider_pos = ft_strchr_pos(args[i], '=');
-			if (divider_pos >= 0)
-			{
-				if (env_node->val)
-					ft_free(env_node->val);
-				env_node->val = ft_strdup(&args[i][divider_pos]);
-			}
-		}
-		i++;
-	}
+	n_l = ft_strlen(name);
+	if (var[n_l] && var[n_l] != '=')
+		return (0);
+	return (1);
 }
 
 void	ft_export(t_mshell *mshell)
@@ -85,10 +62,10 @@ void	ft_export(t_mshell *mshell)
 		tmp_sort_env(mshell->export);
 		ft_env(mshell);
 		clean_lst_env(&mshell->export);
+		mshell->exit_status = 0;
 	}
 	else
 		export_loop(mshell, args, 1);
-	mshell->exit_status = 0;
 }
 
 void	ft_unset(t_mshell *mshell)
@@ -115,25 +92,33 @@ void	ft_unset(t_mshell *mshell)
 	mshell->exit_status = 0;
 }
 
-int	ft_exit(t_mshell *mshell, char *input)
+void	export_loop(t_mshell *mshell, char **args, int i)
 {
-	if (ft_strcmp(mshell->cmdarr[0].args[0], "exit") == 0)
+	char		*name;
+	t_env_lst	*env_node;
+	int			divider_pos;
+
+	while (args[i])
 	{
-		ft_free(input);
-		printf("exit\n");
-		if (!mshell->cmdarr[0].args[1])
-			exit(mshell->exit_status);
-		else if (mshell->cmdarr[0].args[1]
-			&& !ft_isdigit(mshell->cmdarr[0].args[1][0]))
-			ft_error_exit("exit: ", "numeric argument required", 2);
-		else if (ft_isdigit(mshell->cmdarr[0].args[1][0])
-			&& mshell->cmdarr[0].args[2])
+		name = cut_name(args[i]);
+		if (!check_var_validity(args[i], name))
 		{
-			ft_error_return("exit: ", "too many arguments", mshell, 1);
-			return (1);
+			ft_error_return(args[i], mshell, 1, 0);
+			return (ft_free(name));
 		}
-		else if (mshell->cmdarr[0].args[1])
-			exit(ft_atoi(mshell->cmdarr[0].args[1]));
+		env_node = find_env_node(name, mshell->env);
+		if (!env_node)
+			fill_str(args[i], &mshell->env);
+		else
+		{
+			divider_pos = ft_strchr_pos(args[i], '=');
+			if (divider_pos >= 0)
+			{
+				if (env_node->val)
+					ft_free(env_node->val);
+				env_node->val = ft_strdup(&args[i][divider_pos]);
+			}
+		}
+		i++;
 	}
-	return (0);
 }
