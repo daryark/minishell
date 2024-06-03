@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:10:22 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/03 16:50:56 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:19:09 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_cd(t_mshell *mshell)
 	{
 		node = find_env_node("HOME", mshell->env);
 		if (node)
-			path = ft_strdup(node->name);
+			path = ft_strdup(node->val);
 		if (!path || chdir(path) == -1)
 			return (ft_error_return("", mshell, 1, 1));
 		ft_free(path);
