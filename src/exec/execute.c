@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/03 14:56:36 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:28:18 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	execute(t_mshell *mshell)
 	int	**pipes;
 
 	pipes = ft_malloc(sizeof(int *) * (mshell->cmdarr_l - 1));
-	std_in = dup(0);
-	std_out = dup(1);
 	i = return_builtin_num(mshell->cmdarr[0].args[0]);
 	if (mshell->cmdarr_l == 1 && i != -1)
 	{
+		std_in = dup(0);
+		std_out = dup(1);
 		heredoc_loop(mshell, 0);
 		open_input_files(mshell, 0);
 		open_output_files(mshell, 0);

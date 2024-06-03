@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:00:05 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/03 20:11:51 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:18:47 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,3 @@ int	input_err_check(t_mshell *mshell, char *input)
 		return (0);
 	return (1);
 }
-
