@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:10:22 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/02 18:40:48 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:02:13 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,11 @@ void	ft_pwd(t_mshell *mshell)
 {
 	char	*path;
 
-	(void)mshell;
+	if (mshell->cmdarr[mshell->cmd_num].args)
+	{
+		ft_error_return("pwd: ", "too many arguments", mshell, 1);
+		return ;
+	}
 	path = getcwd(NULL, 0);
 	if (!path)
 	{
