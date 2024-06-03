@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:31:17 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/02 19:18:03 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/03 12:01:38 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	ft_unset(t_mshell *mshell)
 
 int	ft_exit(t_mshell *mshell, char *input)
 {
-	if (ft_strcmp(mshell->cmdarr[0].args[0], "exit") == 0)
+	if (ft_strcmp("exit", mshell->cmdarr[0].args[0]) == 0)
 	{
 		ft_free(input);
 		printf("exit\n");
