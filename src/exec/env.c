@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:13:24 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/31 17:07:21 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/03 11:24:07 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ void	export_arg_loop(t_mshell *mshell, char **args, int i)
 	while (args[i])
 	{
 		name = cut_name(args[i]);
+		if (args[i][ft_strlen(name)] && args[i][ft_strlen(name)] != '=')
+		{
+			ft_free(name);
+			name = NULL;
+		}
 		if (!name)
 			return (syntax_err(args[i], 4));
 		env_node = find_env_node(name, mshell->env);

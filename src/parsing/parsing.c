@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/01 14:36:27 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 11:27:37 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,10 @@ static void	split_tokens(char *s, t_mshell *mshell)
 			w_l = pass_str(&s[i]);
 		mshell->tokarr[a_i].word = ft_substr(s, i, w_l--);
 		i += w_l;
-		// printf("%s%s%s	", GREEN, mshell->tokarr[a_i].word, RE);
-		// printf("%s%d%s\n", YELLOW, mshell->tokarr[a_i].type, RE);
+		printf("%s%s%s	", GREEN, mshell->tokarr[a_i].word, RE);
+		printf("%s%d%s\n", YELLOW, mshell->tokarr[a_i].type, RE);
 		a_i++;
 	}
-	// printf("tokarr_l:%d\n", mshell->tokarr_l);
 }
 
 // cmdarr [{args - arr[char *],
