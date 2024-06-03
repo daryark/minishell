@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 23:22:23 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/03 15:23:16 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:13:46 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	leave_heredoc(t_mshell *mshell, int err_i)
 	if (!heredoc)
 		return (0);
 	mshell->cmdarr = ft_malloc(sizeof(t_cmdarr) * 1);
-	if (!mshell->cmdarr)
-		alloc_err();
 	mshell->cmdarr_l = 1;
 	alloc_cmd((t_count){.arg = 0, .in = heredoc, .out = 0}, mshell->cmdarr);
 	i = -1;
@@ -57,53 +55,6 @@ int	leave_heredoc(t_mshell *mshell, int err_i)
 	return (heredoc);
 }
 
-void	print_cmds(t_mshell *mshell)
-{
-	int	c;
-	int	i;
-
-	c = 0;
-	printf("%s---------PRINT CMDS------------%s", GREEN, RE);
-	printf("len cmds:%d\n\n", mshell->cmdarr_l);
-	while (c < mshell->cmdarr_l)
-	{
-		printf("cmd N: %d\nargs: ", c);
-		i = 0;
-		while (mshell->cmdarr[c].args[i] != NULL)
-		{
-			printf("(%s), ", mshell->cmdarr[c].args[i]);
-			i++;
-		}
-		i = 0;
-		printf("\ninp: ");
-		while (i < mshell->cmdarr[c].inp_l)
-		{
-			printf("{t: %i, w: %s},", mshell->cmdarr[c].inp[i].type,
-				mshell->cmdarr[c].inp[i].word);
-			i++;
-		}
-		i = 0;
-		printf("\nout: ");
-		while (i < mshell->cmdarr[c].out_l)
-		{
-			printf("{t: %i, w: %s},", mshell->cmdarr[c].out[i].type,
-				mshell->cmdarr[c].out[i].word);
-			i++;
-		}
-		printf("\n%s-------------------------%s\n", GREEN, RE);
-		c++;
-	}
-}
-
-void	print_env(t_env_lst *env)
-{
-	while (env)
-	{
-		printf("%s%s = %s%s%s\n", YELLOW, env->name, GREEN, env->val, RE);
-		env = env->next;
-	}
-}
-
 int	empty_str(char *s)
 {
 	if (!s)
@@ -113,4 +64,27 @@ int	empty_str(char *s)
 	if (*s)
 		return (0);
 	return (1);
+}
+
+void	init_dst(char **dst, char *src)
+{
+	char	q;
+	int		i;
+	int		d;
+
+	i = -1;
+	d = 0;
+	q = '\0';
+	if (!src)
+		return ;
+	while (src[++i])
+	{
+		quote_opened_type(src[i], &q);
+		if (!(((space(src[i]) && space(src[i + 1])) || (space(src[i]) && (!d
+							|| !src[i + 1]))) && !q))
+			d++;
+	}
+	*dst = (char *)ft_calloc(sizeof(char), d + 1);
+	if (!*dst)
+		alloc_err();
 }

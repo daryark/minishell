@@ -6,39 +6,11 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:30:07 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/03 15:16:09 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:52:03 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
-
-// cut env name from str
-char	*cut_name(char *s)
-{
-	int		i;
-	char	*name;
-
-	i = 0;
-	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
-		i++;
-	name = ft_substr(s, 0, i);
-	if (!name)
-		alloc_err();
-	return (name);
-}
-
-// takes the name str and returns node with name:val pair, or NULL
-t_env_lst	*find_env_node(char *name, t_env_lst *env)
-{
-	while (env)
-	{
-		if (ft_strlen(name) == ft_strlen(env->name) && !ft_strncmp(name,
-				env->name, ft_strlen(name)))
-			return (env);
-		env = env->next;
-	}
-	return (NULL);
-}
 
 // finds part with env_var name in *s, updates *i(to pass back in strjoin)
 // return env_var value

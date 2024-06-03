@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_lst.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 01:00:02 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/29 15:51:12 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:15:07 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	ft_lstadd_env(t_env_lst **lst, char *name, char *val)
 	t_env_lst	*head;
 
 	node = ft_malloc(sizeof(t_env_lst));
-	if (!node)
-		alloc_err();
 	head = *lst;
 	if (!head)
 		*lst = node;

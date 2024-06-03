@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 18:31:17 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/03 14:45:04 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:19:26 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,7 @@ void	export_loop(t_mshell *mshell, char **args, int i)
 	{
 		name = cut_name(args[i]);
 		if (!check_var_validity(args[i], name))
-		{
-			ft_error_return(args[i], mshell, 1, 0);
-			return (ft_free(name));
-		}
+			return (ft_error_return(args[i], mshell, 1, 0), ft_free(name));
 		env_node = find_env_node(name, mshell->env);
 		if (!env_node)
 			fill_str(args[i], &mshell->env);

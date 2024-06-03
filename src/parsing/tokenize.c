@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:34:22 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/03 10:28:19 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:15:02 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void	init_tokarr(char *s, t_mshell *mshell)
 		len++;
 	}
 	mshell->tokarr = ft_malloc(sizeof(t_token) * len);
-	if (!mshell->tokarr)
-		alloc_err();
 	mshell->tokarr_l = len;
 }
 

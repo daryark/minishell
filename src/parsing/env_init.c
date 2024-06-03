@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 03:28:01 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/03 15:14:06 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:41:44 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void	set_shlvl(t_mshell *mshell)
 	ft_free(shlvl_node->val);
 	if (shlvl == 999)
 	{
-		printf("mminishell: warning: shell level (1000) too high, resetting to 1\n");
+		printf("mminishell: warning: shell level (1000) too high, \
+			resetting to 1\n");
 		shlvl_node->val = "1";
 	}
 	else

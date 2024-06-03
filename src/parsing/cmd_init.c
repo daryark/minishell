@@ -6,15 +6,17 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 15:14:09 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/03 15:27:51 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:14:53 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-t_count	set_count(t_count count)
+static void	set_count(t_count *count)
 {
-	return (count);
+	count->arg = 0;
+	count->in = 0;
+	count->out = 0;
 }
 
 void	alloc_cmd(t_count sizes, t_cmdarr *cmd)
@@ -22,8 +24,6 @@ void	alloc_cmd(t_count sizes, t_cmdarr *cmd)
 	cmd->args = ft_malloc(sizeof(char *) * (sizes.arg + 1));
 	cmd->inp = ft_malloc(sizeof(t_token) * sizes.in);
 	cmd->out = ft_malloc(sizeof(t_token) * sizes.out);
-	if (!cmd->args || !cmd->inp || !cmd->out)
-		alloc_err();
 	cmd->args[sizes.arg] = NULL;
 	cmd->inp_l = sizes.in;
 	cmd->out_l = sizes.out;
@@ -33,7 +33,7 @@ void	init_cmd(int c, int *t, t_mshell *mshell)
 {
 	t_count	count;
 
-	count = set_count((t_count){.arg = 0, .in = 0, .out = 0});
+	set_count(&count);
 	while (mshell->tokarr && *t < mshell->tokarr_l && mshell->tokarr[*t].word
 		&& mshell->tokarr[*t].type != T_PIPE)
 	{
@@ -70,8 +70,6 @@ void	init_cmdarr(t_mshell *mshell)
 			c++;
 	}
 	mshell->cmdarr = ft_malloc(sizeof(t_cmdarr) * c);
-	if (!mshell->cmdarr)
-		alloc_err();
 	mshell->cmdarr_l = c;
 	c = -1;
 	t = -1;

@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:27:34 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/05/21 14:09:05 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:04:02 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ static int	init_split_save_divider(char ***dst, char *s, char c)
 	return (len);
 }
 
-//! DIVIDE THE FUNC INTO PARTS
-// split string into parts
 // searches for divider and preserve it!
 //->put divider as a start of each arr[str] $part $part ...
 char	**split_save_divider(char *s, char c)
@@ -50,15 +48,10 @@ char	**split_save_divider(char *s, char c)
 	while (len--)
 	{
 		if (!i && s[i] != c)
-		{
-			w_l = ft_strchr_pos(&s[i], c);
-			arr[a_i] = ft_substr(s, i, --w_l);
-		}
+			w_l = ft_strchr_pos(&s[i], c) - 1;
 		else
-		{
 			w_l = ft_strchr_pos(&s[i + 1], c);
-			arr[a_i] = ft_substr(s, i, w_l);
-		}
+		arr[a_i] = ft_substr(s, i, w_l);
 		if (!arr[a_i])
 			alloc_err();
 		i += w_l;

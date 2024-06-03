@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/03 12:30:10 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:49:03 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,8 @@ static char	*trim_input(char *src)
 	i = -1;
 	d = 0;
 	q = '\0';
-	if (!src)
-		return (NULL);
-	while (src[++i])
-	{
-		quote_opened_type(src[i], &q);
-		if (!(((space(src[i]) && space(src[i + 1])) || (space(src[i]) && (!d
-							|| !src[i + 1]))) && !q))
-			d++;
-	}
-	dst = (char *)ft_calloc(sizeof(char), d + 1);
-	if (!dst)
-		alloc_err();
-	i = -1;
-	d = 0;
+	dst = NULL;
+	init_dst(&dst, src);
 	while (src[++i])
 	{
 		quote_opened_type(src[i], &q);
@@ -82,8 +70,6 @@ static void	split_tokens(char *s, t_mshell *mshell)
 			w_l = pass_str(&s[i]);
 		mshell->tokarr[a_i].word = ft_substr(s, i, w_l--);
 		i += w_l;
-		// printf("%s%s%s	", GREEN, mshell->tokarr[a_i].word, RE);
-		// printf("%s%d%s\n", YELLOW, mshell->tokarr[a_i].type, RE);
 		a_i++;
 	}
 }
@@ -104,7 +90,6 @@ static void	create_cmdarr(t_mshell *mshell)
 		fill_cmd(c, &t, mshell);
 		t++;
 	}
-	// print_cmds(mshell);
 }
 
 int	parse_input(char *input, t_mshell *mshell)
@@ -120,7 +105,6 @@ int	parse_input(char *input, t_mshell *mshell)
 	err = token_order_check(mshell);
 	if (err >= 0)
 	{
-		// mshell->exit_status = 2;
 		if (!leave_heredoc(mshell, err))
 			return (ft_free(dst), 0);
 	}
@@ -130,3 +114,5 @@ int	parse_input(char *input, t_mshell *mshell)
 	mshell->exit_status = 0;
 	return (ft_free(dst), 1);
 }
+
+		// mshell->exit_status = 2;
