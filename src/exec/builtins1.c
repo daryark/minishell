@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 22:10:22 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/03 15:32:58 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:50:56 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	ft_pwd(t_mshell *mshell)
 {
 	char	*path;
 
-	(void)mshell;
 	path = getcwd(NULL, 0);
 	if (!path)
 		return (ft_error_return(path, mshell, 1, 0));
@@ -77,16 +76,16 @@ void	ft_pwd(t_mshell *mshell)
 
 int	ft_exit(t_mshell *mshell, char *input)
 {
-	if (ft_strcmp(mshell->cmdarr[0].args[0], "exit") == 0)
+	if (ft_strcmp("exit", mshell->cmdarr[0].args[0]) == 0)
 	{
 		ft_free(input);
 		printf("exit\n");
 		if (!mshell->cmdarr[0].args[1])
 			exit(mshell->exit_status);
 		else if (mshell->cmdarr[0].args[1]
-			&& !ft_isdigit(mshell->cmdarr[0].args[1][0]))
+			&& !ft_isdigit_loop(mshell->cmdarr[0].args[1]))
 			ft_error_exit("exit: ", "numeric argument required", 2);
-		else if (ft_isdigit(mshell->cmdarr[0].args[1][0])
+		else if (ft_isdigit_loop(mshell->cmdarr[0].args[1])
 			&& mshell->cmdarr[0].args[2])
 			return (ft_error_return("", mshell, 1, 0), 1);
 		else if (mshell->cmdarr[0].args[1])

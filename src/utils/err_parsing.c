@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
+/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:00:05 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/01 16:17:16 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:51:30 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ void	syntax_err(char *s, int status)
 		printf("Minishell: syntax error near unexpected token `%s'\n", s);
 	if (status == 39)
 		printf("Minishell: syntax error unable to locate closing quotation\n");
-	else if (status == 4)
-		printf("minishell: export: `%s': not a valid identifier\n", s);
 }
 
 int	input_err_check(t_mshell *mshell, char *input)

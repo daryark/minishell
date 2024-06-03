@@ -6,7 +6,7 @@
 /*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 12:54:07 by btvildia          #+#    #+#             */
-/*   Updated: 2024/05/29 14:54:36 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:48:39 by btvildia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int					ft_tolower(int c);
 int					ft_lstsize(t_list *lst);
 int					ft_atoi(char *str);
 t_list				*ft_lstnew(void *content);
+int					ft_isdigit_loop(char *str);
 size_t				ft_strlen(char *str);
 char				*ft_strdup(char *s1);
 void				ft_bzero(void *s, size_t n);
