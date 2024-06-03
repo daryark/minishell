@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+         #
+#    By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/04 14:20:53 by escura            #+#    #+#              #
-#    Updated: 2024/05/13 16:25:17 by btvildia         ###   ########.fr        #
+#    Updated: 2024/06/03 20:49:27 by dyarkovs         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LFLAGS	 =
 
 all: $(OUT)
 
-$(OUT): $(OBJS)
+$(OUT): $(OBJS) $(HEADER)
 	ar rcs $(OUT) $(OBJS)
 
 clean:
