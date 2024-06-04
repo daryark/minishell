@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:30:30 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/03 20:53:54 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:37:57 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	ft_print_err(char *cmd, char *arg, char *content)
 {
 	write(2, "minishell: ", 11);
 	write(2, cmd, ft_strlen(cmd));
+	write (2, ":", 2);
 	if (*arg)
 	{
 		write(2, "`", 1);
