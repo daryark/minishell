@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path.c                                             :+:      :+:    :+:   */
+/*   utils_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:09:10 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/02 15:51:49 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:14:15 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*find_path(char *cmd, char *path)
 	int		fd;
 
 	i = 0;
-	paths = ft_split(path + 5, ':');
+	paths = ft_split(path, ':');
 	while (paths[i] != NULL)
 	{
 		tmp = ft_strjoin(paths[i], "/");

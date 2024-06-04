@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:46:36 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/03 17:28:18 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:53:45 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,13 @@
 void	execute(t_mshell *mshell)
 {
 	int	i;
-	int	std_in;
-	int	std_out;
 	int	**pipes;
 
 	pipes = ft_malloc(sizeof(int *) * (mshell->cmdarr_l - 1));
 	i = return_builtin_num(mshell->cmdarr[0].args[0]);
-	if (mshell->cmdarr_l == 1 && i != -1)
-	{
-		std_in = dup(0);
-		std_out = dup(1);
-		heredoc_loop(mshell, 0);
-		open_input_files(mshell, 0);
-		open_output_files(mshell, 0);
+	if (mshell->cmdarr_l == 1 && i != -1 && (mshell->cmdarr[0].inp_l == 0)
+		&& (mshell->cmdarr[0].out_l == 0))
 		mshell->builtin[i].fn_ptr(mshell);
-		close(std_in);
-		close(std_out);
-	}
 	else
 	{
 		open_fds(mshell, pipes);
@@ -52,13 +42,13 @@ void	ft_piping(t_mshell *mshell, int **pipes)
 		pid = fork();
 		if (pid == 0)
 		{
+			signal(SIGINT, child_signal);
+			heredoc_loop(mshell, i);
 			if (i != 0)
 				dup2(pipes[i - 1][0], 0);
 			if (i != mshell->cmdarr_l - 1)
 				dup2(pipes[i][1], 1);
 			close_fds(mshell, pipes);
-			signal(SIGINT, child_signal);
-			heredoc_loop(mshell, i);
 			open_input_files(mshell, i);
 			open_output_files(mshell, i);
 			mshell->cmd_num = i;

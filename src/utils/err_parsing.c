@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 23:00:05 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/03 20:53:39 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:39:51 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	input_err_check(t_mshell *mshell, char *input)
 		if (err_quote)
 			syntax_err((char *)&err_quote, 39);
 		else if (err_symb)
-			syntax_err((char *)&err_symb, mshell->exit_status);
+			syntax_err((char *)&err_symb, mshell->exit_status);	
 	}
 	else if (empty_str(input))
 		mshell->exit_status = 0;

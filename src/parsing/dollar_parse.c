@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 23:30:07 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/04 12:07:15 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:08:45 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	not_replace_cases(char *s, char q)
 	else if (space(s[1]) || !s[1] || q == '\'' || (q && (spec_symb(&s[1])
 				|| quote(s[1]))))
 		return (0);
-	else if (!ft_isalnum(s[1]) && !quote(s[1]) && !spec_symb(&s[1]))
+	else if (!ft_isalnum(s[1]) && !quote(s[1]) && !spec_symb(&s[1]) && (s[1] != '?'))
 		return (0);
 	else if (!q && (spec_symb(&s[1]) || quote(s[1])))
 		return (1);

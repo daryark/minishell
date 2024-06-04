@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_execute.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:54:09 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/02 19:34:14 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:53:18 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	return_builtin_num(char *cmd)
 	return (-1);
 }
 
+
 void	ft_execve(t_mshell *mshell)
 {
 	char		*path;
@@ -85,10 +86,12 @@ void	ft_execve(t_mshell *mshell)
 	envp = convert_env(mshell->env);
 	cmds = mshell->cmdarr[mshell->cmd_num].args;
 	env = find_env_node("PATH", mshell->env);
-	if (!env)
-		ft_error_exit(cmds[0], ": command not found", 127);
 	if (ft_strchr(cmds[0], '/') == NULL)
+	{
+		if (!env)
+			ft_error_exit(cmds[0], ": command not found", 127);
 		path = find_path(cmds[0], env->val);
+	}
 	else
 		path = ft_strdup(cmds[0]);
 	if (path == NULL)
@@ -98,3 +101,4 @@ void	ft_execve(t_mshell *mshell)
 		ft_error_exit(cmds[0], ": command not found", 127);
 	exit(0);
 }
+

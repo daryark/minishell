@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 23:22:23 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/03 16:13:46 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:44:28 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	leave_heredoc(t_mshell *mshell, int err_i)
 	heredoc = 0;
 	while (++i < err_i)
 	{
-		if (mshell->tokarr[i].type == T_HEREDOC && (i + 1) < mshell->tokarr_l
+		if ((mshell->tokarr_l > i) && mshell->tokarr[i].type == T_HEREDOC && (i + 1) < mshell->tokarr_l
 			&& mshell->tokarr[i + 1].type == T_WORD)
 			heredoc++;
 	}

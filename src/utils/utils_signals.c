@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_signals.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:24:46 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/02 00:20:16 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/04 16:57:38 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	handle_sigint(int signals)
 		g_signal = 0;
 	}
 }
-
+	
 void	ignore_signals(void)
 {
 	struct sigaction	sa;

@@ -24,7 +24,6 @@ OBJ = $(addprefix $(OBJ_F), $(SRC:%.c=%.o))
 
 all: $(NAME)
 
-.SILENT:
 $(NAME): $(OBJ)
 	@printf "\n"
 	$(MAKE) -C $(FT_DES)
