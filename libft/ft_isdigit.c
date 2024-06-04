@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btvildia <btvildia@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 13:20:23 by btvildia          #+#    #+#             */
-/*   Updated: 2024/06/03 16:49:00 by btvildia         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:40:45 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_isdigit(int c)
 
 int	ft_isdigit_loop(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
