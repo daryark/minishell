@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:27:34 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/03 16:04:02 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/15 22:43:59 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static int	init_split_save_divider(char ***dst, char *s, char c)
 
 	i = -1;
 	len = 1;
+	if (s && s[0] == c)
+		i++;
 	while (s[++i])
 	{
-		if (!i && s[0] == c)
-			i++;
 		if (s[i] == c)
 			len++;
 	}

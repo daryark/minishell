@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 14:43:20 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/04 18:42:16 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/15 22:33:40 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,17 @@ int	parse_input(char *input, t_mshell *mshell)
 		return (0);
 	dst = trim_input(input);
 	replace_dollars(&dst, mshell);
+	if (!*dst)
+	{
+		mshell->exit_status = 0;
+		return (ft_free(dst), 0);
+	}
 	split_tokens(dst, mshell);
 	err = token_order_check(mshell);
 	if (err >= 0)
 	{
 		if (!leave_heredoc(mshell, err))
-		{
 			return(0);
-		}
 	}
 	open_quotes(mshell);
 	if (err < 0)
@@ -116,5 +119,3 @@ int	parse_input(char *input, t_mshell *mshell)
 	mshell->exit_status = 0;
 	return (ft_free(dst), 1);
 }
-
-		// mshell->exit_status = 2;

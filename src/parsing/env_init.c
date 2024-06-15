@@ -6,7 +6,7 @@
 /*   By: dyarkovs <dyarkovs@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 03:28:01 by dyarkovs          #+#    #+#             */
-/*   Updated: 2024/06/03 20:10:18 by dyarkovs         ###   ########.fr       */
+/*   Updated: 2024/06/15 21:53:56 by dyarkovs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	fill_str(char *s, t_env_lst **lst)
 		val = ft_strdup(&(s[divider_pos]));
 		if (!val || !name)
 			err = 1;
-		ft_lstadd_env(lst, name, val);
 	}
 	else
 	{
@@ -51,8 +50,9 @@ int	fill_str(char *s, t_env_lst **lst)
 		val = NULL;
 		if (!name)
 			err = 1;
-		ft_lstadd_env(lst, name, val);
 	}
+	if (!err)
+		ft_lstadd_env(lst, name, val);
 	return (err);
 }
 
